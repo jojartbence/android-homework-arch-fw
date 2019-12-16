@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import kotlinx.android.synthetic.main.fragment_opening_screen.*
 
 /**
  * A simple [Fragment] subclass.
@@ -29,8 +30,10 @@ class OpeningScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        val timer = object: CountDownTimer(1000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {}
+        val timer = object: CountDownTimer(2000, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                fadeImage(0.05f)
+            }
 
             override fun onFinish() {
                 changeToLoginFragment()
@@ -41,5 +44,9 @@ class OpeningScreenFragment : Fragment() {
 
     fun changeToLoginFragment() {
         navController.navigate(R.id.action_openingScreenFragment_to_loginFragment)
+    }
+
+    fun fadeImage(rate: Float) {
+        imageView.alpha -= rate
     }
 }
