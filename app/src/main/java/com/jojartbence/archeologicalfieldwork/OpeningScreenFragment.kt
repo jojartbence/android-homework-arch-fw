@@ -20,5 +20,4 @@ class OpeningScreenFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_opening_screen, container, false)
     }
 
-
 }
