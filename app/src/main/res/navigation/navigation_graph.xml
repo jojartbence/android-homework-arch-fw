@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/openingScreenFragment">
 
+    <fragment
+        android:id="@+id/openingScreenFragment"
+        android:name="com.jojartbence.archeologicalfieldwork.OpeningScreenFragment"
+        android:label="fragment_opening_screen"
+        tools:layout="@layout/fragment_opening_screen" >
+        <action
+            android:id="@+id/action_openingScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.jojartbence.archeologicalfieldwork.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_siteListFragment"
+            app:destination="@id/siteListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/siteListFragment"
+        android:name="com.jojartbence.archeologicalfieldwork.SiteListFragment"
+        android:label="fragment_site_list"
+        tools:layout="@layout/fragment_site_list" >
+        <action
+            android:id="@+id/action_siteListFragment_to_siteFragment"
+            app:destination="@id/siteFragment" />
+        <action
+            android:id="@+id/action_siteListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.jojartbence.archeologicalfieldwork.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/siteFragment"
+        android:name="com.jojartbence.archeologicalfieldwork.SiteFragment"
+        android:label="fragment_site"
+        tools:layout="@layout/fragment_site" />
 </navigation>
