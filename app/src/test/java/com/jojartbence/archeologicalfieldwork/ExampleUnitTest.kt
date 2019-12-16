@@ -1,4 +1,4 @@
-package com.example.archeologicalfieldwork
+package com.jojartbence.archeologicalfieldwork
 
 import org.junit.Test
 

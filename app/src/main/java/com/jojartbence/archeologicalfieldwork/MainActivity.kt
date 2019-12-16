@@ -1,4 +1,4 @@
-package com.example.archeologicalfieldwork
+package com.jojartbence.archeologicalfieldwork
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

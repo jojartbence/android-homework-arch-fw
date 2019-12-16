@@ -1,4 +1,4 @@
-package com.example.archeologicalfieldwork
+package com.jojartbence.archeologicalfieldwork
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
