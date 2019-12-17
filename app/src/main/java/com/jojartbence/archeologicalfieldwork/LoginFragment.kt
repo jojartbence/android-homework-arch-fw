@@ -52,14 +52,16 @@ class LoginFragment : Fragment() {
         val password = password.text.toString()
         if (email == "" || password == "") {
             Toast.makeText(activity, "Please provide email + password", Toast.LENGTH_SHORT).show()
-        }
-        else {
+        } else {
+            showProgressBar()
             viewModel.doLogin(email,password,
                 doOnSuccess = {
                     navController.navigate(R.id.action_loginFragment_to_siteListFragment)
                 },
                 doOnFailure = {},
-                doOnComplete = {})
+                doOnComplete = {
+                    hideProgressBar()
+                })
         }
     }
 
@@ -71,17 +73,25 @@ class LoginFragment : Fragment() {
             Toast.makeText(activity, "Please provide email + password", Toast.LENGTH_SHORT).show()
         }
         else {
+            showProgressBar()
             viewModel.doSignUp(email,password,
                 doOnSuccess = {
                     navController.navigate(R.id.action_loginFragment_to_siteListFragment)
                 },
                 doOnFailure = {},
-                doOnComplete = {})
+                doOnComplete = {
+                    hideProgressBar()
+                })
         }
     }
 
 
+    fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
 
 
-
+    fun hideProgressBar() {
+        progressBar.visibility = View.INVISIBLE
+    }
 }
