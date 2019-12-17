@@ -58,7 +58,9 @@ class LoginFragment : Fragment() {
                 doOnSuccess = {
                     navController.navigate(R.id.action_loginFragment_to_siteListFragment)
                 },
-                doOnFailure = {},
+                doOnFailure = {
+                    Toast.makeText(activity, "Log in failed: ${it.message}", Toast.LENGTH_SHORT).show()
+                },
                 doOnComplete = {
                     hideProgressBar()
                 })
@@ -78,7 +80,9 @@ class LoginFragment : Fragment() {
                 doOnSuccess = {
                     navController.navigate(R.id.action_loginFragment_to_siteListFragment)
                 },
-                doOnFailure = {},
+                doOnFailure = {
+                    Toast.makeText(activity, "Sign up failed: ${it.message}", Toast.LENGTH_SHORT).show()
+                },
                 doOnComplete = {
                     hideProgressBar()
                 })
