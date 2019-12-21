@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.jojartbence.helpers.readImageFromPath
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.card_site.view.*
 
@@ -37,6 +38,7 @@ class SiteAdapter constructor(private var sites: List<SiteModel>,
         fun bind(site: SiteModel, listener: SiteListener) {
             itemView.siteTitle.text = site.title
             itemView.description.text = site.description
+            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, site.image))
             itemView.setOnClickListener { listener.onSiteClick(site) }
         }
     }

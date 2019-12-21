@@ -7,7 +7,7 @@ data class SiteModel (
     var title: String = "",
     var description: String = "",
     var location: Location = Location(),
-    var images: MutableList<String> = mutableListOf(),
+    var image: String = "",
     var visited: Boolean = false,
     var visitDate: Date? = null,
     var additionalNotes: String? = null

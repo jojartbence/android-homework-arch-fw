@@ -42,6 +42,6 @@ class SiteListFragment : Fragment(), SiteListener {
 
 
     override fun onSiteClick(site: SiteModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        viewModel.doEditSite(site)
     }
 }

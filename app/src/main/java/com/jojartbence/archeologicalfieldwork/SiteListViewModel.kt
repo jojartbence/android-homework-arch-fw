@@ -17,4 +17,12 @@ class SiteListViewModel: ViewModel() {
     fun getSites(): List<SiteModel> {
         return siteStore.findAll()
     }
+
+    fun doAddSite() {
+        // TODO
+    }
+
+    fun doEditSite(site: SiteModel) {
+        // TODO
+    }
 }
