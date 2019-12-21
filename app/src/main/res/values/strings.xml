@@ -7,4 +7,7 @@
     <string name="login_password">Password</string>
     <string name="login_signup">Sign Up</string>
     <string name="login_login">Log in</string>
+    <string name="hint_siteTitle">Placemark Title</string>
+    <string name="hint_siteDescription">Description </string>
+    <string name="button_addImage">Add Image </string>
 </resources>
