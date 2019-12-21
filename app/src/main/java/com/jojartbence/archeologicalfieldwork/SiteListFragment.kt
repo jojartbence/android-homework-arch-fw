@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.jojartbence.model.SiteModel
+import kotlinx.android.synthetic.main.fragment_site_list.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class SiteListFragment : Fragment() {
+class SiteListFragment : Fragment(), SiteListener {
 
     private val viewModel by lazy { ViewModelProviders.of(this)[SiteListViewModel::class.java] }
 
@@ -27,4 +30,18 @@ class SiteListFragment : Fragment() {
     }
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val layoutManager = LinearLayoutManager(activity!!.applicationContext)
+        recyclerView.layoutManager = layoutManager
+
+        recyclerView.adapter = SiteAdapter(viewModel.getSites(), this)
+        recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+
+    override fun onSiteClick(site: SiteModel) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
