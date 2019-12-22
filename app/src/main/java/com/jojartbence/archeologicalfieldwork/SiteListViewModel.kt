@@ -4,18 +4,18 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.jojartbence.model.SiteJsonStore
 import com.jojartbence.model.SiteModel
+import com.jojartbence.model.SiteRepository
 import com.jojartbence.model.SiteStoreInterface
 
 class SiteListViewModel: ViewModel() {
 
-    lateinit var siteStore: SiteStoreInterface
 
     fun createDatabase(context: Context) {
-        siteStore = SiteJsonStore(context)
+        SiteRepository.createDatabase(context)
     }
 
     fun getSites(): List<SiteModel> {
-        return siteStore.findAll()
+        return SiteRepository.findAll()
     }
 
     fun doAddSite() {
