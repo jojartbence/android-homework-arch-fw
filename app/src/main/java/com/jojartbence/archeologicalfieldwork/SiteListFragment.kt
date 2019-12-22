@@ -65,6 +65,11 @@ class SiteListFragment : Fragment(), SiteListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.item_add -> navController.navigate(R.id.action_siteListFragment_to_siteFragment)
+
+            R.id.item_logout -> {
+                viewModel.doLogOut()
+                navController.navigateUp()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
