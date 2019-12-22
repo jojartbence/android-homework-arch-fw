@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 
 /**
  * A simple [Fragment] subclass.
  */
 class SiteFragment : Fragment() {
+
+    private val viewModel by lazy { ViewModelProviders.of(this)[SiteViewModel::class.java] }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
