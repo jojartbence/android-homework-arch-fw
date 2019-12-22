@@ -38,7 +38,7 @@ class SiteAdapter constructor(private var sites: List<SiteModel>,
         fun bind(site: SiteModel, listener: SiteListener) {
             itemView.siteTitle.text = site.title
             itemView.description.text = site.description
-            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, site.image))
+            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, site.images[0]))
             itemView.setOnClickListener { listener.onSiteClick(site) }
         }
     }

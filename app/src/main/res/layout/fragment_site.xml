@@ -52,7 +52,7 @@
                 app:layout_constraintGuide_percent="0.7" />
 
             <Button
-                android:id="@+id/chooseImage"
+                android:id="@+id/addImage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -80,7 +80,7 @@
                 android:src="@android:drawable/ic_menu_camera"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/chooseImage" />
+                app:layout_constraintTop_toBottomOf="@+id/addImage" />
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -92,7 +92,7 @@
                 android:src="@android:drawable/ic_menu_camera"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chooseImage" />
+                app:layout_constraintTop_toBottomOf="@+id/addImage" />
 
             <ImageView
                 android:id="@+id/imageView3"

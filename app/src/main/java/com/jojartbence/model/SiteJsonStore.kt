@@ -46,7 +46,7 @@ class SiteJsonStore: SiteStoreInterface {
             foundSite.title = site.title
             foundSite.description = site.description
             foundSite.location = site.location
-            foundSite.image = site.image
+            foundSite.images = site.images.clone()
             foundSite.visited = site.visited
             foundSite.visitDate = site.visitDate
             foundSite.additionalNotes = site.additionalNotes
