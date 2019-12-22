@@ -13,4 +13,5 @@
     <string name="menu_addSite">Add site</string>
     <string name="site_saveSite">Save</string>
     <string name="site_deleteSite">Delete</string>
+    <string name="toast_enter_site_title">Please enter a title</string>
 </resources>
