@@ -60,4 +60,13 @@ class SiteListFragment : Fragment(), SiteListener {
         )
         navController.navigate(R.id.action_siteListFragment_to_siteFragment, bundle)
     }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.item_add -> navController.navigate(R.id.action_siteListFragment_to_siteFragment)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
