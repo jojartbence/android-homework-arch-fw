@@ -33,7 +33,7 @@ class SiteFragment : Fragment() {
         editSite = arguments!!.getBoolean("editSite")
 
 
-        // TODO: ez itt eléggé hányás, szebben kéne
+        // TODO: really ugly, should handle the differencies between edit and new sites better
         val tempSite: SiteModel? = arguments!!.getParcelable("site")
         if (tempSite != null) {
             site = tempSite
@@ -125,7 +125,7 @@ class SiteFragment : Fragment() {
 
 
     fun showImages() {
-        // TODO: ez is jó nagy hányás így, de legalább valamennyire működik
+        // TODO: really ugly and code copy. The task is to load an image only if there is a valid image behind its path
 
         if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
             imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))

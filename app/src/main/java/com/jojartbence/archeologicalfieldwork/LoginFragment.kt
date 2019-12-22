@@ -47,6 +47,10 @@ class LoginFragment : Fragment() {
     }
 
 
+    // TODO: these lambda functions given to the viewModel should be replaced by a liveData message when viewModel authentication finishes.
+
+    // TODO: after successful login, siteListFragment opens. However, the keyboard does not dissapear automatically. It should be fixed.
+
     fun logIn() {
         val email = email.text.toString()
         val password = password.text.toString()

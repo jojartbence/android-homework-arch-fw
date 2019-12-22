@@ -7,6 +7,9 @@ import com.jojartbence.helpers.showImagePicker
 import com.jojartbence.model.SiteModel
 import com.jojartbence.model.SiteRepository
 
+
+// TODO: find a better way to handle these 4 images. There is too much code copy.
+
 class SiteViewModel: ViewModel() {
 
     val image1RequestId = 1

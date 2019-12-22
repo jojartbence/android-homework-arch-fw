@@ -5,6 +5,8 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 
+// TODO: do not initialize with these dummy values
+
 @Parcelize
 data class SiteModel (
     var id: Long = 0,
