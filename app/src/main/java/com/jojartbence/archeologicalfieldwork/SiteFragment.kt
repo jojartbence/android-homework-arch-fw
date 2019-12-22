@@ -47,6 +47,11 @@ class SiteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (editSite) {
+            showSiteInEditMode()
+        }
+
         navController = Navigation.findNavController(view)
     }
 
@@ -85,5 +90,11 @@ class SiteFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    fun showSiteInEditMode() {
+        siteTitle.setText(site?.title)
+        siteDescription.setText(site?.description)
     }
 }
