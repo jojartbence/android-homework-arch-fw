@@ -2,10 +2,8 @@ package com.jojartbence.archeologicalfieldwork
 
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -30,6 +28,7 @@ class SiteListFragment : Fragment(), SiteListener {
     ): View? {
         // Inflate the layout for this fragment
         viewModel.createDatabase(activity!!.applicationContext)
+        setHasOptionsMenu(true)
 
         return inflater.inflate(R.layout.fragment_site_list, container, false)
     }
@@ -44,6 +43,13 @@ class SiteListFragment : Fragment(), SiteListener {
 
         recyclerView.adapter = SiteAdapter(viewModel.getSites(), this)
         recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.menu_sitelist, menu)
     }
 
 
