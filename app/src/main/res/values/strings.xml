@@ -11,4 +11,6 @@
     <string name="hint_siteDescription">Description </string>
     <string name="button_addImage">Add Image </string>
     <string name="menu_addSite">Add site</string>
+    <string name="site_saveSite">Save</string>
+    <string name="site_deleteSite">Delete</string>
 </resources>
