@@ -1,6 +1,5 @@
 package com.jojartbence.archeologicalfieldwork
 
-import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
