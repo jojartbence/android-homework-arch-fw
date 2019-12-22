@@ -125,9 +125,19 @@ class SiteFragment : Fragment() {
 
 
     fun showImages() {
-        imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))
-        imageView2.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[1]))
-        imageView3.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[2]))
-        imageView4.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[3]))
+        // TODO: ez is jó nagy hányás így, de legalább valamennyire működik
+
+        if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
+            imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))
+        }
+        if (readImageFromPath(activity!!.applicationContext, site.images[1]) != null) {
+            imageView2.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[1]))
+        }
+        if (readImageFromPath(activity!!.applicationContext, site.images[2]) != null) {
+            imageView3.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[2]))
+        }
+        if (readImageFromPath(activity!!.applicationContext, site.images[3]) != null) {
+            imageView4.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[3]))
+        }
     }
 }
