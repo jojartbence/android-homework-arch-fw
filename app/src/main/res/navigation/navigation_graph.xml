@@ -22,7 +22,9 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_siteListFragment"
-            app:destination="@id/siteListFragment" />
+            app:destination="@id/siteListFragment"
+            app:popUpTo="@+id/openingScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
