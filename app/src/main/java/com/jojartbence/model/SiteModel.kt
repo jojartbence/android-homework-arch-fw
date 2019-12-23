@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 
-// TODO: do not initialize with these dummy values
+// TODO: do not initialize with these dummy values. Leave it uninitialized.
 
 @Parcelize
 data class SiteModel (
