@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.readImageFromPath
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
@@ -63,6 +66,16 @@ class SiteFragment : Fragment() {
 
 
         navController = Navigation.findNavController(view)
+
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync {
+            it?.clear()
+            it?.uiSettings?.setZoomControlsEnabled(true)
+            val options = MarkerOptions().title("asdsad").position(LatLng(46.959029, 18.934780))
+            it?.addMarker(options)
+            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(46.959029, 18.934780), 15f))
+
+        }
     }
 
 
