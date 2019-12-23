@@ -1,0 +1,30 @@
+Release notes
+
+
+2019.12.23. - v1.0.0
+Features:
+	Components:
+		- Site list
+		- Site edit
+		- Site create
+		- Splash screen
+		- Signup/login
+	Site Features:
+		- Name
+		- Description
+		- Up to 4 images
+	Navigation:
+		- Cancel
+		- Delete
+		- Add
+		- Logout
+		- Android Navigation Component
+	Persistence:
+		- Site (JSON)
+		- firebase authentication
+	Git:
+		- commit history
+		- tagged releases
+		- develop branch
+		- feature branch
+		- release branch
