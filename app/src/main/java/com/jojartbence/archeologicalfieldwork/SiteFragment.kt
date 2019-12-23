@@ -71,7 +71,7 @@ class SiteFragment : Fragment() {
         mapView.getMapAsync {
             it?.clear()
             it?.uiSettings?.setZoomControlsEnabled(true)
-            val options = MarkerOptions().title("asdsad").position(LatLng(46.959029, 18.934780))
+            val options = MarkerOptions().title("BORLABOR").position(LatLng(46.959029, 18.934780))
             it?.addMarker(options)
             it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(46.959029, 18.934780), 15f))
 
@@ -145,5 +145,29 @@ class SiteFragment : Fragment() {
         if (readImageFromPath(activity!!.applicationContext, site.images[3]) != null) {
             imageView4.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[3]))
         }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
     }
 }
