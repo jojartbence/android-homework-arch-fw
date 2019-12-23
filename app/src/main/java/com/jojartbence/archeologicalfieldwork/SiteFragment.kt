@@ -55,9 +55,6 @@ class SiteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (editSite) {
-            showSiteInEditMode()
-        }
 
         imageList = listOf(
             Triple(imageView1, viewModel.image1RequestId, site.images[0]),
@@ -68,6 +65,10 @@ class SiteFragment : Fragment() {
 
         for (imageItem in imageList) {
             imageItem.first.setOnClickListener {viewModel.doSelectImage(this, imageItem.second)}
+        }
+
+        if (editSite) {
+            showSiteInEditMode()
         }
 
         navController = Navigation.findNavController(view)
