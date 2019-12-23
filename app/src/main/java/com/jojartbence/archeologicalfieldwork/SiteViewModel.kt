@@ -1,6 +1,7 @@
 package com.jojartbence.archeologicalfieldwork
 
 import android.content.Intent
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.jojartbence.helpers.showImagePicker
@@ -8,7 +9,7 @@ import com.jojartbence.model.SiteModel
 import com.jojartbence.model.SiteRepository
 
 
-// TODO: find a better way to handle these 4 images. There is too much code copy.
+// TODO: find a better way to handle these 4 images. The image handling should be in the ViewModel
 
 class SiteViewModel: ViewModel() {
 
@@ -16,6 +17,7 @@ class SiteViewModel: ViewModel() {
     val image2RequestId = 2
     val image3RequestId = 3
     val image4RequestId = 4
+
 
 
     fun doSaveSite(site: SiteModel) {

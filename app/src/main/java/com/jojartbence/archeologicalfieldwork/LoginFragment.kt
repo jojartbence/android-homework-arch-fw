@@ -2,11 +2,11 @@ package com.jojartbence.archeologicalfieldwork
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -48,8 +48,6 @@ class LoginFragment : Fragment() {
 
 
     // TODO: these lambda functions given to the viewModel should be replaced by a liveData message when viewModel authentication finishes.
-
-    // TODO: after successful login, siteListFragment opens. However, the keyboard does not dissapear automatically. It should be fixed.
 
     fun logIn() {
         val email = email.text.toString()

@@ -4,6 +4,7 @@ package com.jojartbence.archeologicalfieldwork
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -31,15 +32,8 @@ class SiteFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         editSite = arguments!!.getBoolean("editSite")
+        site = arguments!!.getParcelable("site") ?: SiteModel()
 
-
-        // TODO: really ugly, should handle the differencies between edit and new sites better
-        val tempSite: SiteModel? = arguments!!.getParcelable("site")
-        if (tempSite != null) {
-            site = tempSite
-        } else {
-            site = SiteModel()
-        }
     }
 
 
@@ -66,6 +60,7 @@ class SiteFragment : Fragment() {
         imageView2.setOnClickListener { viewModel.doSelectImage(this, viewModel.image2RequestId) }
         imageView3.setOnClickListener { viewModel.doSelectImage(this, viewModel.image3RequestId) }
         imageView4.setOnClickListener { viewModel.doSelectImage(this, viewModel.image4RequestId) }
+
 
         navController = Navigation.findNavController(view)
     }
@@ -125,8 +120,6 @@ class SiteFragment : Fragment() {
 
 
     fun showImages() {
-        // TODO: really ugly and code copy. The task is to load an image only if there is a valid image behind its path
-
         if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
             imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))
         }

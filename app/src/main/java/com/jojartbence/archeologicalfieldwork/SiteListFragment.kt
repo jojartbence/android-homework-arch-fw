@@ -1,8 +1,10 @@
 package com.jojartbence.archeologicalfieldwork
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
@@ -38,6 +40,8 @@ class SiteListFragment : Fragment(), SiteListener {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
+        hideKeyboard()
+
         val layoutManager = LinearLayoutManager(activity!!.applicationContext)
         recyclerView.layoutManager = layoutManager
 
@@ -72,6 +76,12 @@ class SiteListFragment : Fragment(), SiteListener {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    fun hideKeyboard() {
+        val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
     }
 
 }
