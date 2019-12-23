@@ -28,9 +28,6 @@ class SiteFragment : Fragment() {
     var editSite: Boolean = false
     lateinit var site: SiteModel
 
-    // TODO: this logic with imageList should be in the ViewModel
-    lateinit var imageList: List<Triple<ImageView,Int,String>>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,21 +52,15 @@ class SiteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        imageList = listOf(
-            Triple(imageView1, viewModel.image1RequestId, site.images[0]),
-            Triple(imageView2, viewModel.image2RequestId, site.images[1]),
-            Triple(imageView3, viewModel.image3RequestId, site.images[2]),
-            Triple(imageView4, viewModel.image4RequestId, site.images[3])
-        )
-
-        for (imageItem in imageList) {
-            imageItem.first.setOnClickListener {viewModel.doSelectImage(this, imageItem.second)}
-        }
-
         if (editSite) {
             showSiteInEditMode()
         }
+
+        imageView1.setOnClickListener { viewModel.doSelectImage(this, viewModel.image1RequestId) }
+        imageView2.setOnClickListener { viewModel.doSelectImage(this, viewModel.image2RequestId) }
+        imageView3.setOnClickListener { viewModel.doSelectImage(this, viewModel.image3RequestId) }
+        imageView4.setOnClickListener { viewModel.doSelectImage(this, viewModel.image4RequestId) }
+
 
         navController = Navigation.findNavController(view)
     }
@@ -129,12 +120,17 @@ class SiteFragment : Fragment() {
 
 
     fun showImages() {
-
-        for (imageItem in imageList) {
-            val bitmap = readImageFromPath(activity!!.applicationContext, imageItem.third)
-            if (bitmap != null) {
-                imageItem.first.setImageBitmap(bitmap)
-            }
+        if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
+            imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))
+        }
+        if (readImageFromPath(activity!!.applicationContext, site.images[1]) != null) {
+            imageView2.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[1]))
+        }
+        if (readImageFromPath(activity!!.applicationContext, site.images[2]) != null) {
+            imageView3.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[2]))
+        }
+        if (readImageFromPath(activity!!.applicationContext, site.images[3]) != null) {
+            imageView4.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[3]))
         }
     }
 }
