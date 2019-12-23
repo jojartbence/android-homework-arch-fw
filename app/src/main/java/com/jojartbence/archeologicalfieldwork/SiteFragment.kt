@@ -31,15 +31,7 @@ class SiteFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         editSite = arguments!!.getBoolean("editSite")
-
-
-        // TODO: really ugly, should handle the differencies between edit and new sites better
-        val tempSite: SiteModel? = arguments!!.getParcelable("site")
-        if (tempSite != null) {
-            site = tempSite
-        } else {
-            site = SiteModel()
-        }
+        site = arguments!!.getParcelable("site") ?: SiteModel()
     }
 
 
