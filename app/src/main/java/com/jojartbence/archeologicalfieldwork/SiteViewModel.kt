@@ -45,5 +45,7 @@ class SiteViewModel: ViewModel() {
             image3RequestId -> site.images[2] = data.data.toString()
             image4RequestId -> site.images[3] = data.data.toString()
         }
+
+
     }
 }
