@@ -148,8 +148,8 @@ class SiteFragment : Fragment() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         mapView.onDestroy()
     }
 
@@ -170,4 +170,23 @@ class SiteFragment : Fragment() {
         super.onResume()
         mapView.onResume()
     }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
 }
