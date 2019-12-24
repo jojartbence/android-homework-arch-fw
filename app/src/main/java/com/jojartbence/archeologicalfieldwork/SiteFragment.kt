@@ -71,9 +71,9 @@ class SiteFragment : Fragment() {
         mapView.getMapAsync {
             it?.clear()
             it?.uiSettings?.setZoomControlsEnabled(true)
-            val options = MarkerOptions().title("BORLABOR").position(LatLng(46.959029, 18.934780))
+            val options = MarkerOptions().title(site.title).position(LatLng(site.location.lat, site.location.lng))
             it?.addMarker(options)
-            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(46.959029, 18.934780), 15f))
+            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(site.location.lat, site.location.lng), site.location.zoom))
             it?.setOnMapClickListener {
                 val bundle = bundleOf("location" to site.location)
                 navController.navigate(R.id.action_siteFragment_to_siteEditLocationFragment, bundle)

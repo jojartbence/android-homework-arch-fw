@@ -21,7 +21,8 @@ class SiteEditLocationFragment : Fragment() {
     private val viewModel by lazy { ViewModelProviders.of(this)[SiteEditLocationViewModel::class.java] }
     lateinit var navController: NavController
 
-    private var location: Location? = null
+    lateinit var location: Location
+    val defaultLocation = Location()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,16 +37,16 @@ class SiteEditLocationFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
-        location = arguments?.getParcelable<Location>("location")
+        location = arguments?.getParcelable("location") ?: defaultLocation
 
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             it?.clear()
             it?.uiSettings?.setZoomControlsEnabled(true)
-            val options = MarkerOptions().title("BORLABOR").position(LatLng(46.959029, 18.934780))
+            val options = MarkerOptions().title("BORLABOR").position(LatLng(location.lat, location.lng))
             it?.addMarker(options)
-            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(46.959029, 18.934780), 15f))
+            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.lat, location.lng), location.zoom))
         }
     }
 
