@@ -10,13 +10,17 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.model.Location
 import kotlinx.android.synthetic.main.fragment_site.*
+import kotlinx.android.synthetic.main.fragment_site.mapView
+import kotlinx.android.synthetic.main.site_edit_location_fragment.*
 
 
-class SiteEditLocationFragment : Fragment() {
+class SiteEditLocationFragment : Fragment(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
 
     private val viewModel by lazy { ViewModelProviders.of(this)[SiteEditLocationViewModel::class.java] }
     lateinit var navController: NavController
@@ -42,12 +46,42 @@ class SiteEditLocationFragment : Fragment() {
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
-            it?.clear()
-            it?.uiSettings?.setZoomControlsEnabled(true)
-            val options = MarkerOptions().title("BORLABOR").position(LatLng(location.lat, location.lng))
-            it?.addMarker(options)
-            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.lat, location.lng), location.zoom))
+            it.setOnMarkerDragListener(this)
+            it.setOnMarkerClickListener(this)
+            val loc = LatLng(location.lat, location.lng)
+            val options = MarkerOptions()
+                .title("Placemark")
+                .snippet("GPS : " + loc.toString())
+                .draggable(true)
+                .position(loc)
+            it.addMarker(options)
+            it.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+            lat.setText("%.6f".format(location.lat))
+            lng.setText("%.6f".format(location.lng))
         }
+    }
+
+
+    override fun onMarkerDragEnd(marker: Marker) {
+        location.lat = marker.position.latitude
+        location.lng = marker.position.longitude
+    }
+
+
+    override fun onMarkerDragStart(marker: Marker) {
+    }
+
+
+    override fun onMarkerDrag(marker: Marker) {
+        lat.text = "Lat: %.6f".format(marker.position.latitude)
+        lng.text = "Lng: %.6f".format(marker.position.longitude)
+    }
+
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val loc = LatLng(location.lat, location.lng)
+        marker.setSnippet("GPS : " + loc.toString())
+        return false
     }
 
 
@@ -91,5 +125,4 @@ class SiteEditLocationFragment : Fragment() {
         super.onStop()
         mapView.onStop()
     }
-
 }
