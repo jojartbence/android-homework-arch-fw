@@ -60,5 +60,13 @@
             android:name="editSite"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_siteFragment_to_siteEditLocationFragment"
+            app:destination="@id/siteEditLocationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/siteEditLocationFragment"
+        android:name="com.jojartbence.archeologicalfieldwork.SiteEditLocationFragment"
+        android:label="site_edit_location_fragment"
+        tools:layout="@layout/site_edit_location_fragment" />
 </navigation>
