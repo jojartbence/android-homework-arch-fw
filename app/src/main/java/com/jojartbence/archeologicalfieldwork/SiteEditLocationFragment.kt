@@ -56,8 +56,8 @@ class SiteEditLocationFragment : Fragment(), GoogleMap.OnMarkerDragListener, Goo
                 .position(loc)
             it.addMarker(options)
             it.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
-            lat.setText("%.6f".format(location.lat))
-            lng.setText("%.6f".format(location.lng))
+            lat.text = "Lat: %.6f".format(location.lat)
+            lng.text = "Lng: %.6f".format(location.lng)
         }
     }
 
