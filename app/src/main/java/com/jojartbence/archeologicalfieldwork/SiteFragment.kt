@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -64,7 +65,6 @@ class SiteFragment : Fragment() {
         imageView3.setOnClickListener { viewModel.doSelectImage(this, viewModel.image3RequestId) }
         imageView4.setOnClickListener { viewModel.doSelectImage(this, viewModel.image4RequestId) }
 
-
         navController = Navigation.findNavController(view)
 
         mapView.onCreate(savedInstanceState)
@@ -74,6 +74,10 @@ class SiteFragment : Fragment() {
             val options = MarkerOptions().title("BORLABOR").position(LatLng(46.959029, 18.934780))
             it?.addMarker(options)
             it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(46.959029, 18.934780), 15f))
+            it?.setOnMapClickListener {
+                val bundle = bundleOf("location" to site.location)
+                navController.navigate(R.id.action_siteFragment_to_siteEditLocationFragment, bundle)
+            }
 
         }
     }

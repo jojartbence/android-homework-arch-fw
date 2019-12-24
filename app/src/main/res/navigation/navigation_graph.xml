@@ -68,5 +68,9 @@
         android:id="@+id/siteEditLocationFragment"
         android:name="com.jojartbence.archeologicalfieldwork.SiteEditLocationFragment"
         android:label="site_edit_location_fragment"
-        tools:layout="@layout/site_edit_location_fragment" />
+        tools:layout="@layout/site_edit_location_fragment" >
+        <argument
+            android:name="location"
+            app:argType="com.jojartbence.model.Location" />
+    </fragment>
 </navigation>
