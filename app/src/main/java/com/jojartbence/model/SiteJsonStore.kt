@@ -51,7 +51,7 @@ class SiteJsonStore: SiteStoreInterface {
             foundSite.location = site.location
             foundSite.images = site.images.clone()
             foundSite.visited = site.visited
-            foundSite.visitDate = site.visitDate
+            foundSite.dateVisited = site.dateVisited
             foundSite.additionalNotes = site.additionalNotes
 
             serialize()

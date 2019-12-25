@@ -18,6 +18,8 @@ import com.jojartbence.helpers.readImageFromPath
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
 import kotlinx.android.synthetic.main.fragment_site.view.*
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 /**
  * A simple [Fragment] subclass.
@@ -91,7 +93,7 @@ class SiteFragment : Fragment() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.site_delete -> {
                 if (editSite) {
                     viewModel.doDeleteSite(site)
@@ -102,16 +104,25 @@ class SiteFragment : Fragment() {
                 if (siteTitle.text.toString().isEmpty()) {
                     Toast.makeText(activity, R.string.toast_enter_site_title, Toast.LENGTH_SHORT).show()
                 } else {
-                    if (editSite) {
+
+                    try {
                         site.title = siteTitle.text.toString()
                         site.description = siteDescription.text.toString()
-                        viewModel.doEditSite(site)
-                    } else {
-                        site.title = siteTitle.text.toString()
-                        site.description = siteDescription.text.toString()
-                        viewModel.doSaveSite(site)
+                        site.visited = visited.isChecked
+                        site.dateVisited = SimpleDateFormat("dd.MM.yyyy").parse(dateVisited.text.toString())
+                        site.additionalNotes = addtionalNotes.text.toString()
+
+                        if (editSite) {
+                            viewModel.doEditSite(site)
+                        } else {
+                            viewModel.doSaveSite(site)
+                        }
+                        navController.navigateUp()
+
+                    } catch (e: ParseException) {
+                        e.printStackTrace()
+                        Toast.makeText( activity, R.string.toast_wrong_date_format, Toast.LENGTH_SHORT).show()
                     }
-                    navController.navigateUp()
                 }
             }
         }
@@ -122,6 +133,9 @@ class SiteFragment : Fragment() {
     fun showSiteInEditMode() {
         siteTitle.setText(site.title)
         siteDescription.setText(site.description)
+        visited.isChecked = site.visited
+        dateVisited.setText(SimpleDateFormat("dd.MM.yyyy").format(site.dateVisited))
+        addtionalNotes.setText(site.additionalNotes)
 
         showImages()
     }

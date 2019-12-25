@@ -15,7 +15,7 @@ data class SiteModel (
     var location: Location = Location(),
     var images: Array<String> = arrayOf("", "", "", ""),
     var visited: Boolean = false,
-    var visitDate: Date? = null,
+    var dateVisited: Date? = null,
     var additionalNotes: String? = null
 ): Parcelable
 

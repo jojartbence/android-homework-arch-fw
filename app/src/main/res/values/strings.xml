@@ -10,7 +10,7 @@
     <string name="hint_siteTitle">Site title</string>
     <string name="hint_siteDescription">Description</string>
     <string name="hint_visited">Visited</string>
-    <string name="hint_date_visited">Date visited</string>
+    <string name="hint_date_visited">Date (dd.MM.yyyy)</string>
     <string name="hint_additional_notes">Additional notes</string>
     <string name="button_addImage">Add Image</string>
     <string name="menu_addSite">Add site</string>
@@ -18,5 +18,6 @@
     <string name="site_saveSite">Save</string>
     <string name="site_deleteSite">Delete</string>
     <string name="toast_enter_site_title">Please enter a title</string>
+    <string name="toast_wrong_date_format">Wrong date format</string>
     <string name="image_picker_select_image">Select image</string>
 </resources>
