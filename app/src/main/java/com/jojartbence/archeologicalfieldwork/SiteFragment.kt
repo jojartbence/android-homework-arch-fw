@@ -107,6 +107,8 @@ class SiteFragment : Fragment() {
                     Toast.makeText(activity, R.string.toast_enter_site_title, Toast.LENGTH_SHORT).show()
                 } else {
 
+                    // TODO: now there is always an error when there is not an appropriate date in date visited. It should not throw an error when the field is empty.
+
                     try {
                         site.title = siteTitle.text.toString()
                         site.description = siteDescription.text.toString()
