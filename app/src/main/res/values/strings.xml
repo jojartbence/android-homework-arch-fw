@@ -7,8 +7,11 @@
     <string name="login_password">Password</string>
     <string name="login_signup">Sign Up</string>
     <string name="login_login">Log in</string>
-    <string name="hint_siteTitle">Placemark Title</string>
+    <string name="hint_siteTitle">Site title</string>
     <string name="hint_siteDescription">Description</string>
+    <string name="hint_visited">Visited</string>
+    <string name="hint_date_visited">Date visited</string>
+    <string name="hint_additional_notes">Additional notes</string>
     <string name="button_addImage">Add Image</string>
     <string name="menu_addSite">Add site</string>
     <string name="menu_logout">Log out</string>
