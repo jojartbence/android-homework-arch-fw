@@ -34,5 +34,21 @@
             android:layout_below="@id/siteTitle"
             android:layout_toEndOf="@+id/imageIcon" />
 
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:layout_toEndOf="@+id/imageIcon" />
+
+        <CheckBox
+            android:id="@+id/visited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageIcon"
+            android:clickable="false"
+            android:text="Visited"
+            android:textSize="10sp" />
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
