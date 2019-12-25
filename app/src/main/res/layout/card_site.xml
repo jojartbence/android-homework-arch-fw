@@ -32,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/siteTitle"
-            android:layout_toEndOf="@+id/imageIcon" />
+            android:layout_toEndOf="@+id/imageIcon"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/location"
@@ -48,8 +49,8 @@
             android:layout_below="@id/imageIcon"
             android:clickable="false"
             android:focusable="false"
-            android:text="@string/hint_visited"
             android:layoutDirection="rtl"
+            android:text="@string/hint_visited"
             android:textSize="10sp" />
 
     </RelativeLayout>

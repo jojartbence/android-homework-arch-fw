@@ -39,7 +39,7 @@ class SiteAdapter constructor(private var sites: List<SiteModel>,
             itemView.siteTitle.text = site.title
             itemView.description.text = site.description
             itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, site.images[0]))
-            itemView.location.text = "Lat: ${site.location.lat} - Lng: ${site.location.lng}"
+            itemView.location.text = "Lat: %.6f - Lng: %.6f".format(site.location.lat, site.location.lng)
             itemView.visited.isChecked = site.visited
             itemView.setOnClickListener { listener.onSiteClick(site) }
         }
