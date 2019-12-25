@@ -111,7 +111,12 @@ class SiteFragment : Fragment() {
                         site.title = siteTitle.text.toString()
                         site.description = siteDescription.text.toString()
                         site.visited = visited.isChecked
-                        site.dateVisited = SimpleDateFormat("dd.MM.yyyy").parse(dateVisited.text.toString())
+                        if (site.visited) {
+                            site.dateVisited =
+                                SimpleDateFormat("dd.MM.yyyy").parse(dateVisited.text.toString())
+                        } else {
+                            site.dateVisited = null
+                        }
                         site.additionalNotes = addtionalNotes.text.toString()
 
                         if (editSite) {
@@ -136,7 +141,9 @@ class SiteFragment : Fragment() {
         siteTitle.setText(site.title)
         siteDescription.setText(site.description)
         visited.isChecked = site.visited
-        dateVisited.setText(SimpleDateFormat("dd.MM.yyyy").format(site.dateVisited))
+        if (site.visited) {
+            dateVisited.setText(SimpleDateFormat("dd.MM.yyyy").format(site.dateVisited))
+        }
         addtionalNotes.setText(site.additionalNotes)
 
         showImages()
