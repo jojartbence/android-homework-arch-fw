@@ -60,12 +60,15 @@ class SiteFragment : Fragment() {
 
         if (editSite) {
             showSiteInEditMode()
+            setDateVisitedVisibility()
         }
 
         imageView1.setOnClickListener { viewModel.doSelectImage(this, viewModel.image1RequestId) }
         imageView2.setOnClickListener { viewModel.doSelectImage(this, viewModel.image2RequestId) }
         imageView3.setOnClickListener { viewModel.doSelectImage(this, viewModel.image3RequestId) }
         imageView4.setOnClickListener { viewModel.doSelectImage(this, viewModel.image4RequestId) }
+
+        visited.setOnClickListener { setDateVisitedVisibility() }
 
         navController = Navigation.findNavController(view)
 
@@ -80,7 +83,6 @@ class SiteFragment : Fragment() {
                 val bundle = bundleOf("location" to site.location)
                 navController.navigate(R.id.action_siteFragment_to_siteEditLocationFragment, bundle)
             }
-
         }
     }
 
@@ -162,6 +164,15 @@ class SiteFragment : Fragment() {
         }
         if (readImageFromPath(activity!!.applicationContext, site.images[3]) != null) {
             imageView4.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[3]))
+        }
+    }
+
+
+    fun setDateVisitedVisibility() {
+        if (!visited.isChecked) {
+            dateVisited.visibility = View.INVISIBLE
+        } else {
+            dateVisited.visibility = View.VISIBLE
         }
     }
 

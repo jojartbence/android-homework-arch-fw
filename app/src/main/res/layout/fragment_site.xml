@@ -90,7 +90,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/siteDescription" />
+                app:layout_constraintTop_toTopOf="@+id/siteDescription"
+                android:visibility="invisible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
