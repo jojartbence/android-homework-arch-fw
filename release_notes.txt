@@ -1,6 +1,10 @@
 Release notes
 
 
+2019.12.25. - v1.0.1
+Hotfix:
+	- Login screen layout fixed by better constraints
+
 2019.12.23. - v1.0.0
 Features:
 	Components:
