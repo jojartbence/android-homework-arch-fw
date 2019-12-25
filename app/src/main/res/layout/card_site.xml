@@ -47,7 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imageIcon"
             android:clickable="false"
-            android:text="Visited"
+            android:focusable="false"
+            android:text="@string/hint_visited"
+            android:layoutDirection="rtl"
             android:textSize="10sp" />
 
     </RelativeLayout>
