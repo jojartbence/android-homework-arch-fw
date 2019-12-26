@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/openingScreenFragment"
         android:name="com.jojartbence.archeologicalfieldwork.OpeningScreenFragment"
-        android:label="fragment_opening_screen"
+        android:label="Loading..."
         tools:layout="@layout/fragment_opening_screen" >
         <action
             android:id="@+id/action_openingScreenFragment_to_loginFragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.jojartbence.archeologicalfieldwork.LoginFragment"
-        android:label="fragment_login"
+        android:label="Log in or Sign up"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_siteListFragment"
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/siteListFragment"
         android:name="com.jojartbence.archeologicalfieldwork.SiteListFragment"
-        android:label="fragment_site_list"
+        android:label="List of sites"
         tools:layout="@layout/fragment_site_list" >
         <action
             android:id="@+id/action_siteListFragment_to_siteFragment"
@@ -43,13 +43,13 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.jojartbence.archeologicalfieldwork.SettingsFragment"
-        android:label="fragment_settings"
+        android:label="Settings"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/siteFragment"
         android:name="com.jojartbence.archeologicalfieldwork.SiteFragment"
-        android:label="fragment_site"
+        android:label="A site"
         tools:layout="@layout/fragment_site" >
         <argument
             android:name="site"
@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/siteEditLocationFragment"
         android:name="com.jojartbence.archeologicalfieldwork.SiteEditLocationFragment"
-        android:label="site_edit_location_fragment"
+        android:label="Edit location"
         tools:layout="@layout/site_edit_location_fragment" >
         <argument
             android:name="location"
