@@ -49,7 +49,6 @@
     <fragment
         android:id="@+id/siteFragment"
         android:name="com.jojartbence.archeologicalfieldwork.SiteFragment"
-        android:label="A site"
         tools:layout="@layout/fragment_site" >
         <argument
             android:name="site"

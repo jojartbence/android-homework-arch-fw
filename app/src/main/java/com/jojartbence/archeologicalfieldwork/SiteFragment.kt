@@ -4,8 +4,8 @@ package com.jojartbence.archeologicalfieldwork
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -17,9 +17,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.readImageFromPath
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
-import kotlinx.android.synthetic.main.fragment_site.view.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
+
 
 /**
  * A simple [Fragment] subclass.
@@ -39,7 +39,6 @@ class SiteFragment : Fragment() {
 
         editSite = arguments!!.getBoolean("editSite")
         site = arguments!!.getParcelable("site") ?: SiteModel()
-
     }
 
 
@@ -61,6 +60,10 @@ class SiteFragment : Fragment() {
         if (editSite) {
             showSiteInEditMode()
             setDateVisitedVisibility()
+
+            (activity as AppCompatActivity?)?.supportActionBar?.title = site.title
+        } else {
+            (activity as AppCompatActivity?)?.supportActionBar?.title = "New site"
         }
 
         imageView1.setOnClickListener { viewModel.doSelectImage(this, viewModel.image1RequestId) }
