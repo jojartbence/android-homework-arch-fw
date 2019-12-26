@@ -9,11 +9,6 @@ import com.jojartbence.model.SiteRepository
 
 class SiteListViewModel: ViewModel() {
 
-    fun createDatabase(context: Context) {
-        SiteRepository.createDatabase(context)
-    }
-
-
     fun getSites(): List<SiteModel> {
         return SiteRepository.findAll()
     }

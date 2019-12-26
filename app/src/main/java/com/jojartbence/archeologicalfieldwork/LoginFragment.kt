@@ -58,6 +58,7 @@ class LoginFragment : Fragment() {
             showProgressBar()
             viewModel.doLogin(email,password,
                 doOnSuccess = {
+                    viewModel.createDatabase(activity!!.applicationContext)
                     navController.navigate(R.id.action_loginFragment_to_siteListFragment)
                 },
                 doOnFailure = {
@@ -80,6 +81,7 @@ class LoginFragment : Fragment() {
             showProgressBar()
             viewModel.doSignUp(email,password,
                 doOnSuccess = {
+                    viewModel.createDatabase(activity!!.applicationContext)
                     navController.navigate(R.id.action_loginFragment_to_siteListFragment)
                 },
                 doOnFailure = {

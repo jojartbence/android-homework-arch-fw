@@ -1,7 +1,9 @@
 package com.jojartbence.archeologicalfieldwork
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.jojartbence.model.SiteRepository
 
 class LoginViewModel: ViewModel() {
 
@@ -31,6 +33,10 @@ class LoginViewModel: ViewModel() {
         }.addOnCompleteListener {
             doOnComplete()
         }
+    }
+
+    fun createDatabase(context: Context) {
+        SiteRepository.createDatabase(context, auth.currentUser?.email ?: "dummy")
     }
 
 }
