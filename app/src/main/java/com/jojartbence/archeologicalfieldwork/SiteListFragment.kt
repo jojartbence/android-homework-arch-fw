@@ -74,6 +74,10 @@ class SiteListFragment : Fragment(), SiteListener {
                 viewModel.doLogOut()
                 navController.navigateUp()
             }
+
+            R.id.item_settings -> {
+                navController.navigate(R.id.action_siteListFragment_to_settingsFragment)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
