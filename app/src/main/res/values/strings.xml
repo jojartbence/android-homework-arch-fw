@@ -20,4 +20,8 @@
     <string name="toast_enter_site_title">Please enter a title</string>
     <string name="toast_wrong_date_format">Wrong date format</string>
     <string name="image_picker_select_image">Select image</string>
+    <string name="settings_account_name">Logged in as: </string>
+    <string name="settings_total_sites">Total number of sites: </string>
+    <string name="settings_visited_sites">Number of visited sites: </string>
+
 </resources>
