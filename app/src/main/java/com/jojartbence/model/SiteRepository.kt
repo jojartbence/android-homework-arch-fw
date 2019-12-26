@@ -6,8 +6,8 @@ object SiteRepository {
     private lateinit var siteStore: SiteStoreInterface
 
 
-    fun createDatabase(context: Context) {
-        siteStore = SiteJsonStore(context)
+    fun createDatabase(context: Context, userEmail: String) {
+        siteStore = SiteJsonStore(context, userEmail)
     }
 
 

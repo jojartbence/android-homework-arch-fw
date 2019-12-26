@@ -28,10 +28,9 @@ class SiteListFragment : Fragment(), SiteListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        viewModel.createDatabase(activity!!.applicationContext)
         setHasOptionsMenu(true)
 
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_site_list, container, false)
     }
 

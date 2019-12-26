@@ -1,6 +1,7 @@
 package com.jojartbence.model
 
 import android.content.Context
+import android.provider.ContactsContract
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -13,7 +14,7 @@ import java.util.*
 // TODO: separate json store for all the users. One solution: separate json file for all the users, based on their id. Create this store instance in loginFragment, just after logging in. This instance should get user id as a constructor parameter.
 
 
-const val JSON_FILE = "sites.json"
+const val JSON_FILE_BASE = "sites.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
 val listType = object : TypeToken<ArrayList<SiteModel>>() {}.type
 
@@ -25,9 +26,13 @@ class SiteJsonStore: SiteStoreInterface {
     val context: Context
     var sites = mutableListOf<SiteModel>()
 
-    constructor (context: Context) {
+    lateinit var jsonFileName: String
+
+    constructor (context: Context, userEmail: String) {
         this.context = context
-        if (exists(context, JSON_FILE)) {
+        jsonFileName = userEmail + JSON_FILE_BASE
+
+        if (exists(context, jsonFileName)) {
             deserialize()
         }
     }
@@ -67,11 +72,11 @@ class SiteJsonStore: SiteStoreInterface {
         val jsonString = gsonBuilder.toJson(sites,
             listType
         )
-        write(context, JSON_FILE, jsonString)
+        write(context, jsonFileName, jsonString)
     }
 
     private fun deserialize() {
-        val jsonString = read(context, JSON_FILE)
+        val jsonString = read(context, jsonFileName)
         sites = Gson().fromJson(jsonString,
             listType
         )
