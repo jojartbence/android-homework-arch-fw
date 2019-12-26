@@ -13,6 +13,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/settings_account_name"
         android:textSize="20sp"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/totalSites"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_total_sites"
         android:textSize="20sp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +37,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/settings_visited_sites"
         android:textSize="20sp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/totalSites" />
