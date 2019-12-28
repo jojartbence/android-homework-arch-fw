@@ -80,8 +80,9 @@ class SiteListFragment : Fragment(), SiteListener {
             }
 
             android.R.id.home -> {
-                Toast.makeText(context, "up button clicked", Toast.LENGTH_SHORT).show()
-                navController.navigateUp()
+                // Close the app
+                activity?.finishAndRemoveTask()
+                return true
             }
         }
         return super.onOptionsItemSelected(item)
