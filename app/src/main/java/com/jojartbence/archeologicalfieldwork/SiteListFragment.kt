@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
@@ -76,6 +77,11 @@ class SiteListFragment : Fragment(), SiteListener {
 
             R.id.item_settings -> {
                 navController.navigate(R.id.action_siteListFragment_to_settingsFragment)
+            }
+
+            android.R.id.home -> {
+                Toast.makeText(context, "up button clicked", Toast.LENGTH_SHORT).show()
+                navController.navigateUp()
             }
         }
         return super.onOptionsItemSelected(item)
