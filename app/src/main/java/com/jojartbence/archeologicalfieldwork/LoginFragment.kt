@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -22,6 +23,31 @@ class LoginFragment : Fragment() {
     private val viewModel by lazy { ViewModelProviders.of(this)[LoginViewModel::class.java] }
 
     lateinit var navController: NavController
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        val loginResultObserver = Observer<Boolean?> {
+            hideProgressBar()
+            when(it) {
+                true -> navController.navigate(R.id.action_loginFragment_to_siteListFragment)
+                false -> Toast.makeText(activity, "Log in failed: ${viewModel.errorMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        val signupResultObserver = Observer<Boolean?> {
+            hideProgressBar()
+            when(it) {
+                true -> navController.navigate(R.id.action_loginFragment_to_siteListFragment)
+                false -> Toast.makeText(activity, "Sign up failed: ${viewModel.errorMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.loginResult.observe(this, loginResultObserver)
+        viewModel.signupResult.observe(this, signupResultObserver)
+
+        super.onCreate(savedInstanceState)
+    }
 
 
     override fun onCreateView(
@@ -50,31 +76,29 @@ class LoginFragment : Fragment() {
     }
 
 
-    // TODO: these lambda functions given to the viewModel should be replaced by a liveData message when viewModel authentication finishes.
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                return viewModel.closeApp(activity)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
-    fun logIn() {
+
+    private fun logIn() {
         val email = email.text.toString()
         val password = password.text.toString()
         if (email == "" || password == "") {
             Toast.makeText(activity, "Please provide email + password", Toast.LENGTH_SHORT).show()
         } else {
             showProgressBar()
-            viewModel.doLogin(email,password,
-                doOnSuccess = {
-                    viewModel.createDatabase(activity!!.applicationContext)
-                    navController.navigate(R.id.action_loginFragment_to_siteListFragment)
-                },
-                doOnFailure = {
-                    Toast.makeText(activity, "Log in failed: ${it.message}", Toast.LENGTH_SHORT).show()
-                },
-                doOnComplete = {
-                    hideProgressBar()
-                })
+            viewModel.doLogin(email, password, activity!!.applicationContext)
         }
     }
 
 
-    fun signUp() {
+    private fun signUp() {
         val email = email.text.toString()
         val password = password.text.toString()
         if (email == "" || password == "") {
@@ -82,40 +106,17 @@ class LoginFragment : Fragment() {
         }
         else {
             showProgressBar()
-            viewModel.doSignUp(email,password,
-                doOnSuccess = {
-                    viewModel.createDatabase(activity!!.applicationContext)
-                    navController.navigate(R.id.action_loginFragment_to_siteListFragment)
-                },
-                doOnFailure = {
-                    Toast.makeText(activity, "Sign up failed: ${it.message}", Toast.LENGTH_SHORT).show()
-                },
-                doOnComplete = {
-                    hideProgressBar()
-                })
+            viewModel.doSignUp(email, password, activity!!.applicationContext)
         }
     }
 
 
-    fun showProgressBar() {
+    private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
     }
 
 
-    fun hideProgressBar() {
+    private fun hideProgressBar() {
         progressBar.visibility = View.INVISIBLE
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> {
-                // Close the app
-                activity?.finishAndRemoveTask()
-                return true
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 }
