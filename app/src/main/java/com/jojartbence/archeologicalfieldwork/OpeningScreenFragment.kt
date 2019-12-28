@@ -30,6 +30,9 @@ class OpeningScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
+
+        // TODO: timer should be in viewModel
+
         val timer = object: CountDownTimer(2000, 100) {
             override fun onTick(millisUntilFinished: Long) {
                 fadeImage(0.05f)
