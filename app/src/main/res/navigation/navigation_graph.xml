@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_opening_screen" >
         <action
             android:id="@+id/action_openingScreenFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@+id/openingScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -23,7 +25,7 @@
         <action
             android:id="@+id/action_loginFragment_to_siteListFragment"
             app:destination="@id/siteListFragment"
-            app:popUpTo="@+id/openingScreenFragment"
+            app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

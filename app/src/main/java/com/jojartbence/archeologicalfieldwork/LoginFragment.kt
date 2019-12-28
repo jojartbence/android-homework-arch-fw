@@ -3,6 +3,7 @@ package com.jojartbence.archeologicalfieldwork
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -27,6 +28,8 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        setHasOptionsMenu(true)
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false)
@@ -101,5 +104,18 @@ class LoginFragment : Fragment() {
 
     fun hideProgressBar() {
         progressBar.visibility = View.INVISIBLE
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                // Close the app
+                activity?.finishAndRemoveTask()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
