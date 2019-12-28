@@ -80,9 +80,7 @@ class SiteListFragment : Fragment(), SiteListener {
             }
 
             android.R.id.home -> {
-                // Close the app
-                activity?.finishAndRemoveTask()
-                return true
+                return viewModel.closeApp(activity)
             }
         }
         return super.onOptionsItemSelected(item)
