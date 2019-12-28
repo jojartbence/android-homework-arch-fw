@@ -25,8 +25,13 @@ class SiteEditLocationFragment : Fragment(), GoogleMap.OnMarkerDragListener, Goo
     private val viewModel by lazy { ViewModelProviders.of(this)[SiteEditLocationViewModel::class.java] }
     lateinit var navController: NavController
 
-    lateinit var location: Location
-    val defaultLocation = Location()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel.attachLocation(arguments?.getParcelable("location"))
+
+        super.onCreate(savedInstanceState)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,30 +46,26 @@ class SiteEditLocationFragment : Fragment(), GoogleMap.OnMarkerDragListener, Goo
 
         navController = Navigation.findNavController(view)
 
-        location = arguments?.getParcelable("location") ?: defaultLocation
-
-
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             it.setOnMarkerDragListener(this)
             it.setOnMarkerClickListener(this)
-            val loc = LatLng(location.lat, location.lng)
             val options = MarkerOptions()
                 .title("Placemark")
-                .snippet("GPS : " + loc.toString())
+                .snippet("GPS : " + viewModel.getLatLng().toString())
                 .draggable(true)
-                .position(loc)
+                .position(viewModel.getLatLng())
             it.addMarker(options)
-            it.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
-            lat.text = "Lat: %.6f".format(location.lat)
-            lng.text = "Lng: %.6f".format(location.lng)
+            it.moveCamera(CameraUpdateFactory.newLatLngZoom(viewModel.getLatLng(), viewModel.location.zoom))
+            lat.text = "Lat: %.6f".format(viewModel.location.lat)
+            lng.text = "Lng: %.6f".format(viewModel.location.lng)
         }
     }
 
 
     override fun onMarkerDragEnd(marker: Marker) {
-        location.lat = marker.position.latitude
-        location.lng = marker.position.longitude
+        viewModel.location.lat = marker.position.latitude
+        viewModel.location.lng = marker.position.longitude
     }
 
 
@@ -79,8 +80,7 @@ class SiteEditLocationFragment : Fragment(), GoogleMap.OnMarkerDragListener, Goo
 
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val loc = LatLng(location.lat, location.lng)
-        marker.setSnippet("GPS : " + loc.toString())
+        marker.snippet = "GPS : " + viewModel.getLatLng().toString()
         return false
     }
 
