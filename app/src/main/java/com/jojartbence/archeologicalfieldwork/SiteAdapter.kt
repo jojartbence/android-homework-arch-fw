@@ -18,7 +18,7 @@ class SiteAdapter constructor(private var sites: List<SiteModel>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(
-            LayoutInflater.from(parent?.context).inflate(
+            LayoutInflater.from(parent.context).inflate(
                 R.layout.card_site,
                 parent,
                 false

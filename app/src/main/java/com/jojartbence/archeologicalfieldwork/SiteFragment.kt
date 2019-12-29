@@ -16,6 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.readImageFromPath
+import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -157,10 +158,10 @@ class SiteFragment : Fragment() {
         visited.isChecked = site.visited
         if (site.visited) {
             try {
-                dateVisited.setText(SimpleDateFormat("dd.MM.yyyy").format(site.dateVisited))
+                dateVisited.setText(SimpleDateFormat("dd.MM.yyyy").format(site.dateVisited ?: SiteModel.defaultDateInCaseOfError))
             } catch (e: Exception) {
                 e.printStackTrace()
-                dateVisited.setText("2000.01.01")
+                dateVisited.setText(SiteModel.defaultDateInCaseOfErrorAsString)
                 Toast.makeText( activity, R.string.toast_could_not_load_date, Toast.LENGTH_SHORT).show()
             }
         }

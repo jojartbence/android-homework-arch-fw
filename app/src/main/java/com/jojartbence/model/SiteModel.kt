@@ -15,8 +15,14 @@ data class SiteModel (
     var visited: Boolean = false,
     var dateVisited: Date? = null,
     var additionalNotes: String? = null
-): Parcelable
+): Parcelable {
 
+    // TODO: use Calendar instead of deprecated Date
+    companion object {
+        val defaultDateInCaseOfError: Date = Date(100, 1, 1)
+        const val defaultDateInCaseOfErrorAsString: String = "2000.01.01"
+    }
+}
 
 @Parcelize
 data class Location (

@@ -26,7 +26,7 @@ class SiteJsonStore: SiteStoreInterface {
     val context: Context
     var sites = mutableListOf<SiteModel>()
 
-    lateinit var jsonFileName: String
+    var jsonFileName: String
 
     constructor (context: Context, userEmail: String) {
         this.context = context
