@@ -79,6 +79,10 @@ class SiteListFragment : Fragment(), SiteListener {
                 navController.navigate(R.id.action_siteListFragment_to_settingsFragment)
             }
 
+            R.id.item_mapOfAllSites -> {
+                navController.navigate(R.id.action_siteListFragment_to_mapOfAllSitesFragment)
+            }
+
             android.R.id.home -> {
                 return viewModel.closeApp(activity)
             }
