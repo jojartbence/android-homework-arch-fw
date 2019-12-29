@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -34,6 +35,12 @@ class SiteFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         viewModel.attachArguments(arguments!!.getParcelable("site"), arguments!!.getBoolean("editSite"))
+
+        val visitedSwitchStateObserver = Observer<Boolean> {
+            setDateVisitedVisibility(it)
+        }
+
+        viewModel.visitedSwitchState.observe(this, visitedSwitchStateObserver)
     }
 
 
@@ -52,8 +59,21 @@ class SiteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        showSite()
-        setDateVisitedVisibility()
+        if (viewModel.editSite) {
+            // load site to UI
+            showSite()
+
+            // save the switch state to the viewmodel
+            viewModel.visitedSwitchState.value = visited.isChecked
+        } else {
+            // get the switch state from the viewmodel (e.g. if location had been set, and the view has been recreated)
+            visited.isChecked = viewModel.visitedSwitchState.value ?: false
+
+            // set visibility based on restored state
+            setDateVisitedVisibility(visited.isChecked)
+        }
+
+        showImages()
 
         if (viewModel.editSite) {
             (activity as AppCompatActivity?)?.supportActionBar?.title = viewModel.site.title
@@ -66,7 +86,9 @@ class SiteFragment : Fragment() {
         imageView3.setOnClickListener { viewModel.doSelectImage(this, viewModel.image3RequestId) }
         imageView4.setOnClickListener { viewModel.doSelectImage(this, viewModel.image4RequestId) }
 
-        visited.setOnClickListener { setDateVisitedVisibility() }
+        visited.setOnClickListener {
+            viewModel.visitedSwitchState.value = visited.isChecked
+        }
 
         navController = Navigation.findNavController(view)
 
@@ -143,8 +165,6 @@ class SiteFragment : Fragment() {
             }
         }
         addtionalNotes.setText(site.additionalNotes)
-
-        showImages()
     }
 
 
@@ -175,11 +195,11 @@ class SiteFragment : Fragment() {
     }
 
 
-    private fun setDateVisitedVisibility() {
-        if (!visited.isChecked) {
-            dateVisited.visibility = View.INVISIBLE
-        } else {
+    private fun setDateVisitedVisibility(visible: Boolean) {
+        if (visible) {
             dateVisited.visibility = View.VISIBLE
+        } else {
+            dateVisited.visibility = View.INVISIBLE
         }
     }
 

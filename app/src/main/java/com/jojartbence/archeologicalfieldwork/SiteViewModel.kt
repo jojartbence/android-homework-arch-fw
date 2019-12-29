@@ -2,6 +2,7 @@ package com.jojartbence.archeologicalfieldwork
 
 import android.content.Intent
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jojartbence.helpers.showImagePicker
 import com.jojartbence.model.SiteModel
@@ -20,6 +21,8 @@ class SiteViewModel: ViewModel() {
 
     var editSite: Boolean = false
     lateinit var site: SiteModel
+
+    val visitedSwitchState = MutableLiveData<Boolean>(false)
 
 
     fun attachArguments(site: SiteModel?, editSite: Boolean) {
