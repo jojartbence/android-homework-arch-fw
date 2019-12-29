@@ -52,10 +52,10 @@ class SiteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (viewModel.editSite) {
-            showSiteInEditMode()
-            setDateVisitedVisibility()
+        showSite()
+        setDateVisitedVisibility()
 
+        if (viewModel.editSite) {
             (activity as AppCompatActivity?)?.supportActionBar?.title = viewModel.site.title
         } else {
             (activity as AppCompatActivity?)?.supportActionBar?.title = "New site"
@@ -127,7 +127,7 @@ class SiteFragment : Fragment() {
     }
 
 
-    private fun showSiteInEditMode() {
+    private fun showSite() {
         val site = viewModel.site
 
         siteTitle.setText(site.title)
