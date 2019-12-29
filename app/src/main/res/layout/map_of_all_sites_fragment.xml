@@ -46,7 +46,7 @@
             app:layout_constraintGuide_percent="0.4" />
 
         <ImageView
-            android:id="@+id/siteImage"
+            android:id="@+id/selectedSiteImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"

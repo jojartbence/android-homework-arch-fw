@@ -76,6 +76,7 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun showSelectedSite() {
         selectedSiteTitle.text = viewModel.selectedSite.value?.title
         selectedSiteDescription.text = viewModel.selectedSite.value?.description
+        selectedSiteImage.setImageBitmap(viewModel.getImageOfSelectedSite(activity!!.applicationContext))
     }
 
 
