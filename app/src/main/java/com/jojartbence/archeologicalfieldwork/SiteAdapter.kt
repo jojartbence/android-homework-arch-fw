@@ -18,7 +18,7 @@ class SiteAdapter constructor(private var sites: List<SiteModel>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(
-            LayoutInflater.from(parent?.context).inflate(
+            LayoutInflater.from(parent.context).inflate(
                 R.layout.card_site,
                 parent,
                 false
@@ -39,6 +39,8 @@ class SiteAdapter constructor(private var sites: List<SiteModel>,
             itemView.siteTitle.text = site.title
             itemView.description.text = site.description
             itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, site.images[0]))
+            itemView.location.text = "Lat: %.6f - Lng: %.6f".format(site.location.lat, site.location.lng)
+            itemView.visited.isChecked = site.visited
             itemView.setOnClickListener { listener.onSiteClick(site) }
         }
     }

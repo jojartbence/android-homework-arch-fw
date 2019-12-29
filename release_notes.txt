@@ -1,9 +1,34 @@
 Release notes
 
 
+2019.12.29. - v1.1.0
+Features:
+	- Components:
+		- Settings (statistics)
+	- Site features:
+		- Visited checkbox
+		- Date visited
+		- Additional notes
+		- Location
+	- Navigation:
+		- Up button
+		- Settings menu item
+	- Persistence:
+		- User (JSON)
+	- Git:
+		- Hotfix branch (used at v1.0.1)
+Improvements:
+	- Using MVVM architecture
+	- Animations when switching fragments
+	- Changes in opening screen
+	- Navigate back works better now
+	- UI improvements
+
+	
 2019.12.25. - v1.0.1
 Hotfix:
 	- Login screen layout fixed by better constraints
+	
 
 2019.12.23. - v1.0.0
 Features:

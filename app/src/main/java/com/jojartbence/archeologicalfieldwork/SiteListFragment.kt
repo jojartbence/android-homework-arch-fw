@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
@@ -28,10 +29,9 @@ class SiteListFragment : Fragment(), SiteListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        viewModel.createDatabase(activity!!.applicationContext)
         setHasOptionsMenu(true)
 
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_site_list, container, false)
     }
 
@@ -67,12 +67,20 @@ class SiteListFragment : Fragment(), SiteListener {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.item_add -> navController.navigate(R.id.action_siteListFragment_to_siteFragment)
 
             R.id.item_logout -> {
                 viewModel.doLogOut()
                 navController.navigateUp()
+            }
+
+            R.id.item_settings -> {
+                navController.navigate(R.id.action_siteListFragment_to_settingsFragment)
+            }
+
+            android.R.id.home -> {
+                return viewModel.closeApp(activity)
             }
         }
         return super.onOptionsItemSelected(item)
