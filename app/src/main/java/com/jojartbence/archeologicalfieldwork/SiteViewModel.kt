@@ -30,8 +30,6 @@ class SiteViewModel: ViewModel() {
 
     fun doSaveSite(title: String, description: String, visited: Boolean, dateVisitedAsString: String, additionalNotes: String) {
 
-        // TODO: now there is always an error when there is not an appropriate date in date visited. It should not throw an error when the field is empty.
-
         site.title = title
         site.description = description
         site.visited = visited
