@@ -77,7 +77,7 @@ class LoginFragment : Fragment() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 return viewModel.closeApp(activity)
             }
