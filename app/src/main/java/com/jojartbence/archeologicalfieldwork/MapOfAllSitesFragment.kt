@@ -67,6 +67,7 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 val options = MarkerOptions().title(it.title).position(loc)
                 map.addMarker(options).tag = it.id
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.location.zoom))
+                viewModel.selectedSite.value = it
             }
         }
     }
