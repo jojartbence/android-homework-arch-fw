@@ -50,6 +50,7 @@ class SiteEditLocationFragment : Fragment(), GoogleMap.OnMarkerDragListener, Goo
         mapView.getMapAsync {
             it.setOnMarkerDragListener(this)
             it.setOnMarkerClickListener(this)
+            it?.uiSettings?.isZoomControlsEnabled = true
             val options = MarkerOptions()
                 .title("Placemark")
                 .snippet("GPS : " + viewModel.getLatLng().toString())
