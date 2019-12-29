@@ -110,8 +110,8 @@ class SiteFragment : Fragment() {
                             title = siteTitle.text.toString(),
                             description = siteDescription.text.toString(),
                             visited = visited.isChecked,
-                            dateVisitedAsString = dateVisited.toString(),
-                            additionalNotes = addtionalNotes.toString()
+                            dateVisitedAsString = dateVisited.text.toString(),
+                            additionalNotes = addtionalNotes.text.toString()
                         )
 
                         navController.navigateUp()

@@ -51,7 +51,7 @@ class SiteViewModel: ViewModel() {
 
 
     fun doDeleteSite() {
-        if (!editSite) {
+        if (editSite) {
             SiteRepository.delete(site)
         }
     }
