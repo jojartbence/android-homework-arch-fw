@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:elevation="24dp"
-    android:focusable="true"
-    android:descendantFocusability="blocksDescendants">
+    android:elevation="24dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,7 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageIcon"
-            android:focusable="false"
+            android:clickable="false"
+            android:enabled="false"
             android:layoutDirection="rtl"
             android:text="@string/hint_visited"
             android:textSize="10sp" />
