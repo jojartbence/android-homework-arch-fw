@@ -92,6 +92,6 @@
     <fragment
         android:id="@+id/mapOfAllSitesFragment"
         android:name="com.jojartbence.archeologicalfieldwork.MapOfAllSitesFragment"
-        android:label="map_of_all_sites_fragment"
+        android:label="Map of all sites"
         tools:layout="@layout/map_of_all_sites_fragment" />
 </navigation>
