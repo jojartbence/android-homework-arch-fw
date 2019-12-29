@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_opening_screen.*
@@ -18,10 +20,29 @@ class OpeningScreenFragment : Fragment() {
 
     lateinit var navController: NavController
 
+    private val viewModel by lazy { ViewModelProviders.of(this)[OpeningScreenViewModel::class.java] }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val isTimerExpiredObserver = Observer<Boolean> {
+            if (it){
+                changeToLoginFragment()
+            }
+        }
+
+        viewModel.isTimerExpired.observe(this, isTimerExpiredObserver)
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        viewModel.startTimer(2000)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_opening_screen, container, false)
     }
@@ -29,24 +50,11 @@ class OpeningScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-
-        val timer = object: CountDownTimer(2000, 100) {
-            override fun onTick(millisUntilFinished: Long) {
-                fadeImage(0.05f)
-            }
-
-            override fun onFinish() {
-                changeToLoginFragment()
-            }
-        }
-        timer.start()
     }
 
-    fun changeToLoginFragment() {
+
+    private fun changeToLoginFragment() {
         navController.navigate(R.id.action_openingScreenFragment_to_loginFragment)
     }
 
-    fun fadeImage(rate: Float) {
-        imageView.alpha -= rate
-    }
 }

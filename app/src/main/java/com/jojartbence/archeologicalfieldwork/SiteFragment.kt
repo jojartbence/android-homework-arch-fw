@@ -15,7 +15,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.readImageFromPath
-import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -31,14 +30,10 @@ class SiteFragment : Fragment() {
     lateinit var navController: NavController
 
 
-    var editSite: Boolean = false
-    lateinit var site: SiteModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        editSite = arguments!!.getBoolean("editSite")
-        site = arguments!!.getParcelable("site") ?: SiteModel()
+        viewModel.attachArguments(arguments!!.getParcelable("site"), arguments!!.getBoolean("editSite"))
     }
 
 
@@ -57,11 +52,11 @@ class SiteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (editSite) {
+        if (viewModel.editSite) {
             showSiteInEditMode()
             setDateVisitedVisibility()
 
-            (activity as AppCompatActivity?)?.supportActionBar?.title = site.title
+            (activity as AppCompatActivity?)?.supportActionBar?.title = viewModel.site.title
         } else {
             (activity as AppCompatActivity?)?.supportActionBar?.title = "New site"
         }
@@ -78,12 +73,12 @@ class SiteFragment : Fragment() {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             it?.clear()
-            it?.uiSettings?.setZoomControlsEnabled(true)
-            val options = MarkerOptions().title(site.title).position(LatLng(site.location.lat, site.location.lng))
+            it?.uiSettings?.isZoomControlsEnabled = true
+            val options = MarkerOptions().title(viewModel.site.title).position(LatLng(viewModel.site.location.lat, viewModel.site.location.lng))
             it?.addMarker(options)
-            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(site.location.lat, site.location.lng), site.location.zoom))
+            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.site.location.lat, viewModel.site.location.lng), viewModel.site.location.zoom))
             it?.setOnMapClickListener {
-                val bundle = bundleOf("location" to site.location)
+                val bundle = bundleOf("location" to viewModel.site.location)
                 navController.navigate(R.id.action_siteFragment_to_siteEditLocationFragment, bundle)
             }
         }
@@ -100,9 +95,8 @@ class SiteFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.site_delete -> {
-                if (editSite) {
-                    viewModel.doDeleteSite(site)
-                }
+
+                viewModel.doDeleteSite()
                 navController.navigateUp()
             }
             R.id.site_save -> {
@@ -110,25 +104,16 @@ class SiteFragment : Fragment() {
                     Toast.makeText(activity, R.string.toast_enter_site_title, Toast.LENGTH_SHORT).show()
                 } else {
 
-                    // TODO: now there is always an error when there is not an appropriate date in date visited. It should not throw an error when the field is empty.
-
                     try {
-                        site.title = siteTitle.text.toString()
-                        site.description = siteDescription.text.toString()
-                        site.visited = visited.isChecked
-                        if (site.visited) {
-                            site.dateVisited =
-                                SimpleDateFormat("dd.MM.yyyy").parse(dateVisited.text.toString())
-                        } else {
-                            site.dateVisited = null
-                        }
-                        site.additionalNotes = addtionalNotes.text.toString()
 
-                        if (editSite) {
-                            viewModel.doEditSite(site)
-                        } else {
-                            viewModel.doSaveSite(site)
-                        }
+                        viewModel.doSaveSite(
+                            title = siteTitle.text.toString(),
+                            description = siteDescription.text.toString(),
+                            visited = visited.isChecked,
+                            dateVisitedAsString = dateVisited.toString(),
+                            additionalNotes = addtionalNotes.toString()
+                        )
+
                         navController.navigateUp()
 
                     } catch (e: ParseException) {
@@ -142,12 +127,20 @@ class SiteFragment : Fragment() {
     }
 
 
-    fun showSiteInEditMode() {
+    private fun showSiteInEditMode() {
+        val site = viewModel.site
+
         siteTitle.setText(site.title)
         siteDescription.setText(site.description)
         visited.isChecked = site.visited
         if (site.visited) {
-            dateVisited.setText(SimpleDateFormat("dd.MM.yyyy").format(site.dateVisited))
+            try {
+                dateVisited.setText(SimpleDateFormat("dd.MM.yyyy").format(site.dateVisited))
+            } catch (e: Exception) {
+                e.printStackTrace()
+                dateVisited.setText("2000.01.01")
+                Toast.makeText( activity, R.string.toast_could_not_load_date, Toast.LENGTH_SHORT).show()
+            }
         }
         addtionalNotes.setText(site.additionalNotes)
 
@@ -158,13 +151,15 @@ class SiteFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null) {
-            viewModel.doActivityResult(requestCode, resultCode, data, site)
+            viewModel.doActivityResult(requestCode, resultCode, data)
             showImages()
         }
     }
 
 
-    fun showImages() {
+    private fun showImages() {
+        val site = viewModel.site
+
         if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
             imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))
         }
@@ -180,7 +175,7 @@ class SiteFragment : Fragment() {
     }
 
 
-    fun setDateVisitedVisibility() {
+    private fun setDateVisitedVisibility() {
         if (!visited.isChecked) {
             dateVisited.visibility = View.INVISIBLE
         } else {
