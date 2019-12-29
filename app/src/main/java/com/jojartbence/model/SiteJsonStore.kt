@@ -11,9 +11,6 @@ import com.jojartbence.helpers.write
 import java.util.*
 
 
-// TODO: separate json store for all the users. One solution: separate json file for all the users, based on their id. Create this store instance in loginFragment, just after logging in. This instance should get user id as a constructor parameter.
-
-
 const val JSON_FILE_BASE = "sites.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
 val listType = object : TypeToken<ArrayList<SiteModel>>() {}.type
