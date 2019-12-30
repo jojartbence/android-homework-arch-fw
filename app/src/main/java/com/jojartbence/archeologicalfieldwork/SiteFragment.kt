@@ -1,6 +1,7 @@
 package com.jojartbence.archeologicalfieldwork
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -12,10 +13,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jojartbence.helpers.checkLocationPermissions
 import com.jojartbence.helpers.readImageFromPath
+import com.jojartbence.model.Location
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
 import java.text.ParseException
@@ -92,6 +96,19 @@ class SiteFragment : Fragment() {
         }
 
         navController = Navigation.findNavController(view)
+
+
+        if (!viewModel.editSite) {
+            if (checkLocationPermissions(activity as Activity)) {
+                var locationService = LocationServices.getFusedLocationProviderClient(activity as Activity)
+                locationService.lastLocation.addOnSuccessListener {
+                    if (it != null) {
+                        viewModel.site.location = (Location(it.latitude, it.longitude, 15f))
+                    }
+                }
+            }
+        }
+
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
