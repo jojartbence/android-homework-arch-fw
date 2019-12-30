@@ -36,7 +36,7 @@ class SiteFragment : Fragment() {
 
     lateinit var navController: NavController
 
-    lateinit var googleMap: GoogleMap
+    var googleMap: GoogleMap? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +49,15 @@ class SiteFragment : Fragment() {
         }
 
         viewModel.visitedSwitchState.observe(this, visitedSwitchStateObserver)
+
+
+        val liveLocationObserver = Observer<Location> {
+            setLocationOnMap(it)
+        }
+
+        viewModel.liveLocation.observe(this, liveLocationObserver)
+
+        viewModel.initLocationService(activity as Activity)
     }
 
 
@@ -101,23 +110,10 @@ class SiteFragment : Fragment() {
         navController = Navigation.findNavController(view)
 
 
-        if (!viewModel.editSite) {
-            if (checkLocationPermissions(activity as Activity)) {
-                var locationService = LocationServices.getFusedLocationProviderClient(activity as Activity)
-                locationService.lastLocation.addOnSuccessListener {
-                    if (it != null) {
-                        viewModel.site.location = (Location(it.latitude, it.longitude, 15f))
-                        setCurrentLocationOnMap()
-                    }
-                }
-            }
-        }
-
-
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             googleMap = it
-            setCurrentLocationOnMap()
+            setLocationOnMap(viewModel.site.location)
             it?.setOnMapClickListener {
                 val bundle = bundleOf("location" to viewModel.site.location)
                 navController.navigate(R.id.action_siteFragment_to_siteEditLocationFragment, bundle)
@@ -126,11 +122,11 @@ class SiteFragment : Fragment() {
     }
 
 
-    fun setCurrentLocationOnMap() {
-        googleMap.clear()
-        val newMarker = MarkerOptions().title(viewModel.site.title).position(LatLng(viewModel.site.location.lat, viewModel.site.location.lng))
-        googleMap.addMarker(newMarker)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.site.location.lat, viewModel.site.location.lng), viewModel.site.location.zoom))
+    fun setLocationOnMap(location: Location) {
+        googleMap?.clear()
+        val newMarker = MarkerOptions().title(viewModel.site.title).position(LatLng(location.lat, location.lng))
+        googleMap?.addMarker(newMarker)
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.lat, location.lng), location.zoom))
     }
 
 

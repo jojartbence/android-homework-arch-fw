@@ -1,10 +1,14 @@
 package com.jojartbence.archeologicalfieldwork
 
+import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.location.LocationServices
+import com.jojartbence.helpers.checkLocationPermissions
 import com.jojartbence.helpers.showImagePicker
+import com.jojartbence.model.Location
 import com.jojartbence.model.SiteModel
 import com.jojartbence.model.SiteRepository
 import java.text.SimpleDateFormat
@@ -23,6 +27,8 @@ class SiteViewModel: ViewModel() {
     lateinit var site: SiteModel
 
     val visitedSwitchState = MutableLiveData<Boolean>(false)
+
+    val liveLocation = MutableLiveData<Location> ()
 
 
     fun attachArguments(site: SiteModel?, editSite: Boolean) {
@@ -69,6 +75,21 @@ class SiteViewModel: ViewModel() {
             image2RequestId -> site.images[1] = data.data.toString()
             image3RequestId -> site.images[2] = data.data.toString()
             image4RequestId -> site.images[3] = data.data.toString()
+        }
+    }
+
+
+    fun initLocationService(activity: Activity) {
+        if (!editSite) {
+            if (checkLocationPermissions(activity)) {
+                var locationService = LocationServices.getFusedLocationProviderClient(activity)
+                locationService.lastLocation.addOnSuccessListener {
+                    if (it != null) {
+                        site.location = (Location(it.latitude, it.longitude, 15f))
+                        liveLocation.value = site.location
+                    }
+                }
+            }
         }
     }
 }
