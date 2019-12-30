@@ -168,7 +168,7 @@ class SiteFragment : Fragment() {
                 }
             }
             R.id.site_markAsFavourite -> {
-                changeIsFavouriteState()
+                changeIsFavouriteState(item)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -230,16 +230,16 @@ class SiteFragment : Fragment() {
     }
 
 
-    private fun changeIsFavouriteState() {
+    private fun changeIsFavouriteState(item: MenuItem) {
         when(viewModel.site.isFavourite) {
             false -> {
                 viewModel.site.isFavourite = true
-                // TODO: set menu item icon btn_star_big_on
+                item.icon = resources.getDrawable(android.R.drawable.star_big_on, null)
             }
 
             true -> {
                 viewModel.site.isFavourite = false
-                // TODO: set menu item icon btn_star_big_off
+                item.icon = resources.getDrawable(android.R.drawable.star_big_off, null)
             }
         }
     }
