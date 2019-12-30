@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.checkLocationPermissions
@@ -34,6 +35,8 @@ class SiteFragment : Fragment() {
     private val viewModel by lazy { ViewModelProviders.of(this)[SiteViewModel::class.java] }
 
     lateinit var navController: NavController
+
+    lateinit var googleMap: GoogleMap
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,6 +107,7 @@ class SiteFragment : Fragment() {
                 locationService.lastLocation.addOnSuccessListener {
                     if (it != null) {
                         viewModel.site.location = (Location(it.latitude, it.longitude, 15f))
+                        setCurrentLocationOnMap()
                     }
                 }
             }
@@ -112,16 +116,21 @@ class SiteFragment : Fragment() {
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
-            it?.clear()
-            it?.uiSettings?.isZoomControlsEnabled = true
-            val options = MarkerOptions().title(viewModel.site.title).position(LatLng(viewModel.site.location.lat, viewModel.site.location.lng))
-            it?.addMarker(options)
-            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.site.location.lat, viewModel.site.location.lng), viewModel.site.location.zoom))
+            googleMap = it
+            setCurrentLocationOnMap()
             it?.setOnMapClickListener {
                 val bundle = bundleOf("location" to viewModel.site.location)
                 navController.navigate(R.id.action_siteFragment_to_siteEditLocationFragment, bundle)
             }
         }
+    }
+
+
+    fun setCurrentLocationOnMap() {
+        googleMap.clear()
+        val newMarker = MarkerOptions().title(viewModel.site.title).position(LatLng(viewModel.site.location.lat, viewModel.site.location.lng))
+        googleMap.addMarker(newMarker)
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.site.location.lat, viewModel.site.location.lng), viewModel.site.location.zoom))
     }
 
 
