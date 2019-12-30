@@ -20,7 +20,11 @@ fun showImagePicker(parent: Fragment, id: Int) {
 }
 
 
-fun readImageFromPath(context: Context, path : String) : Bitmap? {
+fun readImageFromPath(context: Context, path : String?) : Bitmap? {
+    if (path == null) {
+        return null
+    }
+
     var bitmap : Bitmap? = null
     val uri = Uri.parse(path)
     if (uri != null) {

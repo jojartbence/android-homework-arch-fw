@@ -48,6 +48,11 @@
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_siteListFragment_to_mapOfAllSitesFragment"
+            app:destination="@id/mapOfAllSitesFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
@@ -84,4 +89,9 @@
             android:name="location"
             app:argType="com.jojartbence.model.Location" />
     </fragment>
+    <fragment
+        android:id="@+id/mapOfAllSitesFragment"
+        android:name="com.jojartbence.archeologicalfieldwork.MapOfAllSitesFragment"
+        android:label="Map of all sites"
+        tools:layout="@layout/map_of_all_sites_fragment" />
 </navigation>
