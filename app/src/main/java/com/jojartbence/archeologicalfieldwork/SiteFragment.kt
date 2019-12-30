@@ -134,6 +134,8 @@ class SiteFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_site, menu)
+
+        setFavouriteIconImage(menu.findItem(R.id.site_markAsFavourite))
     }
 
 
@@ -232,15 +234,17 @@ class SiteFragment : Fragment() {
 
     private fun changeIsFavouriteState(item: MenuItem) {
         when(viewModel.site.isFavourite) {
-            false -> {
-                viewModel.site.isFavourite = true
-                item.icon = resources.getDrawable(android.R.drawable.star_big_on, null)
-            }
+            false -> viewModel.site.isFavourite = true
+            true -> viewModel.site.isFavourite = false
+        }
+        setFavouriteIconImage(item)
+    }
 
-            true -> {
-                viewModel.site.isFavourite = false
-                item.icon = resources.getDrawable(android.R.drawable.star_big_off, null)
-            }
+
+    private fun setFavouriteIconImage(item: MenuItem) {
+        when(viewModel.site.isFavourite) {
+            true -> item.icon = resources.getDrawable(android.R.drawable.star_big_on, null)
+            false -> item.icon = resources.getDrawable(android.R.drawable.star_big_off, null)
         }
     }
 
