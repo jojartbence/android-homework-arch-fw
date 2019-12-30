@@ -167,6 +167,9 @@ class SiteFragment : Fragment() {
                     }
                 }
             }
+            R.id.site_markAsFavourite -> {
+                changeIsFavouriteState()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -223,6 +226,21 @@ class SiteFragment : Fragment() {
             dateVisited.visibility = View.VISIBLE
         } else {
             dateVisited.visibility = View.INVISIBLE
+        }
+    }
+
+
+    private fun changeIsFavouriteState() {
+        when(viewModel.site.isFavourite) {
+            false -> {
+                viewModel.site.isFavourite = true
+                // TODO: set menu item icon btn_star_big_on
+            }
+
+            true -> {
+                viewModel.site.isFavourite = false
+                // TODO: set menu item icon btn_star_big_off
+            }
         }
     }
 

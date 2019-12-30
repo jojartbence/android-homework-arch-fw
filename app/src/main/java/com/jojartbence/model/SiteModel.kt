@@ -14,7 +14,8 @@ data class SiteModel (
     var images: Array<String> = arrayOf("", "", "", ""),
     var visited: Boolean = false,
     var dateVisited: Date? = null,
-    var additionalNotes: String? = null
+    var additionalNotes: String? = null,
+    var isFavourite: Boolean = false
 ): Parcelable {
 
     // TODO: use Calendar instead of deprecated Date
