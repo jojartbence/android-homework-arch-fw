@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/site_markAsFavourite"
-        android:icon="@android:drawable/btn_star_big_on"
+        android:icon="@android:drawable/btn_star_big_off"
         android:title="@string/site_markAsFavourite"
         app:showAsAction="always" />
     <item
