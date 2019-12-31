@@ -59,7 +59,7 @@ class SiteListFragment : Fragment(), SiteListener {
 
     override fun onSiteClick(site: SiteModel) {
         val bundle = bundleOf(
-            "site" to site,
+            "site" to site.copy(),
             "editSite" to true
         )
         navController.navigate(R.id.action_siteListFragment_to_siteFragment, bundle)
