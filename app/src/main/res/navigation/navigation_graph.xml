@@ -102,7 +102,7 @@
     <fragment
         android:id="@+id/favouriteSitesList"
         android:name="com.jojartbence.archeologicalfieldwork.FavouriteSitesList"
-        android:label="favourite_sites_list_fragment"
+        android:label="Favourite sites"
         tools:layout="@layout/favourite_sites_list_fragment" >
         <action
             android:id="@+id/action_favouriteSitesList_to_siteFragment"

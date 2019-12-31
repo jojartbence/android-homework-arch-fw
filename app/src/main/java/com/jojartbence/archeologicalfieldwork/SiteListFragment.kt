@@ -83,7 +83,7 @@ class SiteListFragment : Fragment(), SiteListener {
                 navController.navigate(R.id.action_siteListFragment_to_mapOfAllSitesFragment)
             }
 
-            R.id.site_markAsFavourite -> {
+            R.id.item_favourites -> {
                 navController.navigate(R.id.action_siteListFragment_to_favouriteSitesList)
             }
 
