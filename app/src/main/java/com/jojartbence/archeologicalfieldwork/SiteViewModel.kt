@@ -37,7 +37,7 @@ class SiteViewModel: ViewModel() {
     }
 
 
-    fun doSaveSite(title: String, description: String, visited: Boolean, dateVisitedAsString: String, additionalNotes: String) {
+    fun doSaveSite(title: String, description: String, visited: Boolean, dateVisitedAsString: String, additionalNotes: String, rating: Float) {
 
         site.title = title
         site.description = description
@@ -48,6 +48,7 @@ class SiteViewModel: ViewModel() {
             site.dateVisited = null
         }
         site.additionalNotes = additionalNotes
+        site.rating = rating
 
         if (editSite) {
             SiteRepository.update(site)

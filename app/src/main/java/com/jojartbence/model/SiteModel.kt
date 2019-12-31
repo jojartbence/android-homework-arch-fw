@@ -14,13 +14,19 @@ data class SiteModel (
     var images: Array<String> = arrayOf("", "", "", ""),
     var visited: Boolean = false,
     var dateVisited: Date? = null,
-    var additionalNotes: String? = null
+    var additionalNotes: String? = null,
+    var isFavourite: Boolean = false,
+    var rating: Float = 5.0f
 ): Parcelable {
 
     // TODO: use Calendar instead of deprecated Date
     companion object {
         val defaultDateInCaseOfError: Date = Date(100, 1, 1)
         const val defaultDateInCaseOfErrorAsString: String = "2000.01.01"
+    }
+
+    fun copy(): SiteModel {
+        return SiteModel(id, title, description, location.copy(), images.clone(), visited, dateVisited, additionalNotes, isFavourite, rating)
     }
 }
 

@@ -134,6 +134,8 @@ class SiteFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_site, menu)
+
+        setFavouriteIconImage(menu.findItem(R.id.site_markAsFavourite))
     }
 
 
@@ -156,7 +158,8 @@ class SiteFragment : Fragment() {
                             description = siteDescription.text.toString(),
                             visited = visited.isChecked,
                             dateVisitedAsString = dateVisited.text.toString(),
-                            additionalNotes = addtionalNotes.text.toString()
+                            additionalNotes = addtionalNotes.text.toString(),
+                            rating = ratingBar.rating
                         )
 
                         navController.navigateUp()
@@ -166,6 +169,9 @@ class SiteFragment : Fragment() {
                         Toast.makeText( activity, R.string.toast_wrong_date_format, Toast.LENGTH_SHORT).show()
                     }
                 }
+            }
+            R.id.site_markAsFavourite -> {
+                changeIsFavouriteState(item)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -188,6 +194,7 @@ class SiteFragment : Fragment() {
             }
         }
         addtionalNotes.setText(site.additionalNotes)
+        ratingBar.rating = site.rating
     }
 
 
@@ -223,6 +230,23 @@ class SiteFragment : Fragment() {
             dateVisited.visibility = View.VISIBLE
         } else {
             dateVisited.visibility = View.INVISIBLE
+        }
+    }
+
+
+    private fun changeIsFavouriteState(item: MenuItem) {
+        when(viewModel.site.isFavourite) {
+            false -> viewModel.site.isFavourite = true
+            true -> viewModel.site.isFavourite = false
+        }
+        setFavouriteIconImage(item)
+    }
+
+
+    private fun setFavouriteIconImage(item: MenuItem) {
+        when(viewModel.site.isFavourite) {
+            true -> item.icon = resources.getDrawable(android.R.drawable.star_big_on, null)
+            false -> item.icon = resources.getDrawable(android.R.drawable.star_big_off, null)
         }
     }
 
