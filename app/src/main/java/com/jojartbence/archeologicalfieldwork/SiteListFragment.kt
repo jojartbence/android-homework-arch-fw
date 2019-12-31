@@ -83,6 +83,10 @@ class SiteListFragment : Fragment(), SiteListener {
                 navController.navigate(R.id.action_siteListFragment_to_mapOfAllSitesFragment)
             }
 
+            R.id.site_markAsFavourite -> {
+                navController.navigate(R.id.action_siteListFragment_to_favouriteSitesList)
+            }
+
             android.R.id.home -> {
                 return viewModel.closeApp(activity)
             }

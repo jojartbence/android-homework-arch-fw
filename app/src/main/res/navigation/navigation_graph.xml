@@ -53,6 +53,11 @@
             app:destination="@id/mapOfAllSitesFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_siteListFragment_to_favouriteSitesList"
+            app:destination="@id/favouriteSitesList"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
@@ -94,4 +99,15 @@
         android:name="com.jojartbence.archeologicalfieldwork.MapOfAllSitesFragment"
         android:label="Map of all sites"
         tools:layout="@layout/map_of_all_sites_fragment" />
+    <fragment
+        android:id="@+id/favouriteSitesList"
+        android:name="com.jojartbence.archeologicalfieldwork.FavouriteSitesList"
+        android:label="favourite_sites_list_fragment"
+        tools:layout="@layout/favourite_sites_list_fragment" >
+        <action
+            android:id="@+id/action_favouriteSitesList_to_siteFragment"
+            app:destination="@id/siteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
 </navigation>
