@@ -63,7 +63,7 @@ class SiteJsonStore: SiteStoreInterface {
     }
 
     override fun delete(site: SiteModel) {
-        sites.remove(site)
+        sites.remove(sites.find { it.id == site.id })
         serialize()
     }
 
