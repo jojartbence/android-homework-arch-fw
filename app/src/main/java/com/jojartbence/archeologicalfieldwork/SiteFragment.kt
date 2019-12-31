@@ -158,7 +158,8 @@ class SiteFragment : Fragment() {
                             description = siteDescription.text.toString(),
                             visited = visited.isChecked,
                             dateVisitedAsString = dateVisited.text.toString(),
-                            additionalNotes = addtionalNotes.text.toString()
+                            additionalNotes = addtionalNotes.text.toString(),
+                            rating = ratingBar.rating
                         )
 
                         navController.navigateUp()
@@ -193,6 +194,7 @@ class SiteFragment : Fragment() {
             }
         }
         addtionalNotes.setText(site.additionalNotes)
+        ratingBar.rating = site.rating
     }
 
 

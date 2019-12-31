@@ -55,6 +55,8 @@ class SiteJsonStore: SiteStoreInterface {
             foundSite.visited = site.visited
             foundSite.dateVisited = site.dateVisited
             foundSite.additionalNotes = site.additionalNotes
+            foundSite.isFavourite = site.isFavourite
+            foundSite.rating = site.rating
 
             serialize()
         }

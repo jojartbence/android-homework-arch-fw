@@ -15,7 +15,8 @@ data class SiteModel (
     var visited: Boolean = false,
     var dateVisited: Date? = null,
     var additionalNotes: String? = null,
-    var isFavourite: Boolean = false
+    var isFavourite: Boolean = false,
+    var rating: Float = 5.0f
 ): Parcelable {
 
     // TODO: use Calendar instead of deprecated Date
@@ -25,7 +26,7 @@ data class SiteModel (
     }
 
     fun copy(): SiteModel {
-        return SiteModel(id, title, description, location.copy(), images.clone(), visited, dateVisited, additionalNotes, isFavourite)
+        return SiteModel(id, title, description, location.copy(), images.clone(), visited, dateVisited, additionalNotes, isFavourite, rating)
     }
 }
 
