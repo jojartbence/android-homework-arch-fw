@@ -2,15 +2,15 @@ package com.jojartbence.archeologicalfieldwork
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.LocationServices
 import com.jojartbence.helpers.checkLocationPermissions
 import com.jojartbence.helpers.showImagePicker
-import com.jojartbence.model.Location
-import com.jojartbence.model.SiteModel
-import com.jojartbence.model.SiteRepository
+import com.jojartbence.model.*
 import java.text.SimpleDateFormat
 
 
@@ -91,6 +91,19 @@ class SiteViewModel: ViewModel() {
                     }
                 }
             }
+        }
+    }
+
+
+    fun shareSiteInEmail(parent: Fragment) {
+        // TODO: share the images as an attachment
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:") // only email apps should handle this
+            putExtra(Intent.EXTRA_SUBJECT, "A site has been shared with you")
+            putExtra(Intent.EXTRA_TEXT, site.toEmailText())
+        }
+        if (intent.resolveActivity(parent.activity!!.packageManager) != null) {
+            parent.startActivity(intent)
         }
     }
 }
