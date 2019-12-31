@@ -96,6 +96,7 @@ class SiteViewModel: ViewModel() {
 
 
     fun shareSiteInEmail(parent: Fragment) {
+        // TODO: share the images as an attachment
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:") // only email apps should handle this
             putExtra(Intent.EXTRA_SUBJECT, "A site has been shared with you")
