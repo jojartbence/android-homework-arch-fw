@@ -27,9 +27,6 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 
 
-// TODO: some items saved even without clicking 'save' (favourite, images). This might be because SiteRepository returns directly the sites, not just a copy. This makes changing a field of a site results in changing it also in the repository at once.
-
-
 /**
  * A simple [Fragment] subclass.
  */

@@ -23,6 +23,10 @@ data class SiteModel (
         val defaultDateInCaseOfError: Date = Date(100, 1, 1)
         const val defaultDateInCaseOfErrorAsString: String = "2000.01.01"
     }
+
+    fun copy(): SiteModel {
+        return SiteModel(id, title, description, location.copy(), images.clone(), visited, dateVisited, additionalNotes, isFavourite)
+    }
 }
 
 @Parcelize
