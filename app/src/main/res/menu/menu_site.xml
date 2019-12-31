@@ -15,4 +15,9 @@
         android:id="@+id/site_delete"
         android:title="@string/site_deleteSite"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/site_shareEmail"
+        android:title="@string/site_shareEmail"
+        app:showAsAction="never" />
 </menu>

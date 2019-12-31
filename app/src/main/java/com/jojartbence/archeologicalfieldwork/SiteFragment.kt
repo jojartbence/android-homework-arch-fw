@@ -3,6 +3,7 @@ package com.jojartbence.archeologicalfieldwork
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -172,6 +173,9 @@ class SiteFragment : Fragment() {
             }
             R.id.site_markAsFavourite -> {
                 changeIsFavouriteState(item)
+            }
+            R.id.site_shareEmail -> {
+                viewModel.shareSiteInEmail(this)
             }
         }
         return super.onOptionsItemSelected(item)
