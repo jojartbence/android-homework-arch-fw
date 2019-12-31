@@ -28,6 +28,22 @@ data class SiteModel (
     fun copy(): SiteModel {
         return SiteModel(id, title, description, location.copy(), images.clone(), visited, dateVisited, additionalNotes, isFavourite, rating)
     }
+
+    fun toEmailText(): String {
+        var text: String = "Details of the site: \n\n"
+
+        text += "Title: $title \n"
+        if (description != null) {
+            text += "Description: $description \n"
+        }
+        text += "Location: Lat: %.6f - Lng: %.6f \n".format(location.lat, location.lng)
+        if (additionalNotes != null) {
+            text += "Additional notes: $additionalNotes \n"
+        }
+        text += "Rating: $rating \n"
+
+        return text
+    }
 }
 
 @Parcelize

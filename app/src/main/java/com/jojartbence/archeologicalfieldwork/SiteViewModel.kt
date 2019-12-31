@@ -99,7 +99,7 @@ class SiteViewModel: ViewModel() {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:") // only email apps should handle this
             putExtra(Intent.EXTRA_SUBJECT, "A site has been shared with you")
-            putExtra(Intent.EXTRA_TEXT, site.toString())
+            putExtra(Intent.EXTRA_TEXT, site.toEmailText())
         }
         if (intent.resolveActivity(parent.activity!!.packageManager) != null) {
             parent.startActivity(intent)
