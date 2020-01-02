@@ -8,6 +8,7 @@ import java.util.*
 @Parcelize
 data class SiteModel (
     var id: Long? = null,
+    var firebaseId : String = "",
     var title: String? = null,
     var description: String? = null,
     var location: Location = Location(),
@@ -26,7 +27,7 @@ data class SiteModel (
     }
 
     fun copy(): SiteModel {
-        return SiteModel(id, title, description, location.copy(), images.clone(), visited, dateVisited, additionalNotes, isFavourite, rating)
+        return SiteModel(id, firebaseId, title, description, location.copy(), images.clone(), visited, dateVisited, additionalNotes, isFavourite, rating)
     }
 
     fun toEmailText(): String {
