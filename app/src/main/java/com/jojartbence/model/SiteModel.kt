@@ -7,11 +7,11 @@ import java.util.*
 
 @Parcelize
 data class SiteModel (
-    var id: Long? = null,
+    var id : String = "",
     var title: String? = null,
     var description: String? = null,
     var location: Location = Location(),
-    var images: Array<String> = arrayOf("", "", "", ""),
+    var images: MutableList<String> = mutableListOf("", "", "", ""),
     var visited: Boolean = false,
     var dateVisited: Date? = null,
     var additionalNotes: String? = null,
@@ -26,7 +26,7 @@ data class SiteModel (
     }
 
     fun copy(): SiteModel {
-        return SiteModel(id, title, description, location.copy(), images.clone(), visited, dateVisited, additionalNotes, isFavourite, rating)
+        return SiteModel(id, title, description, location.copy(), images.toMutableList(), visited, dateVisited, additionalNotes, isFavourite, rating)
     }
 
     fun toEmailText(): String {

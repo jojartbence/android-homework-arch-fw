@@ -39,7 +39,7 @@ class SiteJsonStore: SiteStoreInterface {
     }
 
     override fun create(site: SiteModel) {
-        site.id = generateRandomId()
+        site.id = generateRandomId().toString()
         sites.add(site)
         serialize()
     }
@@ -51,7 +51,7 @@ class SiteJsonStore: SiteStoreInterface {
             foundSite.title = site.title
             foundSite.description = site.description
             foundSite.location = site.location
-            foundSite.images = site.images.clone()
+            foundSite.images = site.images.toMutableList()
             foundSite.visited = site.visited
             foundSite.dateVisited = site.dateVisited
             foundSite.additionalNotes = site.additionalNotes
@@ -81,7 +81,7 @@ class SiteJsonStore: SiteStoreInterface {
         )
     }
 
-    override fun findById(id:Long) : SiteModel? {
+    override fun findById (id: String): SiteModel? {
         return sites.find { it.id == id }
     }
 
