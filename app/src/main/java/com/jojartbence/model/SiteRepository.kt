@@ -2,7 +2,7 @@ package com.jojartbence.model
 
 
 object SiteRepository {
-    private lateinit var siteStore: SiteStoreInterface
+    private lateinit var siteStore: SiteFirebaseStore
 
 
     fun createDatabase() {
@@ -11,7 +11,7 @@ object SiteRepository {
 
 
     fun fetchSites(onSitesReady: () -> Unit) {
-        (siteStore as SiteFirebaseStore).fetchSites { onSitesReady }
+        siteStore.fetchSites (onSitesReady)
     }
 
 

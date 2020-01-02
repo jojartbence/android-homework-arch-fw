@@ -7,7 +7,7 @@ class SiteFirebaseStore: SiteStoreInterface {
 
     val sites = ArrayList<SiteModel>()
     lateinit var userId: String
-    lateinit var db: DatabaseReference
+    val db = FirebaseDatabase.getInstance().reference
 
 
     override fun findAll(): List<SiteModel> {
@@ -70,9 +70,8 @@ class SiteFirebaseStore: SiteStoreInterface {
             }
         }
         userId = FirebaseAuth.getInstance().currentUser!!.uid
-        db = FirebaseDatabase.getInstance().reference
         sites.clear()
-        db.child("users").child(userId).child("sites").addListenerForSingleValueEvent(valueEventListener)
+        db.child("users").child(userId).child("sites").addValueEventListener(valueEventListener)
     }
 
 }
