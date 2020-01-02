@@ -16,8 +16,7 @@ class SiteFirebaseStore: SiteStoreInterface {
 
 
     override fun findById(id: Long): SiteModel? {
-        val foundSite: SiteModel? = sites.find { p -> p.id == id }
-        return foundSite
+        return sites.find { p -> p.id == id }
     }
 
 
@@ -37,6 +36,12 @@ class SiteFirebaseStore: SiteStoreInterface {
             foundSite.title = site.title
             foundSite.description = site.description
             foundSite.location = site.location
+            foundSite.images = site.images.clone()
+            foundSite.visited = site.visited
+            foundSite.dateVisited = site.dateVisited
+            foundSite.additionalNotes = site.additionalNotes
+            foundSite.isFavourite = site.isFavourite
+            foundSite.rating = site.rating
         }
 
         db.child("users").child(userId).child("sites").child(site.firebaseId).setValue(site)
@@ -46,7 +51,7 @@ class SiteFirebaseStore: SiteStoreInterface {
 
     override fun delete(site: SiteModel) {
         db.child("users").child(userId).child("sites").child(site.firebaseId).removeValue()
-        sites.remove(site)
+        sites.remove(sites.find { it.firebaseId == site.firebaseId })
     }
 
 
