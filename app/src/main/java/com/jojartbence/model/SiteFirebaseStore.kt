@@ -36,7 +36,7 @@ class SiteFirebaseStore: SiteStoreInterface {
             foundSite.title = site.title
             foundSite.description = site.description
             foundSite.location = site.location
-            foundSite.images = site.images.clone()
+            foundSite.images = site.images.toMutableList()
             foundSite.visited = site.visited
             foundSite.dateVisited = site.dateVisited
             foundSite.additionalNotes = site.additionalNotes
@@ -71,7 +71,7 @@ class SiteFirebaseStore: SiteStoreInterface {
         }
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         sites.clear()
-        db.child("users").child(userId).child("sites").addValueEventListener(valueEventListener)
+        db.child("users").child(userId).child("sites").addListenerForSingleValueEvent(valueEventListener)
     }
 
 }
