@@ -52,7 +52,7 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        viewModel.selectSiteById(marker.tag as Long)
+        viewModel.selectSiteById(marker.tag as String)
         return true
     }
 

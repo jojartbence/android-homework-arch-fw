@@ -15,7 +15,7 @@ class SiteFirebaseStore: SiteStoreInterface {
     }
 
 
-    override fun findById(id: Long): SiteModel? {
+    override fun findById(id: String): SiteModel? {
         return sites.find { p -> p.id == id }
     }
 
@@ -23,7 +23,7 @@ class SiteFirebaseStore: SiteStoreInterface {
     override fun create(site: SiteModel) {
         val key = db.child("users").child(userId).child("sites").push().key
         key?.let {
-            site.firebaseId = key
+            site.id = key
             sites.add(site)
             db.child("users").child(userId).child("sites").child(key).setValue(site)
         }
@@ -31,7 +31,7 @@ class SiteFirebaseStore: SiteStoreInterface {
 
 
     override fun update(site: SiteModel) {
-        var foundSite: SiteModel? = sites.find { p -> p.firebaseId == site.firebaseId }
+        var foundSite: SiteModel? = sites.find { p -> p.id == site.id }
         if (foundSite != null) {
             foundSite.title = site.title
             foundSite.description = site.description
@@ -44,14 +44,14 @@ class SiteFirebaseStore: SiteStoreInterface {
             foundSite.rating = site.rating
         }
 
-        db.child("users").child(userId).child("sites").child(site.firebaseId).setValue(site)
+        db.child("users").child(userId).child("sites").child(site.id).setValue(site)
 
     }
 
 
     override fun delete(site: SiteModel) {
-        db.child("users").child(userId).child("sites").child(site.firebaseId).removeValue()
-        sites.remove(sites.find { it.firebaseId == site.firebaseId })
+        db.child("users").child(userId).child("sites").child(site.id).removeValue()
+        sites.remove(sites.find { it.id == site.id })
     }
 
 
@@ -65,7 +65,7 @@ class SiteFirebaseStore: SiteStoreInterface {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                dataSnapshot!!.children.mapNotNullTo(sites) { it.getValue<SiteModel>(SiteModel::class.java) }
+                dataSnapshot.children.mapNotNullTo(sites) { it.getValue<SiteModel>(SiteModel::class.java) }
                 onSitesReady()
             }
         }

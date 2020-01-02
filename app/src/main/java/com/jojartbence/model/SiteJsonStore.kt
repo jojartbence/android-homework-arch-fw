@@ -39,7 +39,7 @@ class SiteJsonStore: SiteStoreInterface {
     }
 
     override fun create(site: SiteModel) {
-        site.id = generateRandomId()
+        site.id = generateRandomId().toString()
         sites.add(site)
         serialize()
     }
@@ -81,7 +81,7 @@ class SiteJsonStore: SiteStoreInterface {
         )
     }
 
-    override fun findById(id:Long) : SiteModel? {
+    override fun findById (id: String): SiteModel? {
         return sites.find { it.id == id }
     }
 

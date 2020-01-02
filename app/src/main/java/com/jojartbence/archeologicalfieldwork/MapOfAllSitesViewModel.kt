@@ -18,7 +18,7 @@ class MapOfAllSitesViewModel : ViewModel() {
     }
 
 
-    fun selectSiteById(id: Long) {
+    fun selectSiteById(id: String) {
         selectedSite.value = SiteRepository.findById(id)
     }
 

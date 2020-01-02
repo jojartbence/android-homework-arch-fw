@@ -35,7 +35,7 @@ object SiteRepository {
     }
 
 
-    fun findById(id:Long) : SiteModel? {
+    fun findById(id: String) : SiteModel? {
         return siteStore.findById(id)
     }
 
