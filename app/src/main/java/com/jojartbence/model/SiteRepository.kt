@@ -1,13 +1,17 @@
 package com.jojartbence.model
 
-import android.content.Context
 
 object SiteRepository {
     private lateinit var siteStore: SiteStoreInterface
 
 
-    fun createDatabase(context: Context, userEmail: String) {
-        siteStore = SiteJsonStore(context, userEmail)
+    fun createDatabase() {
+        siteStore = SiteFirebaseStore()
+    }
+
+
+    fun fetchSites(onSitesReady: () -> Unit) {
+        (siteStore as SiteFirebaseStore).fetchSites { onSitesReady }
     }
 
 

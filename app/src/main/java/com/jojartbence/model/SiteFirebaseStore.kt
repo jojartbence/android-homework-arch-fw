@@ -60,13 +60,13 @@ class SiteFirebaseStore: SiteStoreInterface {
     }
 
 
-    fun fetchSites(sitesReady: () -> Unit) {
+    fun fetchSites(onSitesReady: () -> Unit) {
         val valueEventListener = object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 dataSnapshot!!.children.mapNotNullTo(sites) { it.getValue<SiteModel>(SiteModel::class.java) }
-                sitesReady()
+                onSitesReady()
             }
         }
         userId = FirebaseAuth.getInstance().currentUser!!.uid
