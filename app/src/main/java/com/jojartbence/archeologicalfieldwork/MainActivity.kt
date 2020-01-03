@@ -6,10 +6,7 @@ import android.view.MenuItem
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.jojartbence.model.SiteRepository
@@ -43,13 +40,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // TODO: handle backstack the right way
         when (item.itemId) {
             R.id.nav_logout -> {
                 doLogOut()
             }
             else -> {
-                // TODO: the navigation drawer's default navigate function should be called here, which also does some addition stuff
                 navController.navigate(item.itemId)
+                if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                }
             }
 
         }
