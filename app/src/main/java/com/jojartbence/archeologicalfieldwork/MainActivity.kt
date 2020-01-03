@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val topLevelDestinations = setOf(R.id.nav_addSite, R.id.nav_mapOfAllSites, R.id.nav_favouriteSites, R.id.nav_settings, R.id.nav_siteList, R.id.nav_logout)
+        val topLevelDestinations = setOf(R.id.nav_mapOfAllSites, R.id.nav_favouriteSites, R.id.nav_settings, R.id.nav_siteList)
         appBarConfig = AppBarConfiguration.Builder(topLevelDestinations).setDrawerLayout(drawer_layout).build()
 
 
