@@ -1,11 +1,13 @@
 package com.jojartbence.archeologicalfieldwork
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -30,16 +32,26 @@ class LoginFragment : Fragment() {
         val loginResultObserver = Observer<Boolean?> {
             hideProgressBar()
             when(it) {
-                true -> navController.navigate(R.id.action_loginFragment_to_siteListFragment)
-                false -> Toast.makeText(activity, "Log in failed: ${viewModel.errorMessage}", Toast.LENGTH_SHORT).show()
+                true -> {
+                    hideKeyboard()
+                    navController.navigate(R.id.action_loginFragment_to_siteListFragment)
+                }
+                false -> {
+                    Toast.makeText(activity, "Log in failed: ${viewModel.errorMessage}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
         val signupResultObserver = Observer<Boolean?> {
             hideProgressBar()
             when(it) {
-                true -> navController.navigate(R.id.action_loginFragment_to_siteListFragment)
-                false -> Toast.makeText(activity, "Sign up failed: ${viewModel.errorMessage}", Toast.LENGTH_SHORT).show()
+                true -> {
+                    hideKeyboard()
+                    navController.navigate(R.id.action_loginFragment_to_siteListFragment)
+                }
+                false -> {
+                    Toast.makeText(activity, "Sign up failed: ${viewModel.errorMessage}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -118,5 +130,11 @@ class LoginFragment : Fragment() {
 
     private fun hideProgressBar() {
         progressBar.visibility = View.INVISIBLE
+    }
+
+
+    fun hideKeyboard() {
+        val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
     }
 }
