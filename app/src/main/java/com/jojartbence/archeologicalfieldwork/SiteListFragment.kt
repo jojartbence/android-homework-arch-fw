@@ -40,8 +40,6 @@ class SiteListFragment : Fragment(), SiteListener {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        hideKeyboard()
-
         val layoutManager = LinearLayoutManager(activity!!.applicationContext)
         recyclerView.layoutManager = layoutManager
 
@@ -93,11 +91,4 @@ class SiteListFragment : Fragment(), SiteListener {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
-    fun hideKeyboard() {
-        val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
-    }
-
 }
