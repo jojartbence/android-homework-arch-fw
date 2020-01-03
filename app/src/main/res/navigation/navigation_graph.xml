@@ -40,7 +40,7 @@
         tools:layout="@layout/fragment_site_list" >
         <action
             android:id="@+id/action_siteListFragment_to_siteFragment"
-            app:destination="@id/siteFragment"
+            app:destination="@id/nav_site"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
@@ -52,7 +52,7 @@
         tools:layout="@layout/fragment_settings" />
 
     <fragment
-        android:id="@+id/siteFragment"
+        android:id="@+id/nav_site"
         android:name="com.jojartbence.archeologicalfieldwork.SiteFragment"
         tools:layout="@layout/fragment_site" >
         <argument
@@ -91,7 +91,7 @@
         tools:layout="@layout/favourite_sites_list_fragment" >
         <action
             android:id="@+id/action_favouriteSitesList_to_siteFragment"
-            app:destination="@id/siteFragment"
+            app:destination="@id/nav_site"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
