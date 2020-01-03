@@ -2,6 +2,11 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/nav_addSite"
+        android:icon="@drawable/ic_menu_add"
+        android:title="@string/menu_addSite" />
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_mapOfAllSites"
@@ -15,12 +20,12 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_settings"
             android:title="@string/menu_settings" />
-    </group>
 
-    <item
-        android:id="@+id/nav_addSite"
-        android:icon="@drawable/ic_menu_add"
-        android:title="@string/menu_addSite" />
+        <item
+            android:id="@+id/nav_siteList"
+            android:icon="@drawable/ic_menu_site_list"
+            android:title="@string/menu_siteList" />
+    </group>
 
     <item
         android:id="@+id/nav_logout"

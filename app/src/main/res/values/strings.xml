@@ -17,6 +17,7 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_mapOfAllSites">Map of all sites</string>
     <string name="menu_favourites">Favourite sites</string>
+    <string name="menu_siteList">List of sites</string>
     <string name="site_saveSite">Save</string>
     <string name="site_deleteSite">Delete</string>
     <string name="site_markAsFavourite">Mark as favourite</string>
