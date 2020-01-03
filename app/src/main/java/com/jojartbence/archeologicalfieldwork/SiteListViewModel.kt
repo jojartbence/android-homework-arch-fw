@@ -15,10 +15,7 @@ class SiteListViewModel: ViewModel() {
     }
 
 
-    fun doLogOut() {
-        FirebaseAuth.getInstance().signOut()
-        SiteRepository.clear()
-    }
+
 
     fun closeApp(activity: FragmentActivity?): Boolean {
         activity?.finishAndRemoveTask()
