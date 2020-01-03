@@ -33,7 +33,6 @@ class LoginFragment : Fragment() {
             hideProgressBar()
             when(it) {
                 true -> {
-                    hideKeyboard()
                     navController.navigate(R.id.action_loginFragment_to_siteListFragment)
                 }
                 false -> {
@@ -46,7 +45,6 @@ class LoginFragment : Fragment() {
             hideProgressBar()
             when(it) {
                 true -> {
-                    hideKeyboard()
                     navController.navigate(R.id.action_loginFragment_to_siteListFragment)
                 }
                 false -> {
@@ -104,6 +102,7 @@ class LoginFragment : Fragment() {
         if (email == "" || password == "") {
             Toast.makeText(activity, "Please provide email + password", Toast.LENGTH_SHORT).show()
         } else {
+            hideKeyboard()
             showProgressBar()
             viewModel.doLogin(email, password, activity!!.applicationContext)
         }
@@ -117,6 +116,7 @@ class LoginFragment : Fragment() {
             Toast.makeText(activity, "Please provide email + password", Toast.LENGTH_SHORT).show()
         }
         else {
+            hideKeyboard()
             showProgressBar()
             viewModel.doSignUp(email, password, activity!!.applicationContext)
         }
