@@ -39,13 +39,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return navController.navigateUp(appBarConfig) || super.onSupportNavigateUp()
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // TODO: handle backstack the right way
         when (item.itemId) {
             R.id.nav_logout -> {
                 doLogOut()
             }
+
+            R.id.nav_site -> {
+                navController.navigate(item.itemId)
+                if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                }
+            }
+
             else -> {
+                navController.popBackStack()
                 navController.navigate(item.itemId)
                 if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
                     drawer_layout.closeDrawer(GravityCompat.START)
@@ -56,6 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         return true
     }
+
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
