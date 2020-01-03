@@ -29,7 +29,6 @@ class SiteListFragment : Fragment(), SiteListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_site_list, container, false)
@@ -48,47 +47,11 @@ class SiteListFragment : Fragment(), SiteListener {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        inflater.inflate(R.menu.menu_sitelist, menu)
-    }
-
-
     override fun onSiteClick(site: SiteModel) {
         val bundle = bundleOf(
             "site" to site.copy(),
             "editSite" to true
         )
         navController.navigate(R.id.action_siteListFragment_to_siteFragment, bundle)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_add -> navController.navigate(R.id.action_siteListFragment_to_siteFragment)
-
-            R.id.item_logout -> {
-                viewModel.doLogOut()
-                navController.navigateUp()
-            }
-
-            R.id.item_settings -> {
-                navController.navigate(R.id.action_siteListFragment_to_settingsFragment)
-            }
-
-            R.id.item_mapOfAllSites -> {
-                navController.navigate(R.id.action_siteListFragment_to_mapOfAllSitesFragment)
-            }
-
-            R.id.item_favourites -> {
-                navController.navigate(R.id.action_siteListFragment_to_favouriteSitesList)
-            }
-
-            android.R.id.home -> {
-                return viewModel.closeApp(activity)
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }
