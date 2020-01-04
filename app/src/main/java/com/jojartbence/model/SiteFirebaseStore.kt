@@ -43,6 +43,10 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
     override fun update(site: SiteModel) {
         var foundSite: SiteModel? = sites.find { p -> p.id == site.id }
         if (foundSite != null) {
+
+            // Only deleting images thats path has changed. Disgusting, i know, but it was the best solution now.
+            deleteImagesFromCloud(foundSite.images.filterIndexed { index, s -> site.images[index] != s }.toMutableList())
+
             foundSite.title = site.title
             foundSite.description = site.description
             foundSite.location = site.location
@@ -55,7 +59,6 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
         }
 
         db.child("users").child(userId).child("sites").child(site.id).setValue(site)
-        deleteImagesFromCloud(site.images)
 
         updateImages(site)
     }
