@@ -107,7 +107,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                     }.addOnSuccessListener { taskSnapshot ->
                         taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
                             imagePath = it.toString()
-                            db.child("users").child(userId).child("placemarks").child(site.id)
+                            db.child("users").child(userId).child("sites").child(site.id)
                                 .setValue(site)
                         }
                     }
