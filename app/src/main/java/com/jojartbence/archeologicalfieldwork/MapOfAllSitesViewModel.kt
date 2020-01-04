@@ -21,10 +21,4 @@ class MapOfAllSitesViewModel : ViewModel() {
     fun selectSiteById(id: String) {
         selectedSite.value = SiteRepository.findById(id)
     }
-
-
-    fun getImageOfSelectedSite(context: Context): Bitmap? {
-        return readImageFromPath(context, selectedSite.value?.images?.get(0))
-    }
-
 }

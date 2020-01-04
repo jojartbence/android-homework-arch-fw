@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -214,16 +215,16 @@ class SiteFragment : Fragment() {
         val site = viewModel.site
 
         if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
-            imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))
+            Glide.with(this).load(site.images[0]).into(imageView1)
         }
         if (readImageFromPath(activity!!.applicationContext, site.images[1]) != null) {
-            imageView2.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[1]))
+            Glide.with(this).load(site.images[1]).into(imageView2)
         }
         if (readImageFromPath(activity!!.applicationContext, site.images[2]) != null) {
-            imageView3.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[2]))
+            Glide.with(this).load(site.images[2]).into(imageView3)
         }
         if (readImageFromPath(activity!!.applicationContext, site.images[3]) != null) {
-            imageView4.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[3]))
+            Glide.with(this).load(site.images[3]).into(imageView4)
         }
     }
 

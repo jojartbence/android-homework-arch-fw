@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -76,7 +77,7 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun showSelectedSite() {
         selectedSiteTitle.text = viewModel.selectedSite.value?.title
         selectedSiteDescription.text = viewModel.selectedSite.value?.description
-        selectedSiteImage.setImageBitmap(viewModel.getImageOfSelectedSite(activity!!.applicationContext))
+        Glide.with(this).load(viewModel.selectedSite.value?.images?.get(0)).into(selectedSiteImage)
     }
 
 
