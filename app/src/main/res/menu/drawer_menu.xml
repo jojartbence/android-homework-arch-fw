@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_site"
+            android:icon="@drawable/ic_menu_add"
+            android:title="@string/menu_addSite" />
+        <item
+            android:id="@+id/nav_mapOfAllSites"
+            android:icon="@drawable/ic_menu_map"
+            android:title="@string/menu_mapOfAllSites" />
+        <item
+            android:id="@+id/nav_favouriteSites"
+            android:icon="@drawable/ic_menu_favourites"
+            android:title="@string/menu_favourites" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="@string/menu_settings" />
+
+        <item
+            android:id="@+id/nav_siteList"
+            android:icon="@drawable/ic_menu_site_list"
+            android:title="@string/menu_siteList" />
+    </group>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_menu_logout"
+        android:title="@string/menu_logout" />
+
+</menu>

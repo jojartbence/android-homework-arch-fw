@@ -2,10 +2,11 @@ package com.jojartbence.archeologicalfieldwork
 
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -14,12 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.jojartbence.helpers.checkLocationPermissions
 import com.jojartbence.helpers.readImageFromPath
 import com.jojartbence.model.Location
 import com.jojartbence.model.SiteModel
@@ -255,7 +254,14 @@ class SiteFragment : Fragment() {
     }
 
 
+    private fun hideKeyboard() {
+        val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+    }
+
+
     override fun onDestroyView() {
+        hideKeyboard()
         super.onDestroyView()
         mapView.onDestroy()
     }
@@ -295,5 +301,4 @@ class SiteFragment : Fragment() {
         super.onStop()
         mapView.onStop()
     }
-
 }
