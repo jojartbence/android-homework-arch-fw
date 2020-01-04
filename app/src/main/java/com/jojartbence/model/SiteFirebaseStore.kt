@@ -102,7 +102,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                 val bitmap = readImageFromPath(context, imagePath)
 
                 bitmap?.let {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
                     val data = baos.toByteArray()
                     val uploadTask = imageRef.putBytes(data)
                     uploadTask.addOnFailureListener {
