@@ -125,7 +125,11 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
     private fun deleteImagesFromCloud(images: MutableList<String>) {
         images.filter{it != ""}.forEach {
-            FirebaseStorage.getInstance().getReferenceFromUrl(it).delete()
+            try {
+                FirebaseStorage.getInstance().getReferenceFromUrl(it).delete()
+            } catch (e: Exception) {
+                // TODO: handling delete errors
+            }
         }
     }
 
