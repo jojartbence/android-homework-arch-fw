@@ -1,13 +1,22 @@
 package com.jojartbence.model
 
+import android.content.Context
+import android.graphics.Bitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.jojartbence.helpers.readImageFromPath
+import java.io.ByteArrayOutputStream
+import java.io.File
 
-class SiteFirebaseStore: SiteStoreInterface {
+class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
     val sites = ArrayList<SiteModel>()
     lateinit var userId: String
     val db = FirebaseDatabase.getInstance().reference
+    val st = FirebaseStorage.getInstance().reference
+
 
 
     override fun findAll(): List<SiteModel> {
@@ -26,6 +35,7 @@ class SiteFirebaseStore: SiteStoreInterface {
             site.id = key
             sites.add(site)
             db.child("users").child(userId).child("sites").child(key).setValue(site)
+            updateImages(site)
         }
     }
 
@@ -45,12 +55,15 @@ class SiteFirebaseStore: SiteStoreInterface {
         }
 
         db.child("users").child(userId).child("sites").child(site.id).setValue(site)
+        deleteImagesFromCloud(site.images)
 
+        updateImages(site)
     }
 
 
     override fun delete(site: SiteModel) {
         db.child("users").child(userId).child("sites").child(site.id).removeValue()
+        deleteImagesFromCloud(site.images)
         sites.remove(sites.find { it.id == site.id })
     }
 
@@ -72,6 +85,53 @@ class SiteFirebaseStore: SiteStoreInterface {
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         sites.clear()
         db.child("users").child(userId).child("sites").addListenerForSingleValueEvent(valueEventListener)
+    }
+
+
+    private fun updateImages(site: SiteModel) {
+        // TODO: the code is not so nice, val index should be avoided. Maybe introduce a function instead of this that creates uploads the images and changes path to url in the SiteModel.
+        // TODO: its not good that imagePath is used for two purposes (as a file path and an url). It can cause errors.
+
+        site.images.withIndex().forEach {
+
+            var imagePath = it.value
+            val index = it.index
+
+            if (!(imagePath == "" || imagePath.startsWith("http"))) {
+                val fileName = File(imagePath)
+                val imageName = fileName.name
+
+                var imageRef = st.child(userId + '/' + site.id + '/' + imageName)
+                val baos = ByteArrayOutputStream()
+                val bitmap = readImageFromPath(context, imagePath)
+
+                bitmap?.let {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+                    val data = baos.toByteArray()
+                    val uploadTask = imageRef.putBytes(data)
+                    uploadTask.addOnFailureListener {
+                        println(it.message)
+                    }.addOnSuccessListener { taskSnapshot ->
+                        taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                            site.images[index] = it.toString()
+                            db.child("users").child(userId).child("sites").child(site.id)
+                                .setValue(site)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun deleteImagesFromCloud(images: MutableList<String>) {
+        images.filter{it != ""}.forEach {
+            try {
+                FirebaseStorage.getInstance().getReferenceFromUrl(it).delete()
+            } catch (e: Exception) {
+                // TODO: handling delete errors
+            }
+        }
     }
 
 }

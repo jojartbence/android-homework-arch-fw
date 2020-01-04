@@ -15,11 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.jojartbence.helpers.readImageFromPath
 import com.jojartbence.model.Location
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
@@ -211,20 +211,12 @@ class SiteFragment : Fragment() {
 
 
     private fun showImages() {
-        val site = viewModel.site
+        val images = viewModel.site.images
 
-        if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
-            imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[1]) != null) {
-            imageView2.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[1]))
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[2]) != null) {
-            imageView3.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[2]))
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[3]) != null) {
-            imageView4.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[3]))
-        }
+        Glide.with(this).load(images[0]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView1)
+        Glide.with(this).load(images[1]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView2)
+        Glide.with(this).load(images[2]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView3)
+        Glide.with(this).load(images[3]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView4)
     }
 
 
