@@ -55,17 +55,15 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
         }
 
         db.child("users").child(userId).child("sites").child(site.id).setValue(site)
+        deleteImagesFromCloud(site.images)
+
         updateImages(site)
     }
 
 
     override fun delete(site: SiteModel) {
         db.child("users").child(userId).child("sites").child(site.id).removeValue()
-        site.images.filter{it != ""}.forEach {
-            // TODO: If an image is used at more than one site, firestore detects it, and creates only one image instance in the cloud. This code can cause images of other sites also disappear.
-            FirebaseStorage.getInstance().getReferenceFromUrl(it).delete()
-        }
-
+        deleteImagesFromCloud(site.images)
         sites.remove(sites.find { it.id == site.id })
     }
 
@@ -90,7 +88,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
     }
 
 
-    fun updateImages(site: SiteModel) {
+    private fun updateImages(site: SiteModel) {
         // TODO: the code is not so nice, val index should be avoided. Maybe introduce a function instead of this that creates uploads the images and changes path to url in the SiteModel.
 
         site.images.withIndex().forEach {
@@ -102,7 +100,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                 val fileName = File(imagePath)
                 val imageName = fileName.name
 
-                var imageRef = st.child(userId + '/' + imageName)
+                var imageRef = st.child(userId + '/' + site.id + '/' + imageName)
                 val baos = ByteArrayOutputStream()
                 val bitmap = readImageFromPath(context, imagePath)
 
@@ -121,6 +119,13 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                     }
                 }
             }
+        }
+    }
+
+
+    private fun deleteImagesFromCloud(images: MutableList<String>) {
+        images.filter{it != ""}.forEach {
+            FirebaseStorage.getInstance().getReferenceFromUrl(it).delete()
         }
     }
 
