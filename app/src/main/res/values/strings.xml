@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ArcheologicalFieldwork</string>
+    <string name="app_name">Archeological Fieldwork</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_email">Email</string>
