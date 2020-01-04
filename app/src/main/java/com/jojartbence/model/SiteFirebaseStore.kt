@@ -90,6 +90,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
     private fun updateImages(site: SiteModel) {
         // TODO: the code is not so nice, val index should be avoided. Maybe introduce a function instead of this that creates uploads the images and changes path to url in the SiteModel.
+        // TODO: its not good that imagePath is used for two purposes (as a file path and an url). It can cause errors.
 
         site.images.withIndex().forEach {
 
