@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navController = Navigation.findNavController(this, R.id.fragment)
         setupActionBarWithNavController(navController, appBarConfig)
-        nav_view.setupWithNavController(navController)
+        navView.setupWithNavController(navController)
 
-        nav_view.setNavigationItemSelectedListener(this)
+        navView.setNavigationItemSelectedListener(this)
     }
 
 
