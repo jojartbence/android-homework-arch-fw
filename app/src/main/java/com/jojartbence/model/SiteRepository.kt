@@ -1,13 +1,17 @@
 package com.jojartbence.model
 
-import android.content.Context
 
 object SiteRepository {
-    private lateinit var siteStore: SiteStoreInterface
+    private lateinit var siteStore: SiteFirebaseStore
 
 
-    fun createDatabase(context: Context, userEmail: String) {
-        siteStore = SiteJsonStore(context, userEmail)
+    fun createDatabase() {
+        siteStore = SiteFirebaseStore()
+    }
+
+
+    fun fetchSites(onSitesReady: () -> Unit) {
+        siteStore.fetchSites (onSitesReady)
     }
 
 
@@ -31,7 +35,7 @@ object SiteRepository {
     }
 
 
-    fun findById(id:Long) : SiteModel? {
+    fun findById(id: String) : SiteModel? {
         return siteStore.findById(id)
     }
 

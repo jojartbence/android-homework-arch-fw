@@ -1,26 +1,22 @@
 package com.jojartbence.archeologicalfieldwork
 
-
-import android.content.Context
-import android.os.Bundle
-import android.view.*
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site_list.*
 
-/**
- * A simple [Fragment] subclass.
- */
-class SiteListFragment : Fragment(), SiteListener {
 
-    private val viewModel by lazy { ViewModelProviders.of(this)[SiteListViewModel::class.java] }
+class FavouriteSitesList : Fragment(), SiteListener {
+
+    private val viewModel by lazy { ViewModelProviders.of(this)[FavouriteSitesListViewModel::class.java] }
 
     lateinit var navController: NavController
 
@@ -29,9 +25,7 @@ class SiteListFragment : Fragment(), SiteListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_site_list, container, false)
+        return inflater.inflate(R.layout.favourite_sites_list_fragment, container, false)
     }
 
 
@@ -42,7 +36,7 @@ class SiteListFragment : Fragment(), SiteListener {
         val layoutManager = LinearLayoutManager(activity!!.applicationContext)
         recyclerView.layoutManager = layoutManager
 
-        recyclerView.adapter = SiteAdapter(viewModel.getSites(), this)
+        recyclerView.adapter = SiteAdapter(viewModel.getFavouriteSites(), this)
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
@@ -52,6 +46,7 @@ class SiteListFragment : Fragment(), SiteListener {
             "site" to site.copy(),
             "editSite" to true
         )
-        navController.navigate(R.id.action_siteListFragment_to_siteFragment, bundle)
+        navController.navigate(R.id.action_favouriteSitesList_to_siteFragment, bundle)
     }
+
 }

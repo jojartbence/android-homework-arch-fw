@@ -1,7 +1,6 @@
 package com.jojartbence.archeologicalfieldwork
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,8 +25,8 @@ class LoginViewModel: ViewModel() {
     fun doLogin(email: String, password: String, context: Context) {
 
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-            createDatabase(context)
-            loginResult.value = true
+            SiteRepository.createDatabase()
+            SiteRepository.fetchSites { loginResult.value = true }
         }.addOnFailureListener {
             errorMessage = it.message
             loginResult.value = false
@@ -38,17 +37,14 @@ class LoginViewModel: ViewModel() {
     fun doSignUp(email: String, password: String, context: Context) {
 
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-            createDatabase(context)
-            signupResult.value = true
+            SiteRepository.createDatabase()
+            SiteRepository.fetchSites { loginResult.value = true }
         }.addOnFailureListener {
             errorMessage = it.message
             signupResult.value = false
         }
     }
 
-    fun createDatabase(context: Context) {
-        SiteRepository.createDatabase(context, auth.currentUser?.email ?: "dummy")
-    }
 
     fun closeApp(activity: FragmentActivity?): Boolean {
         activity?.finishAndRemoveTask()

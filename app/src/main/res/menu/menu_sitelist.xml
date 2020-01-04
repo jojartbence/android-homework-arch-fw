@@ -6,6 +6,15 @@
         android:id="@+id/item_add"
         android:title="@string/menu_addSite" />
 
+
+    <item
+        android:id="@+id/item_mapOfAllSites"
+        android:title="@string/menu_mapOfAllSites" />
+
+    <item
+        android:id="@+id/item_favourites"
+        android:title="@string/menu_favourites" />
+
     <item
         android:id="@+id/item_settings"
         android:title="@string/menu_settings" />

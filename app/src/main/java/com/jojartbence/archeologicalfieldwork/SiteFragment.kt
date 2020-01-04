@@ -1,9 +1,12 @@
 package com.jojartbence.archeologicalfieldwork
 
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -13,9 +16,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.readImageFromPath
+import com.jojartbence.model.Location
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
 import java.text.ParseException
@@ -31,6 +36,8 @@ class SiteFragment : Fragment() {
 
     lateinit var navController: NavController
 
+    var googleMap: GoogleMap? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +49,15 @@ class SiteFragment : Fragment() {
         }
 
         viewModel.visitedSwitchState.observe(this, visitedSwitchStateObserver)
+
+
+        val liveLocationObserver = Observer<Location> {
+            setLocationOnMap(it)
+        }
+
+        viewModel.liveLocation.observe(this, liveLocationObserver)
+
+        viewModel.initLocationService(activity as Activity)
     }
 
 
@@ -93,13 +109,11 @@ class SiteFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
+
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
-            it?.clear()
-            it?.uiSettings?.isZoomControlsEnabled = true
-            val options = MarkerOptions().title(viewModel.site.title).position(LatLng(viewModel.site.location.lat, viewModel.site.location.lng))
-            it?.addMarker(options)
-            it?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.site.location.lat, viewModel.site.location.lng), viewModel.site.location.zoom))
+            googleMap = it
+            setLocationOnMap(viewModel.site.location)
             it?.setOnMapClickListener {
                 val bundle = bundleOf("location" to viewModel.site.location)
                 navController.navigate(R.id.action_siteFragment_to_siteEditLocationFragment, bundle)
@@ -108,10 +122,20 @@ class SiteFragment : Fragment() {
     }
 
 
+    fun setLocationOnMap(location: Location) {
+        googleMap?.clear()
+        val newMarker = MarkerOptions().title(viewModel.site.title).position(LatLng(location.lat, location.lng))
+        googleMap?.addMarker(newMarker)
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.lat, location.lng), location.zoom))
+    }
+
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_site, menu)
+
+        setFavouriteIconImage(menu.findItem(R.id.site_markAsFavourite))
     }
 
 
@@ -134,7 +158,8 @@ class SiteFragment : Fragment() {
                             description = siteDescription.text.toString(),
                             visited = visited.isChecked,
                             dateVisitedAsString = dateVisited.text.toString(),
-                            additionalNotes = addtionalNotes.text.toString()
+                            additionalNotes = addtionalNotes.text.toString(),
+                            rating = ratingBar.rating
                         )
 
                         navController.navigateUp()
@@ -144,6 +169,12 @@ class SiteFragment : Fragment() {
                         Toast.makeText( activity, R.string.toast_wrong_date_format, Toast.LENGTH_SHORT).show()
                     }
                 }
+            }
+            R.id.site_markAsFavourite -> {
+                changeIsFavouriteState(item)
+            }
+            R.id.site_shareEmail -> {
+                viewModel.shareSiteInEmail(this)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -166,6 +197,7 @@ class SiteFragment : Fragment() {
             }
         }
         addtionalNotes.setText(site.additionalNotes)
+        ratingBar.rating = site.rating
     }
 
 
@@ -205,7 +237,31 @@ class SiteFragment : Fragment() {
     }
 
 
+    private fun changeIsFavouriteState(item: MenuItem) {
+        when(viewModel.site.isFavourite) {
+            false -> viewModel.site.isFavourite = true
+            true -> viewModel.site.isFavourite = false
+        }
+        setFavouriteIconImage(item)
+    }
+
+
+    private fun setFavouriteIconImage(item: MenuItem) {
+        when(viewModel.site.isFavourite) {
+            true -> item.icon = resources.getDrawable(android.R.drawable.star_big_on, null)
+            false -> item.icon = resources.getDrawable(android.R.drawable.star_big_off, null)
+        }
+    }
+
+
+    private fun hideKeyboard() {
+        val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+    }
+
+
     override fun onDestroyView() {
+        hideKeyboard()
         super.onDestroyView()
         mapView.onDestroy()
     }
@@ -245,5 +301,4 @@ class SiteFragment : Fragment() {
         super.onStop()
         mapView.onStop()
     }
-
 }
