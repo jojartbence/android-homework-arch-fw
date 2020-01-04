@@ -212,20 +212,12 @@ class SiteFragment : Fragment() {
 
 
     private fun showImages() {
-        val site = viewModel.site
+        val images = viewModel.site.images
 
-        if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
-            Glide.with(this).load(site.images[0]).into(imageView1)
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[1]) != null) {
-            Glide.with(this).load(site.images[1]).into(imageView2)
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[2]) != null) {
-            Glide.with(this).load(site.images[2]).into(imageView3)
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[3]) != null) {
-            Glide.with(this).load(site.images[3]).into(imageView4)
-        }
+        Glide.with(this).load(images[0]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView1)
+        Glide.with(this).load(images[1]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView2)
+        Glide.with(this).load(images[2]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView3)
+        Glide.with(this).load(images[3]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView4)
     }
 
 
