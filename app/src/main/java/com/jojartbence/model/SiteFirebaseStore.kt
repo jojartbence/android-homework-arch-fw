@@ -96,7 +96,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
             var imagePath = it.value
             val index = it.index
 
-            if (imagePath != "") {
+            if (!(imagePath == "" || imagePath.startsWith("http"))) {
                 val fileName = File(imagePath)
                 val imageName = fileName.name
 
