@@ -86,9 +86,12 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
 
     fun updateImages(site: SiteModel) {
-        site.images.forEach {
+        // TODO: the code is not so nice, val index should be avoided. Maybe introduce a function instead of this that creates uploads the images and changes path to url in the SiteModel.
 
-            var imagePath = it
+        site.images.withIndex().forEach {
+
+            var imagePath = it.value
+            val index = it.index
 
             if (imagePath != "") {
                 val fileName = File(imagePath)
@@ -96,7 +99,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
                 var imageRef = st.child(userId + '/' + imageName)
                 val baos = ByteArrayOutputStream()
-                val bitmap = readImageFromPath(context, it)
+                val bitmap = readImageFromPath(context, imagePath)
 
                 bitmap?.let {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -106,7 +109,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                         println(it.message)
                     }.addOnSuccessListener { taskSnapshot ->
                         taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                            imagePath = it.toString()
+                            site.images[index] = it.toString()
                             db.child("users").child(userId).child("sites").child(site.id)
                                 .setValue(site)
                         }
