@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.jojartbence.model.SiteModel
 import com.jojartbence.model.SiteRepository
+import java.util.*
 
 
 class SiteListViewModel: ViewModel() {
@@ -16,6 +17,6 @@ class SiteListViewModel: ViewModel() {
 
 
     fun filterSitesByTitle(titlePart: String) {
-        filteredSites.value = SiteRepository.findAll().filter { it.title?.contains(titlePart) ?: false }
+        filteredSites.value = SiteRepository.findAll().filter { it.title?.toLowerCase(Locale.getDefault())?.contains(titlePart.toLowerCase(Locale.getDefault())) ?: false }
     }
 }
