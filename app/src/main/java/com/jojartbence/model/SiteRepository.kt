@@ -1,12 +1,14 @@
 package com.jojartbence.model
 
+import android.content.Context
+
 
 object SiteRepository {
     private lateinit var siteStore: SiteFirebaseStore
 
 
-    fun createDatabase() {
-        siteStore = SiteFirebaseStore()
+    fun createDatabase(context: Context) {
+        siteStore = SiteFirebaseStore(context)
     }
 
 
