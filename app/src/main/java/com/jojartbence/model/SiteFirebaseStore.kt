@@ -61,6 +61,11 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
     override fun delete(site: SiteModel) {
         db.child("users").child(userId).child("sites").child(site.id).removeValue()
+        site.images.filter{it != ""}.forEach {
+            // TODO: If an image is used at more than one site, firestore detects it, and creates only one image instance in the cloud. This code can cause images of other sites also disappear.
+            FirebaseStorage.getInstance().getReferenceFromUrl(it).delete()
+        }
+
         sites.remove(sites.find { it.id == site.id })
     }
 
