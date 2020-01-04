@@ -1,10 +1,7 @@
 package com.jojartbence.archeologicalfieldwork
 
-import android.content.Context
-import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.jojartbence.helpers.readImageFromPath
 import com.jojartbence.model.SiteModel
 import com.jojartbence.model.SiteRepository
 
