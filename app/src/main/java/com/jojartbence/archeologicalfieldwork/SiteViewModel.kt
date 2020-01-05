@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.LocationServices
 import com.jojartbence.helpers.checkLocationPermissions
+import com.jojartbence.helpers.showCameraIntent
 import com.jojartbence.helpers.showImagePicker
 import com.jojartbence.model.*
 import java.text.SimpleDateFormat
@@ -66,7 +67,8 @@ class SiteViewModel: ViewModel() {
 
 
     fun doSelectImage(fragment: Fragment, imageNumber: Int) {
-        showImagePicker(fragment, imageNumber)
+       // showImagePicker(fragment, imageNumber)
+        showCameraIntent(fragment, imageNumber)
     }
 
 
