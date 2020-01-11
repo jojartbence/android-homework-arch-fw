@@ -4,16 +4,16 @@ import android.content.Context
 
 
 object SiteRepository {
-    private lateinit var siteStore: SiteFirebaseStore
+    private lateinit var siteStore: SiteStoreInterface
 
 
-    fun createDatabase(context: Context) {
+    fun createDatabase(context: Context, userEmail: String) {
         siteStore = SiteFirebaseStore(context)
     }
 
 
     fun fetchSites(onSitesReady: () -> Unit) {
-        siteStore.fetchSites (onSitesReady)
+        (siteStore as? SiteFirebaseStore)?.fetchSites(onSitesReady)
     }
 
 
