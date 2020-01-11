@@ -5,7 +5,7 @@ import android.content.Context
 
 object SiteRepository {
     private lateinit var siteStore: SiteStoreInterface
-    private var backupSiteStore: SiteStoreInterface? = null
+    private var backupSiteStore: SiteBackupStoreInterface? = null
 
 
     fun createDatabase(context: Context, userEmail: String) {

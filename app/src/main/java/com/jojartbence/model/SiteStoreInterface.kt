@@ -9,11 +9,8 @@ interface SiteStoreInterface {
     fun findById(id: String): SiteModel?
     fun clear()
     fun fetchSites(onSitesReady: () -> Unit)
-}
 
-
-interface SiteBackupStoreInterface: SiteStoreInterface {
-    fun initBackupStore(primaryStore: SiteStoreInterface) {
+    fun initAsBackupStore(primaryStore: SiteStoreInterface) {
         primaryStore.findAll().forEach {
             when (findById(it.id)) {
                 is SiteModel -> update(it)
