@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.jojartbence.helpers.readImageFromPath
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -14,9 +13,13 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
     val sites = ArrayList<SiteModel>()
     lateinit var userId: String
-    val db = FirebaseDatabase.getInstance().reference
-    val st = FirebaseStorage.getInstance().reference
+    private val database = FirebaseDatabase.getInstance()
+    private val imageStore = FirebaseStorage.getInstance()
 
+
+    init {
+        database.setPersistenceEnabled(true)
+    }
 
 
     override fun findAll(): List<SiteModel> {
@@ -30,11 +33,11 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
 
     override fun create(site: SiteModel) {
-        val key = db.child("users").child(userId).child("sites").push().key
+        val key = database.reference.child("users").child(userId).child("sites").push().key
         key?.let {
             site.id = key
             sites.add(site)
-            db.child("users").child(userId).child("sites").child(key).setValue(site)
+            database.reference.child("users").child(userId).child("sites").child(key).setValue(site)
             updateImages(site)
         }
     }
@@ -58,14 +61,14 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
             foundSite.rating = site.rating
         }
 
-        db.child("users").child(userId).child("sites").child(site.id).setValue(site)
+        database.reference.child("users").child(userId).child("sites").child(site.id).setValue(site)
 
         updateImages(site)
     }
 
 
     override fun delete(site: SiteModel) {
-        db.child("users").child(userId).child("sites").child(site.id).removeValue()
+        database.reference.child("users").child(userId).child("sites").child(site.id).removeValue()
         deleteImagesFromCloud(site.imageContainerList)
         sites.remove(sites.find { it.id == site.id })
     }
@@ -87,7 +90,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
         }
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         sites.clear()
-        db.child("users").child(userId).child("sites").addListenerForSingleValueEvent(valueEventListener)
+        database.reference.child("users").child(userId).child("sites").addListenerForSingleValueEvent(valueEventListener)
     }
 
 
@@ -101,7 +104,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                 val fileName = File(container.memoryPath)
                 val imageName = fileName.name
 
-                var imageRef = st.child(userId + '/' + site.id + '/' + imageName)
+                var imageRef = imageStore.reference.child(userId + '/' + site.id + '/' + imageName)
                 val baos = ByteArrayOutputStream()
                 val bitmap = readImageFromPath(context, container.memoryPath)
 
@@ -114,7 +117,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                     }.addOnSuccessListener { taskSnapshot ->
                         taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
                             container.url = it.toString()
-                            db.child("users").child(userId).child("sites").child(site.id)
+                            database.reference.child("users").child(userId).child("sites").child(site.id)
                                 .setValue(site)
                             container.updateNeeded = false
                         }
