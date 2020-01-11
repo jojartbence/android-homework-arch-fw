@@ -42,6 +42,11 @@ class SiteListFragment : Fragment(), SiteListener, SearchView.OnQueryTextListene
         return inflater.inflate(R.layout.fragment_site_list, container, false)
     }
 
+    /* TODO: after updating the first image of a site, the old image will appear in the site list.
+             Reason: upload images to firebase store (and the updating URL) is slower than
+             loading images via the adapter.
+     */
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
