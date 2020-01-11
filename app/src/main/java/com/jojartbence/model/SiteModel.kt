@@ -35,7 +35,7 @@ data class SiteModel (
 
 
     fun copy(): SiteModel {
-        return SiteModel(id, title, description, location.copy(), imageContainerList.toMutableList(), visited, dateVisited, additionalNotes, isFavourite, rating)
+        return SiteModel(id, title, description, location.copy(), imageContainerList.map {it.copy()}, visited, dateVisited, additionalNotes, isFavourite, rating)
     }
 
     fun toEmailText(): String {
