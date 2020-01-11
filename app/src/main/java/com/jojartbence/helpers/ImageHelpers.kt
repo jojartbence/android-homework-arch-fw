@@ -10,19 +10,19 @@ import androidx.fragment.app.Fragment
 import com.jojartbence.archeologicalfieldwork.R
 
 
-fun showImagePicker(parent: Fragment, id: Int) {
+fun showImagePicker(parent: Fragment, requestId: Int) {
     val intent = Intent()
     intent.type = "image/*"
     intent.action = Intent.ACTION_OPEN_DOCUMENT
     intent.addCategory(Intent.CATEGORY_OPENABLE)
     val chooser = Intent.createChooser(intent, R.string.image_picker_select_image.toString())
-    parent.startActivityForResult(chooser, id)
+    parent.startActivityForResult(chooser, requestId)
 }
 
 
-fun showCameraIntent(parent: Fragment, id: Int) {
+fun showCameraIntent(parent: Fragment, requestId: Int) {
     val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    parent.startActivityForResult(cameraIntent, id)
+    parent.startActivityForResult(cameraIntent, requestId)
 }
 
 

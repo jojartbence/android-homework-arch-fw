@@ -24,6 +24,10 @@ class SiteViewModel: ViewModel() {
     val image3RequestId = 3
     val image4RequestId = 4
 
+    val cameraRequestId = 10
+
+    val notInUseRequestId = 666
+
     var editSite: Boolean = false
     lateinit var site: SiteModel
 
@@ -66,9 +70,21 @@ class SiteViewModel: ViewModel() {
     }
 
 
-    fun doSelectImage(fragment: Fragment, imageNumber: Int) {
-       // showImagePicker(fragment, imageNumber)
-        showCameraIntent(fragment, imageNumber)
+    fun doSelectImageFromGallery(fragment: Fragment, imageNumber: Int) {
+        val requestId = when (imageNumber) {
+            1 -> image1RequestId
+            2 -> image2RequestId
+            3 -> image3RequestId
+            4 -> image4RequestId
+            else -> notInUseRequestId
+        }
+
+        showImagePicker(fragment, requestId)
+    }
+
+
+    fun doCaptureImageByCamera(fragment: Fragment) {
+        showCameraIntent(fragment, cameraRequestId)
     }
 
 

@@ -98,10 +98,10 @@ class SiteFragment : Fragment() {
             (activity as AppCompatActivity?)?.supportActionBar?.title = "New site"
         }
 
-        imageView1.setOnClickListener { viewModel.doSelectImage(this, viewModel.image1RequestId) }
-        imageView2.setOnClickListener { viewModel.doSelectImage(this, viewModel.image2RequestId) }
-        imageView3.setOnClickListener { viewModel.doSelectImage(this, viewModel.image3RequestId) }
-        imageView4.setOnClickListener { viewModel.doSelectImage(this, viewModel.image4RequestId) }
+        imageView1.setOnClickListener { viewModel.doSelectImageFromGallery(this, viewModel.image1RequestId) }
+        imageView2.setOnClickListener { viewModel.doSelectImageFromGallery(this, viewModel.image2RequestId) }
+        imageView3.setOnClickListener { viewModel.doSelectImageFromGallery(this, viewModel.image3RequestId) }
+        imageView4.setOnClickListener { viewModel.doSelectImageFromGallery(this, viewModel.image4RequestId) }
 
         visited.setOnClickListener {
             viewModel.visitedSwitchState.value = visited.isChecked
