@@ -16,11 +16,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jojartbence.helpers.showImageUsingGlide
 import com.jojartbence.model.Location
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
@@ -222,15 +222,8 @@ class SiteFragment : Fragment() {
 
 
     private fun showImage(container: SiteModel.ImageContainer, view: ImageView) {
-        val path = when (container.updateNeeded) {
-            true -> container.memoryPath
-            false -> container.url
-        }
 
-        Glide.with(this)
-            .load(path)
-            .error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme))
-            .into(view)
+        showImageUsingGlide(activity!!.applicationContext, container, view, resources.getDrawable(R.drawable.ic_add_photo, context?.theme))
     }
 
 

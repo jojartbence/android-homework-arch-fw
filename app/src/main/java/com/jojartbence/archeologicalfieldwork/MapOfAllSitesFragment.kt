@@ -9,15 +9,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jojartbence.helpers.showImageUsingGlide
 import com.jojartbence.model.SiteModel
-import kotlinx.android.synthetic.main.fragment_site.*
-import kotlinx.android.synthetic.main.fragment_site.siteTitle
 import kotlinx.android.synthetic.main.map_of_all_sites_fragment.*
 
 
@@ -77,7 +75,7 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun showSelectedSite() {
         selectedSiteTitle.text = viewModel.selectedSite.value?.title
         selectedSiteDescription.text = viewModel.selectedSite.value?.description
-        Glide.with(this).load(viewModel.selectedSite.value?.imageContainerList?.get(0)?.url).into(selectedSiteImage)
+        showImageUsingGlide(activity!!.applicationContext, viewModel.selectedSite.value?.imageContainerList?.get(0), selectedSiteImage)
     }
 
 
