@@ -11,7 +11,7 @@ data class SiteModel (
     var title: String? = null,
     var description: String? = null,
     var location: Location = Location(),
-    var images: MutableList<String> = mutableListOf("", "", "", ""),
+    var imageContainerList: List<ImageContainer> = listOf(ImageContainer(), ImageContainer(), ImageContainer(), ImageContainer()),
     var visited: Boolean = false,
     var dateVisited: Date? = null,
     var additionalNotes: String? = null,
@@ -19,14 +19,23 @@ data class SiteModel (
     var rating: Float = 5.0f
 ): Parcelable {
 
+    @Parcelize
+    data class ImageContainer (
+        var memoryPath: String? = null,
+        var url: String? = null,
+        var updateNeeded: Boolean = false
+    ): Parcelable
+
+
     // TODO: use Calendar instead of deprecated Date
     companion object {
         val defaultDateInCaseOfError: Date = Date(100, 1, 1)
         const val defaultDateInCaseOfErrorAsString: String = "2000.01.01"
     }
 
+
     fun copy(): SiteModel {
-        return SiteModel(id, title, description, location.copy(), images.toMutableList(), visited, dateVisited, additionalNotes, isFavourite, rating)
+        return SiteModel(id, title, description, location.copy(), imageContainerList.toMutableList(), visited, dateVisited, additionalNotes, isFavourite, rating)
     }
 
     fun toEmailText(): String {

@@ -38,7 +38,7 @@ class SiteAdapter constructor(private var sites: List<SiteModel>,
         fun bind(site: SiteModel, listener: SiteListener) {
             itemView.siteTitle.text = site.title
             itemView.description.text = site.description
-            Glide.with(itemView.context).load(site.images[0]).into(itemView.imageIcon)
+            Glide.with(itemView.context).load(site.imageContainerList[0].url ?: site.imageContainerList[0].memoryPath).into(itemView.imageIcon)
             itemView.location.text = "Lat: %.6f - Lng: %.6f".format(site.location.lat, site.location.lng)
             itemView.visited.isChecked = site.visited
             itemView.setOnClickListener { listener.onSiteClick(site) }

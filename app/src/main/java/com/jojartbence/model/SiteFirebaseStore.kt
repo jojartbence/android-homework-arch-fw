@@ -44,13 +44,13 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
         var foundSite: SiteModel? = sites.find { p -> p.id == site.id }
         if (foundSite != null) {
 
-            // Only deleting images thats path has changed. Disgusting, i know, but it was the best solution now.
-            deleteImagesFromCloud(foundSite.images.filterIndexed { index, s -> site.images[index] != s }.toMutableList())
+            // Only deleting images thats path has changed.
+            deleteImagesFromCloud(foundSite.imageContainerList.filter {it.updateNeeded})
 
             foundSite.title = site.title
             foundSite.description = site.description
             foundSite.location = site.location
-            foundSite.images = site.images.toMutableList()
+            foundSite.imageContainerList = site.imageContainerList.toList()
             foundSite.visited = site.visited
             foundSite.dateVisited = site.dateVisited
             foundSite.additionalNotes = site.additionalNotes
@@ -66,7 +66,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
     override fun delete(site: SiteModel) {
         db.child("users").child(userId).child("sites").child(site.id).removeValue()
-        deleteImagesFromCloud(site.images)
+        deleteImagesFromCloud(site.imageContainerList)
         sites.remove(sites.find { it.id == site.id })
     }
 
@@ -92,21 +92,18 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
 
     private fun updateImages(site: SiteModel) {
-        // TODO: the code is not so nice, val index should be avoided. Maybe introduce a function instead of this that creates uploads the images and changes path to url in the SiteModel.
-        // TODO: its not good that imagePath is used for two purposes (as a file path and an url). It can cause errors.
 
-        site.images.withIndex().forEach {
+        site.imageContainerList.forEach {
 
-            var imagePath = it.value
-            val index = it.index
+            var container = it
 
-            if (!(imagePath == "" || imagePath.startsWith("http"))) {
-                val fileName = File(imagePath)
+            if (container.updateNeeded) {
+                val fileName = File(container.memoryPath)
                 val imageName = fileName.name
 
                 var imageRef = st.child(userId + '/' + site.id + '/' + imageName)
                 val baos = ByteArrayOutputStream()
-                val bitmap = readImageFromPath(context, imagePath)
+                val bitmap = readImageFromPath(context, container.memoryPath)
 
                 bitmap?.let {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
@@ -116,9 +113,10 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                         println(it.message)
                     }.addOnSuccessListener { taskSnapshot ->
                         taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                            site.images[index] = it.toString()
+                            container.url = it.toString()
                             db.child("users").child(userId).child("sites").child(site.id)
                                 .setValue(site)
+                            container.updateNeeded = false
                         }
                     }
                 }
@@ -127,8 +125,8 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
     }
 
 
-    private fun deleteImagesFromCloud(images: MutableList<String>) {
-        images.filter{it != ""}.forEach {
+    private fun deleteImagesFromCloud(images: List<SiteModel.ImageContainer>) {
+        images.mapNotNull {imageContainer -> imageContainer.url}.filter { it.startsWith("http") }.forEach {
             try {
                 FirebaseStorage.getInstance().getReferenceFromUrl(it).delete()
             } catch (e: Exception) {

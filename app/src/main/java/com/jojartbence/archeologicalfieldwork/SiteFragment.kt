@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -211,12 +212,25 @@ class SiteFragment : Fragment() {
 
 
     private fun showImages() {
-        val images = viewModel.site.images
+        val imageContainerList = viewModel.site.imageContainerList
 
-        Glide.with(this).load(images[0]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView1)
-        Glide.with(this).load(images[1]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView2)
-        Glide.with(this).load(images[2]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView3)
-        Glide.with(this).load(images[3]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView4)
+        showImage(imageContainerList[0], imageView1)
+        showImage(imageContainerList[1], imageView2)
+        showImage(imageContainerList[2], imageView3)
+        showImage(imageContainerList[3], imageView4)
+    }
+
+
+    private fun showImage(container: SiteModel.ImageContainer, view: ImageView) {
+        val path = when (container.updateNeeded) {
+            true -> container.memoryPath
+            false -> container.url
+        }
+
+        Glide.with(this)
+            .load(path)
+            .error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme))
+            .into(view)
     }
 
 

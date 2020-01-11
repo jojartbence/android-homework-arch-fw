@@ -77,7 +77,7 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun showSelectedSite() {
         selectedSiteTitle.text = viewModel.selectedSite.value?.title
         selectedSiteDescription.text = viewModel.selectedSite.value?.description
-        Glide.with(this).load(viewModel.selectedSite.value?.images?.get(0)).into(selectedSiteImage)
+        Glide.with(this).load(viewModel.selectedSite.value?.imageContainerList?.get(0)?.url).into(selectedSiteImage)
     }
 
 
