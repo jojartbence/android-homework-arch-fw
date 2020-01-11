@@ -54,22 +54,15 @@ class LoginViewModel: ViewModel() {
 
 
     private fun handleAuthenticationFailure(context: Context, email: String, it: Exception) {
-        when (isGooglePlayServicesAvailable(context)) {
-            true -> {
+        when (it.message?.contains("internal")) {
+            false -> {
                 errorMessage = it.message
                 loginResult.value = false
             }
-            false -> {
+            true -> {
                 SiteRepository.createDatabaseUsingBackup(context, email)
                 SiteRepository.fetchSites { loginResult.value = true }
             }
         }
-    }
-
-
-    private fun isGooglePlayServicesAvailable(context: Context): Boolean {
-        val googleApiAvailability = GoogleApiAvailability.getInstance()
-        val resultCode = googleApiAvailability.isGooglePlayServicesAvailable(context)
-        return resultCode == ConnectionResult.SUCCESS
     }
 }
