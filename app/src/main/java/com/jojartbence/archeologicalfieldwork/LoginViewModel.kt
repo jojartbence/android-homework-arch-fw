@@ -25,7 +25,7 @@ class LoginViewModel: ViewModel() {
     fun doLogin(email: String, password: String, context: Context) {
 
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-            SiteRepository.createDatabase(context)
+            SiteRepository.createDatabase(context, email)
             SiteRepository.fetchSites { loginResult.value = true }
         }.addOnFailureListener {
             errorMessage = it.message
@@ -37,7 +37,7 @@ class LoginViewModel: ViewModel() {
     fun doSignUp(email: String, password: String, context: Context) {
 
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-            SiteRepository.createDatabase(context)
+            SiteRepository.createDatabase(context, email)
             SiteRepository.fetchSites { loginResult.value = true }
         }.addOnFailureListener {
             errorMessage = it.message
