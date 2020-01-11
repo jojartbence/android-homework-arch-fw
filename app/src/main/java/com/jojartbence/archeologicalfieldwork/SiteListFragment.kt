@@ -1,12 +1,9 @@
 package com.jojartbence.archeologicalfieldwork
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
@@ -41,6 +38,11 @@ class SiteListFragment : Fragment(), SiteListener, SearchView.OnQueryTextListene
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_site_list, container, false)
     }
+
+    /* TODO: after updating the first image of a site, the old image will appear in the site list.
+             Reason: upload images to firebase store (and the updating URL) is slower than
+             loading images via the adapter.
+     */
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

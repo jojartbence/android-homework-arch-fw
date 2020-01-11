@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -15,11 +16,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jojartbence.helpers.showImageUsingGlide
 import com.jojartbence.model.Location
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
@@ -211,12 +212,18 @@ class SiteFragment : Fragment() {
 
 
     private fun showImages() {
-        val images = viewModel.site.images
+        val imageContainerList = viewModel.site.imageContainerList
 
-        Glide.with(this).load(images[0]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView1)
-        Glide.with(this).load(images[1]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView2)
-        Glide.with(this).load(images[2]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView3)
-        Glide.with(this).load(images[3]).error(resources.getDrawable(R.drawable.ic_add_photo, context?.theme)).into(imageView4)
+        showImage(imageContainerList[0], imageView1)
+        showImage(imageContainerList[1], imageView2)
+        showImage(imageContainerList[2], imageView3)
+        showImage(imageContainerList[3], imageView4)
+    }
+
+
+    private fun showImage(container: SiteModel.ImageContainer, view: ImageView) {
+
+        showImageUsingGlide(activity!!.applicationContext, container, view, resources.getDrawable(R.drawable.ic_add_photo, context?.theme))
     }
 
 

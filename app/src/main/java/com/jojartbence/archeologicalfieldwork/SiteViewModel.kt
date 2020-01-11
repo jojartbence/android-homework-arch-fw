@@ -71,12 +71,16 @@ class SiteViewModel: ViewModel() {
 
 
     fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        when (requestCode) {
-            image1RequestId -> site.images[0] = data.data.toString()
-            image2RequestId -> site.images[1] = data.data.toString()
-            image3RequestId -> site.images[2] = data.data.toString()
-            image4RequestId -> site.images[3] = data.data.toString()
+        val chosenImageContainer: SiteModel.ImageContainer = when (requestCode) {
+            image1RequestId -> site.imageContainerList[0]
+            image2RequestId -> site.imageContainerList[1]
+            image3RequestId -> site.imageContainerList[2]
+            image4RequestId -> site.imageContainerList[3]
+            else -> SiteModel.ImageContainer()
         }
+
+        chosenImageContainer.memoryPath = data.data.toString()
+        chosenImageContainer.updateNeeded = true
     }
 
 

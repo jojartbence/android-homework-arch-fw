@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.jojartbence.helpers.readImageFromPath
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -14,9 +13,13 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
     val sites = ArrayList<SiteModel>()
     lateinit var userId: String
-    val db = FirebaseDatabase.getInstance().reference
-    val st = FirebaseStorage.getInstance().reference
+    private val database = FirebaseDatabase.getInstance()
+    private val imageStore = FirebaseStorage.getInstance()
 
+
+    init {
+        database.setPersistenceEnabled(true)
+    }
 
 
     override fun findAll(): List<SiteModel> {
@@ -30,11 +33,11 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
 
     override fun create(site: SiteModel) {
-        val key = db.child("users").child(userId).child("sites").push().key
+        val key = database.reference.child("users").child(userId).child("sites").push().key
         key?.let {
             site.id = key
             sites.add(site)
-            db.child("users").child(userId).child("sites").child(key).setValue(site)
+            database.reference.child("users").child(userId).child("sites").child(key).setValue(site)
             updateImages(site)
         }
     }
@@ -44,13 +47,13 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
         var foundSite: SiteModel? = sites.find { p -> p.id == site.id }
         if (foundSite != null) {
 
-            // Only deleting images thats path has changed. Disgusting, i know, but it was the best solution now.
-            deleteImagesFromCloud(foundSite.images.filterIndexed { index, s -> site.images[index] != s }.toMutableList())
+            // Only deleting images thats path has changed.
+            deleteImagesFromCloud(foundSite.imageContainerList.filter {it.updateNeeded})
 
             foundSite.title = site.title
             foundSite.description = site.description
             foundSite.location = site.location
-            foundSite.images = site.images.toMutableList()
+            foundSite.imageContainerList = site.imageContainerList.map {it.copy()}
             foundSite.visited = site.visited
             foundSite.dateVisited = site.dateVisited
             foundSite.additionalNotes = site.additionalNotes
@@ -58,15 +61,15 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
             foundSite.rating = site.rating
         }
 
-        db.child("users").child(userId).child("sites").child(site.id).setValue(site)
+        database.reference.child("users").child(userId).child("sites").child(site.id).setValue(site)
 
         updateImages(site)
     }
 
 
     override fun delete(site: SiteModel) {
-        db.child("users").child(userId).child("sites").child(site.id).removeValue()
-        deleteImagesFromCloud(site.images)
+        database.reference.child("users").child(userId).child("sites").child(site.id).removeValue()
+        deleteImagesFromCloud(site.imageContainerList)
         sites.remove(sites.find { it.id == site.id })
     }
 
@@ -76,7 +79,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
     }
 
 
-    fun fetchSites(onSitesReady: () -> Unit) {
+    override fun fetchSites(onSitesReady: () -> Unit) {
         val valueEventListener = object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
@@ -87,26 +90,23 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
         }
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         sites.clear()
-        db.child("users").child(userId).child("sites").addListenerForSingleValueEvent(valueEventListener)
+        database.reference.child("users").child(userId).child("sites").addListenerForSingleValueEvent(valueEventListener)
     }
 
 
     private fun updateImages(site: SiteModel) {
-        // TODO: the code is not so nice, val index should be avoided. Maybe introduce a function instead of this that creates uploads the images and changes path to url in the SiteModel.
-        // TODO: its not good that imagePath is used for two purposes (as a file path and an url). It can cause errors.
 
-        site.images.withIndex().forEach {
+        site.imageContainerList.forEach {
 
-            var imagePath = it.value
-            val index = it.index
+            var container = it
 
-            if (!(imagePath == "" || imagePath.startsWith("http"))) {
-                val fileName = File(imagePath)
+            if (container.updateNeeded) {
+                val fileName = File(container.memoryPath)
                 val imageName = fileName.name
 
-                var imageRef = st.child(userId + '/' + site.id + '/' + imageName)
+                var imageRef = imageStore.reference.child(userId + '/' + site.id + '/' + imageName)
                 val baos = ByteArrayOutputStream()
-                val bitmap = readImageFromPath(context, imagePath)
+                val bitmap = readImageFromPath(context, container.memoryPath)
 
                 bitmap?.let {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
@@ -116,9 +116,10 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                         println(it.message)
                     }.addOnSuccessListener { taskSnapshot ->
                         taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                            site.images[index] = it.toString()
-                            db.child("users").child(userId).child("sites").child(site.id)
+                            container.url = it.toString()
+                            database.reference.child("users").child(userId).child("sites").child(site.id)
                                 .setValue(site)
+                            container.updateNeeded = false
                         }
                     }
                 }
@@ -127,8 +128,8 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
     }
 
 
-    private fun deleteImagesFromCloud(images: MutableList<String>) {
-        images.filter{it != ""}.forEach {
+    private fun deleteImagesFromCloud(images: List<SiteModel.ImageContainer>) {
+        images.mapNotNull {imageContainer -> imageContainer.url}.filter { it.startsWith("http") }.forEach {
             try {
                 FirebaseStorage.getInstance().getReferenceFromUrl(it).delete()
             } catch (e: Exception) {
