@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.auth.FirebaseAuth
 import com.jojartbence.model.SiteRepository
+
 
 class LoginViewModel: ViewModel() {
 
@@ -28,8 +31,7 @@ class LoginViewModel: ViewModel() {
             SiteRepository.createDatabase(context, email)
             SiteRepository.fetchSites { loginResult.value = true }
         }.addOnFailureListener {
-            errorMessage = it.message
-            loginResult.value = false
+            handleAuthenticationFailure(context, email, it)
         }
     }
 
@@ -40,8 +42,7 @@ class LoginViewModel: ViewModel() {
             SiteRepository.createDatabase(context, email)
             SiteRepository.fetchSites { loginResult.value = true }
         }.addOnFailureListener {
-            errorMessage = it.message
-            signupResult.value = false
+            handleAuthenticationFailure(context, email, it)
         }
     }
 
@@ -51,4 +52,24 @@ class LoginViewModel: ViewModel() {
         return true
     }
 
+
+    private fun handleAuthenticationFailure(context: Context, email: String, it: Exception) {
+        when (isGooglePlayServicesAvailable(context)) {
+            true -> {
+                errorMessage = it.message
+                loginResult.value = false
+            }
+            false -> {
+                SiteRepository.createDatabaseUsingBackup(context, email)
+                SiteRepository.fetchSites { loginResult.value = true }
+            }
+        }
+    }
+
+
+    private fun isGooglePlayServicesAvailable(context: Context): Boolean {
+        val googleApiAvailability = GoogleApiAvailability.getInstance()
+        val resultCode = googleApiAvailability.isGooglePlayServicesAvailable(context)
+        return resultCode == ConnectionResult.SUCCESS
+    }
 }

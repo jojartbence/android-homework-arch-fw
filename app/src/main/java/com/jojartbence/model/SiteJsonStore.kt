@@ -98,5 +98,6 @@ class SiteJsonStore: SiteStoreInterface {
         if (exists(context, jsonFileName)) {
             deserialize()
         }
+        onSitesReady()
     }
 }
