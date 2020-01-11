@@ -79,7 +79,7 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
     }
 
 
-    fun fetchSites(onSitesReady: () -> Unit) {
+    override fun fetchSites(onSitesReady: () -> Unit) {
         val valueEventListener = object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }

@@ -5,15 +5,17 @@ import android.content.Context
 
 object SiteRepository {
     private lateinit var siteStore: SiteStoreInterface
+    private var backupSiteStore: SiteStoreInterface? = null
 
 
     fun createDatabase(context: Context, userEmail: String) {
         siteStore = SiteFirebaseStore(context)
+        backupSiteStore = SiteJsonStore(context, userEmail)
     }
 
 
     fun fetchSites(onSitesReady: () -> Unit) {
-        (siteStore as? SiteFirebaseStore)?.fetchSites(onSitesReady)
+        siteStore.fetchSites(onSitesReady)
     }
 
 
@@ -23,7 +25,7 @@ object SiteRepository {
 
 
     fun create(site: SiteModel) {
-        return siteStore.create(site)
+        siteStore.create(site)
     }
 
 
@@ -44,5 +46,12 @@ object SiteRepository {
 
     fun clear() {
         siteStore.clear()
+    }
+
+
+    private fun initBackupStore() {
+        siteStore.findAll().forEach {
+            if (backupSiteStore.findById(it.id) != null)
+        }
     }
 }

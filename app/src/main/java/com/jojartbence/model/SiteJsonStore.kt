@@ -25,18 +25,17 @@ class SiteJsonStore: SiteStoreInterface {
 
     var jsonFileName: String
 
+
     constructor (context: Context, userEmail: String) {
         this.context = context
         jsonFileName = userEmail + JSON_FILE_BASE
-
-        if (exists(context, jsonFileName)) {
-            deserialize()
-        }
     }
+
 
     override fun findAll(): MutableList<SiteModel> {
         return sites
     }
+
 
     override fun create(site: SiteModel) {
         site.id = generateRandomId().toString()
@@ -62,10 +61,12 @@ class SiteJsonStore: SiteStoreInterface {
         }
     }
 
+
     override fun delete(site: SiteModel) {
         sites.remove(sites.find { it.id == site.id })
         serialize()
     }
+
 
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(sites,
@@ -74,6 +75,7 @@ class SiteJsonStore: SiteStoreInterface {
         write(context, jsonFileName, jsonString)
     }
 
+
     private fun deserialize() {
         val jsonString = read(context, jsonFileName)
         sites = Gson().fromJson(jsonString,
@@ -81,12 +83,20 @@ class SiteJsonStore: SiteStoreInterface {
         )
     }
 
+
     override fun findById (id: String): SiteModel? {
         return sites.find { it.id == id }
     }
+
 
     override fun clear() {
         sites.clear()
     }
 
+
+    override fun fetchSites(onSitesReady: () -> Unit) {
+        if (exists(context, jsonFileName)) {
+            deserialize()
+        }
+    }
 }
