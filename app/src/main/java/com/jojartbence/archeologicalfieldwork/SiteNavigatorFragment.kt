@@ -62,6 +62,13 @@ class SiteNavigatorFragment : Fragment() {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             it.uiSettings.isZoomControlsEnabled = true
+
+            val markerOptions = MarkerOptions()
+            markerOptions.title("Site")
+            markerOptions.draggable(false)
+            markerOptions.position(viewModel.siteLocation.getLatLng())
+            it.addMarker(markerOptions)
+
             it.moveCamera(CameraUpdateFactory.newLatLngZoom(viewModel.siteLocation.getLatLng(), viewModel.siteLocation.zoom))
             it.isMyLocationEnabled = true
             googleMap = it
