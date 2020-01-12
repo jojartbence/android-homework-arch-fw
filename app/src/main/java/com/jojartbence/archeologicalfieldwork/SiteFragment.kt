@@ -177,6 +177,12 @@ class SiteFragment : Fragment() {
             R.id.site_shareEmail -> {
                 viewModel.shareSiteInEmail(this)
             }
+
+            R.id.site_goToNavigator -> {
+                val bundle = bundleOf("location" to viewModel.site.location.copy(),
+                    "siteTitle" to viewModel.site.title)
+                navController.navigate(R.id.action_nav_site_to_siteNavigatorFragment, bundle)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
