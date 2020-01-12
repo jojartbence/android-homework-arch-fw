@@ -68,6 +68,8 @@ class SiteNavigatorFragment : Fragment() {
             markerOptions.draggable(false)
             markerOptions.position(viewModel.siteLocation.getLatLng())
             it.addMarker(markerOptions)
+            siteLat.text = "Lat: %.6f".format(viewModel.siteLocation.lat)
+            siteLng.text = "Lat: %.6f".format(viewModel.siteLocation.lng)
 
             it.moveCamera(CameraUpdateFactory.newLatLngZoom(viewModel.siteLocation.getLatLng(), viewModel.siteLocation.zoom))
             it.isMyLocationEnabled = true
@@ -88,8 +90,8 @@ class SiteNavigatorFragment : Fragment() {
         liveLocationMarker = googleMap?.addMarker(markerOptions)
         googleMap?.moveCamera(CameraUpdateFactory.newLatLng(position))
 
-        lat.text = "Lat: %.6f".format(position.latitude)
-        lng.text = "Lng: %.6f".format(position.longitude)
+        yourLat.text = "Lat: %.6f".format(position.latitude)
+        yourLng.text = "Lng: %.6f".format(position.longitude)
     }
 
 
