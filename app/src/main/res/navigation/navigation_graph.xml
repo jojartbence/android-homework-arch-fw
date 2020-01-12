@@ -69,6 +69,11 @@
             app:destination="@id/siteEditLocationFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_nav_site_to_siteNavigatorFragment"
+            app:destination="@id/siteNavigatorFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/siteEditLocationFragment"
@@ -94,5 +99,14 @@
             app:destination="@id/nav_site"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/siteNavigatorFragment"
+        android:name="com.jojartbence.archeologicalfieldwork.SiteNavigatorFragment"
+        android:label="site_navigator_fragment"
+        tools:layout="@layout/site_navigator_fragment" >
+        <argument
+            android:name="location"
+            app:argType="com.jojartbence.model.Location" />
     </fragment>
 </navigation>
