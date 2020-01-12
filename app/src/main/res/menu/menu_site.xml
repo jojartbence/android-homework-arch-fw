@@ -17,7 +17,13 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/site_goToNavigator"
+        android:title="@string/site_goToNavigator"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/site_shareEmail"
         android:title="@string/site_shareEmail"
         app:showAsAction="never" />
+
 </menu>
