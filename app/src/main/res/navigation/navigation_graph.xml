@@ -103,7 +103,6 @@
     <fragment
         android:id="@+id/siteNavigatorFragment"
         android:name="com.jojartbence.archeologicalfieldwork.SiteNavigatorFragment"
-        android:label="site_navigator_fragment"
         tools:layout="@layout/site_navigator_fragment" >
         <argument
             android:name="location"
