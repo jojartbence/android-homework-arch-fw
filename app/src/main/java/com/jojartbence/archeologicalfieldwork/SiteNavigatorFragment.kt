@@ -12,14 +12,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jojartbence.helpers.bitmapDescriptorFromVector
 import com.jojartbence.model.Location
-import kotlinx.android.synthetic.main.fragment_site.*
-import kotlinx.android.synthetic.main.fragment_site.mapView
-import kotlinx.android.synthetic.main.site_edit_location_fragment.*
+import kotlinx.android.synthetic.main.site_navigator_fragment.*
 
 
 class SiteNavigatorFragment : Fragment() {
@@ -63,7 +60,8 @@ class SiteNavigatorFragment : Fragment() {
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
-            it?.uiSettings?.isZoomControlsEnabled = true
+            it.uiSettings.isZoomControlsEnabled = true
+            it.isMyLocationEnabled = true
             googleMap = it
         }
     }
@@ -75,7 +73,7 @@ class SiteNavigatorFragment : Fragment() {
         val markerOptions = MarkerOptions()
         markerOptions.title("Your location")
         markerOptions.draggable(false)
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+        markerOptions.icon(bitmapDescriptorFromVector(activity!!.applicationContext, R.drawable.ic_marker_live_location))
         markerOptions.position(position.getLatLng())
 
         liveLocationMarker = googleMap?.addMarker(markerOptions)
