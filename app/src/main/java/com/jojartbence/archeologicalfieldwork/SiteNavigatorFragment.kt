@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.bitmapDescriptorFromVector
@@ -88,7 +89,13 @@ class SiteNavigatorFragment : Fragment() {
         markerOptions.position(position)
 
         liveLocationMarker = googleMap?.addMarker(markerOptions)
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLng(position))
+
+        // Move the map the way both markers can be seen:
+        val builder = LatLngBounds.builder()
+        builder.include(position)
+        builder.include(viewModel.siteLocation.getLatLng())
+        val bounds = builder.build()
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10))
 
         yourLat.text = "Lat: %.6f".format(position.latitude)
         yourLng.text = "Lng: %.6f".format(position.longitude)
