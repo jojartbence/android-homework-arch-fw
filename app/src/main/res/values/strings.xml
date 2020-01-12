@@ -33,5 +33,6 @@
     <string name="settings_total_sites">Total number of sites:</string>
     <string name="settings_visited_sites">Number of visited sites:</string>
     <string name="hint_search_title">Search based on title</string>
-
+    <string name="navigator_your_location">Your location</string>
+    <string name="navigator_site_default_title">Site</string>
 </resources>

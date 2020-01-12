@@ -37,7 +37,7 @@ class SiteNavigatorFragment : Fragment() {
         }
         viewModel.liveLocation.observe(this, liveLocationObserver)
 
-        viewModel.attachTitle(arguments?.getString("siteTitle"))
+        viewModel.attachTitle(arguments?.getString("siteTitle") ?: getString(R.string.navigator_site_default_title))
         viewModel.attachLocation(arguments?.getParcelable("location"))
         viewModel.initLocationService(activity as Activity)
 
@@ -80,7 +80,7 @@ class SiteNavigatorFragment : Fragment() {
         liveLocationMarker?.remove()
 
         val markerOptions = MarkerOptions()
-        markerOptions.title("Your location")
+        markerOptions.title(getString(R.string.navigator_your_location))
         markerOptions.draggable(false)
         markerOptions.icon(bitmapDescriptorFromVector(activity!!.applicationContext, R.drawable.ic_marker_live_location))
         markerOptions.position(position)

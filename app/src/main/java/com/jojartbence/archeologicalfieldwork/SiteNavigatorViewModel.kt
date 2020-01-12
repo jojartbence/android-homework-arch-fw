@@ -35,8 +35,8 @@ class SiteNavigatorViewModel : ViewModel() {
     }
 
 
-    fun attachTitle(title: String?) {
-        this.siteTitle = title ?: "Site"
+    fun attachTitle(title: String) {
+        this.siteTitle = title
     }
 
 
