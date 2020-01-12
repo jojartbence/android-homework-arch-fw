@@ -5,6 +5,7 @@ import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.LatLng
 import com.jojartbence.helpers.checkLocationPermissions
 import com.jojartbence.model.Location
 
@@ -12,7 +13,7 @@ class SiteNavigatorViewModel : ViewModel() {
 
     lateinit var siteLocation: Location
 
-    val liveLocation = MutableLiveData<Location> ()
+    val liveLocation = MutableLiveData<LatLng> ()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
@@ -23,7 +24,7 @@ class SiteNavigatorViewModel : ViewModel() {
         override fun onLocationResult(locationResult: LocationResult?) {
             val location = locationResult?.lastLocation
             location ?: return
-            liveLocation.value = (Location(location.latitude, location.longitude, 15f))
+            liveLocation.value = (LatLng(location.latitude, location.longitude))
         }
     }
 
@@ -45,7 +46,7 @@ class SiteNavigatorViewModel : ViewModel() {
     private fun getSingleLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener {
             if (it != null) {
-                liveLocation.value = (Location(it.latitude, it.longitude, 15f))
+                liveLocation.value = (LatLng(it.latitude, it.longitude))
             }
         }
     }

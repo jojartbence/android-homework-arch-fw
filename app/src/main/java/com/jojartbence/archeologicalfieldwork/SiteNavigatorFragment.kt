@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.bitmapDescriptorFromVector
@@ -31,7 +32,7 @@ class SiteNavigatorFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val liveLocationObserver = Observer<Location> {
+        val liveLocationObserver = Observer<LatLng> {
             refreshLiveLocationMarker(it)
         }
         viewModel.liveLocation.observe(this, liveLocationObserver)
@@ -61,26 +62,27 @@ class SiteNavigatorFragment : Fragment() {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             it.uiSettings.isZoomControlsEnabled = true
+            it.moveCamera(CameraUpdateFactory.newLatLngZoom(viewModel.siteLocation.getLatLng(), viewModel.siteLocation.zoom))
             it.isMyLocationEnabled = true
             googleMap = it
         }
     }
 
 
-    private fun refreshLiveLocationMarker(position: Location) {
+    private fun refreshLiveLocationMarker(position: LatLng) {
         liveLocationMarker?.remove()
 
         val markerOptions = MarkerOptions()
         markerOptions.title("Your location")
         markerOptions.draggable(false)
         markerOptions.icon(bitmapDescriptorFromVector(activity!!.applicationContext, R.drawable.ic_marker_live_location))
-        markerOptions.position(position.getLatLng())
+        markerOptions.position(position)
 
         liveLocationMarker = googleMap?.addMarker(markerOptions)
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(position.getLatLng(), position.zoom))
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLng(position))
 
-        lat.text = "Lat: %.6f".format(position.lat)
-        lng.text = "Lng: %.6f".format(position.lng)
+        lat.text = "Lat: %.6f".format(position.latitude)
+        lng.text = "Lng: %.6f".format(position.longitude)
     }
 
 
