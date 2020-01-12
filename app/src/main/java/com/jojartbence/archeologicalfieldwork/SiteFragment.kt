@@ -116,7 +116,7 @@ class SiteFragment : Fragment() {
             googleMap = it
             setLocationOnMap(viewModel.site.location)
             it?.setOnMapClickListener {
-                val bundle = bundleOf("location" to viewModel.site.location)
+                val bundle = bundleOf("location" to viewModel.site.location.copy())
                 navController.navigate(R.id.action_siteFragment_to_siteEditLocationFragment, bundle)
             }
         }
