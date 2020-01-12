@@ -1,6 +1,7 @@
 package com.jojartbence.model
 
 import android.os.Parcelable
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -61,3 +62,8 @@ data class Location (
     var lng: Double = 18.9325799,
     var zoom: Float = 13f
 ): Parcelable
+{
+    fun getLatLng(): LatLng {
+        return LatLng(lat, lng)
+    }
+}
