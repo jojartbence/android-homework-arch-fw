@@ -12,6 +12,7 @@ import com.jojartbence.model.Location
 class SiteNavigatorViewModel : ViewModel() {
 
     lateinit var siteLocation: Location
+    lateinit var siteTitle: String
 
     val liveLocation = MutableLiveData<LatLng> ()
 
@@ -31,6 +32,11 @@ class SiteNavigatorViewModel : ViewModel() {
 
     fun attachLocation(location: Location?) {
         this.siteLocation = location ?: Location()
+    }
+
+
+    fun attachTitle(title: String?) {
+        this.siteTitle = title ?: "Site"
     }
 
 

@@ -37,7 +37,7 @@ class SiteNavigatorFragment : Fragment() {
         }
         viewModel.liveLocation.observe(this, liveLocationObserver)
 
-
+        viewModel.attachTitle(arguments?.getString("siteTitle"))
         viewModel.attachLocation(arguments?.getParcelable("location"))
         viewModel.initLocationService(activity as Activity)
 
@@ -64,7 +64,7 @@ class SiteNavigatorFragment : Fragment() {
             it.uiSettings.isZoomControlsEnabled = true
 
             val markerOptions = MarkerOptions()
-            markerOptions.title("Site")
+            markerOptions.title(viewModel.siteTitle)
             markerOptions.draggable(false)
             markerOptions.position(viewModel.siteLocation.getLatLng())
             it.addMarker(markerOptions)

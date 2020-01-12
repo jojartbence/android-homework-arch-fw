@@ -108,5 +108,10 @@
         <argument
             android:name="location"
             app:argType="com.jojartbence.model.Location" />
+        <argument
+            android:name="siteTitle"
+            app:argType="string"
+            android:defaultValue="null"
+            app:nullable="true" />
     </fragment>
 </navigation>
