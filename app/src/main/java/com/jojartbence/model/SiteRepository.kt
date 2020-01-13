@@ -8,11 +8,6 @@ object SiteRepository {
     private var backupSiteStore: SiteStoreInterface? = null
 
 
-    init {
-        SiteFirebaseStore.setPersistanceEnabled()
-    }
-
-
     fun createDatabase(context: Context, userEmail: String) {
         siteStore = SiteFirebaseStore(context)
         backupSiteStore = SiteJsonStore(context, userEmail)

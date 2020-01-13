@@ -18,9 +18,19 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
 
 
     companion object {
+        var persistanceAlreadySet: Boolean = false
+
         fun setPersistanceEnabled() {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+            if (!persistanceAlreadySet) {
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+                persistanceAlreadySet = true
+            }
         }
+    }
+
+
+    init {
+        setPersistanceEnabled()
     }
 
 
