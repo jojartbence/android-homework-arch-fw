@@ -68,11 +68,11 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 val options = MarkerOptions().title(it.title).position(loc)
                 map.addMarker(options).tag = it.id
                 cameraBuilder.include(loc)
-                viewModel.selectedSite.value = it
             }
             val bounds = cameraBuilder.build()
             map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10))
 
+            viewModel.selectedSite.value = viewModel.selectedSite.value ?:viewModel.getAllSites().last()
         }
     }
 
