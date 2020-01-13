@@ -1,6 +1,19 @@
 Release notes
 
 
+2019.01.13. - v2.1.0
+Features:
+	- Components:
+		- Search
+		- Navigator
+	- Persistance:
+		- Firestore images
+		- Offline strategy (backup store)
+Improvements:
+	- Improved login process
+	- UI improvements
+
+
 2019.01.04. - v2.0.0
 Features:
 	- Components:
