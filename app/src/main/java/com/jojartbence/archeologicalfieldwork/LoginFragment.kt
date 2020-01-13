@@ -76,6 +76,8 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
+        viewModel.skipIfAlreadyLoggedIn(activity!!.applicationContext)
+
         logIn.setOnClickListener {
             logIn()
         }

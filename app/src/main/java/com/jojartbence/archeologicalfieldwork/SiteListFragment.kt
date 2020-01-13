@@ -1,13 +1,12 @@
 package com.jojartbence.archeologicalfieldwork
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -18,11 +17,17 @@ import kotlinx.android.synthetic.main.fragment_site_list.*
 /**
  * A simple [Fragment] subclass.
  */
-class SiteListFragment : Fragment(), SiteListener {
+class SiteListFragment : Fragment(), SiteListener, SearchView.OnQueryTextListener {
 
     private val viewModel by lazy { ViewModelProviders.of(this)[SiteListViewModel::class.java] }
 
     lateinit var navController: NavController
+
+
+    private val filteredSitesObserver = Observer<List<SiteModel>> {
+        recyclerView.adapter = SiteAdapter(it, this)
+        recyclerView.adapter?.notifyDataSetChanged()
+    }
 
 
     override fun onCreateView(
@@ -34,6 +39,11 @@ class SiteListFragment : Fragment(), SiteListener {
         return inflater.inflate(R.layout.fragment_site_list, container, false)
     }
 
+    /* TODO: after updating the first image of a site, the old image will appear in the site list.
+             Reason: upload images to firebase store (and the updating URL) is slower than
+             loading images via the adapter.
+     */
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,8 +52,11 @@ class SiteListFragment : Fragment(), SiteListener {
         val layoutManager = LinearLayoutManager(activity!!.applicationContext)
         recyclerView.layoutManager = layoutManager
 
-        recyclerView.adapter = SiteAdapter(viewModel.getSites(), this)
+        viewModel.filteredSites.observe(this, filteredSitesObserver)
+
         recyclerView.adapter?.notifyDataSetChanged()
+
+        searchView.setOnQueryTextListener(this)
     }
 
 
@@ -53,5 +66,15 @@ class SiteListFragment : Fragment(), SiteListener {
             "editSite" to true
         )
         navController.navigate(R.id.action_siteListFragment_to_siteFragment, bundle)
+    }
+
+    override fun onQueryTextSubmit(query: String): Boolean {
+        viewModel.filterSitesByTitle(query)
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String): Boolean {
+        viewModel.filterSitesByTitle(newText)
+        return true
     }
 }

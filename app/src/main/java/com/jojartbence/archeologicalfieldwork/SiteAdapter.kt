@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.jojartbence.helpers.readImageFromPath
+import com.jojartbence.helpers.showImageUsingGlide
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.card_site.view.*
 
@@ -38,7 +38,8 @@ class SiteAdapter constructor(private var sites: List<SiteModel>,
         fun bind(site: SiteModel, listener: SiteListener) {
             itemView.siteTitle.text = site.title
             itemView.description.text = site.description
-            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, site.images[0]))
+            showImageUsingGlide(itemView.context, site.imageContainerList[0], itemView.imageIcon)
+
             itemView.location.text = "Lat: %.6f - Lng: %.6f".format(site.location.lat, site.location.lng)
             itemView.visited.isChecked = site.visited
             itemView.setOnClickListener { listener.onSiteClick(site) }

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -19,7 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.jojartbence.helpers.readImageFromPath
+import com.jojartbence.helpers.showImageUsingGlide
 import com.jojartbence.model.Location
 import com.jojartbence.model.SiteModel
 import kotlinx.android.synthetic.main.fragment_site.*
@@ -176,6 +177,12 @@ class SiteFragment : Fragment() {
             R.id.site_shareEmail -> {
                 viewModel.shareSiteInEmail(this)
             }
+
+            R.id.site_goToNavigator -> {
+                val bundle = bundleOf("location" to viewModel.site.location.copy(),
+                    "siteTitle" to viewModel.site.title)
+                navController.navigate(R.id.action_nav_site_to_siteNavigatorFragment, bundle)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -211,20 +218,18 @@ class SiteFragment : Fragment() {
 
 
     private fun showImages() {
-        val site = viewModel.site
+        val imageContainerList = viewModel.site.imageContainerList
 
-        if (readImageFromPath(activity!!.applicationContext, site.images[0]) != null) {
-            imageView1.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[0]))
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[1]) != null) {
-            imageView2.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[1]))
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[2]) != null) {
-            imageView3.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[2]))
-        }
-        if (readImageFromPath(activity!!.applicationContext, site.images[3]) != null) {
-            imageView4.setImageBitmap(readImageFromPath(activity!!.applicationContext, site.images[3]))
-        }
+        showImage(imageContainerList[0], imageView1)
+        showImage(imageContainerList[1], imageView2)
+        showImage(imageContainerList[2], imageView3)
+        showImage(imageContainerList[3], imageView4)
+    }
+
+
+    private fun showImage(container: SiteModel.ImageContainer, view: ImageView) {
+
+        showImageUsingGlide(activity!!.applicationContext, container, view, resources.getDrawable(R.drawable.ic_add_photo, context?.theme))
     }
 
 
