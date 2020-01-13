@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.jojartbence.model.SiteRepository
 
 
@@ -28,8 +29,7 @@ class LoginViewModel: ViewModel() {
     fun doLogin(email: String, password: String, context: Context) {
 
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-            SiteRepository.createDatabase(context, email)
-            SiteRepository.fetchSites { loginResult.value = true }
+            initRepository(email, context, { loginResult.value = true })
         }.addOnFailureListener {
             handleAuthenticationFailure(context, email, it)
         }
@@ -39,11 +39,16 @@ class LoginViewModel: ViewModel() {
     fun doSignUp(email: String, password: String, context: Context) {
 
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-            SiteRepository.createDatabase(context, email)
-            SiteRepository.fetchSites { loginResult.value = true }
+            initRepository(email, context, { loginResult.value = true })
         }.addOnFailureListener {
             handleAuthenticationFailure(context, email, it)
         }
+    }
+
+
+    fun initRepository(email: String, context: Context, onSuccess: () -> Unit) {
+        SiteRepository.createDatabase(context, email)
+        SiteRepository.fetchSites ( onSuccess )
     }
 
 
@@ -63,6 +68,13 @@ class LoginViewModel: ViewModel() {
                 SiteRepository.createDatabaseUsingBackup(context, email)
                 SiteRepository.fetchSites { loginResult.value = true }
             }
+        }
+    }
+
+
+    fun skipIfAlreadyLoggedIn(context: Context) {
+        auth.currentUser?.email?.let {
+            initRepository(it, context, { loginResult.value = true })
         }
     }
 }
