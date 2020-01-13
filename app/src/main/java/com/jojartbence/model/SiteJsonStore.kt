@@ -38,7 +38,7 @@ class SiteJsonStore: SiteStoreInterface {
 
 
     override fun create(site: SiteModel) {
-        site.id = generateRandomId().toString()
+        site.id = site.id ?: generateRandomId().toString()
         sites.add(site)
         serialize()
     }

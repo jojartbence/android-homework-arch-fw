@@ -61,14 +61,18 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
             foundSite.rating = site.rating
         }
 
-        database.reference.child("users").child(userId).child("sites").child(site.id).setValue(site)
+        site.id?.let {
+            database.reference.child("users").child(userId).child("sites").child(it).setValue(site)
+        }
 
         updateImages(site)
     }
 
 
     override fun delete(site: SiteModel) {
-        database.reference.child("users").child(userId).child("sites").child(site.id).removeValue()
+        site.id?.let {
+            database.reference.child("users").child(userId).child("sites").child(it).removeValue()
+        }
         deleteImagesFromCloud(site.imageContainerList)
         sites.remove(sites.find { it.id == site.id })
     }
@@ -117,8 +121,9 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
                     }.addOnSuccessListener { taskSnapshot ->
                         taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
                             container.url = it.toString()
-                            database.reference.child("users").child(userId).child("sites").child(site.id)
-                                .setValue(site)
+                            site.id?.let {
+                                database.reference.child("users").child(userId).child("sites").child(it).setValue(site)
+                            }
                             container.updateNeeded = false
                         }
                     }
