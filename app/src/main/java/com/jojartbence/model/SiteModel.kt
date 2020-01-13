@@ -8,7 +8,7 @@ import java.util.*
 
 @Parcelize
 data class SiteModel (
-    var id : String = "",
+    var id : String? = null,
     var title: String? = null,
     var description: String? = null,
     var location: Location = Location(),

@@ -12,9 +12,12 @@ interface SiteStoreInterface {
 
     fun initAsBackupStore(primaryStore: SiteStoreInterface) {
         primaryStore.findAll().forEach {
-            when (findById(it.id)) {
-                is SiteModel -> update(it)
-                else -> create(it)
+            val site = it
+            site.id?.let {
+                when (findById(it)) {
+                    is SiteModel -> update(site)
+                    else -> create(site)
+                }
             }
         }
     }

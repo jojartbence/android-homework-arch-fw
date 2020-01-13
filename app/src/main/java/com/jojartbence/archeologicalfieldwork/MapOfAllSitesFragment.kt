@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jojartbence.helpers.showImageUsingGlide
@@ -61,13 +62,17 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val map = it
             map.setOnMarkerClickListener(this)
             map.uiSettings.isZoomControlsEnabled = true
+            val cameraBuilder = LatLngBounds.builder()
             viewModel.getAllSites().forEach {
                 val loc = LatLng(it.location.lat, it.location.lng)
                 val options = MarkerOptions().title(it.title).position(loc)
                 map.addMarker(options).tag = it.id
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.location.zoom))
-                viewModel.selectedSite.value = it
+                cameraBuilder.include(loc)
             }
+            val bounds = cameraBuilder.build()
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10))
+
+            viewModel.selectedSite.value = viewModel.selectedSite.value ?:viewModel.getAllSites().last()
         }
     }
 
