@@ -17,8 +17,10 @@ class SiteFirebaseStore(val context: Context): SiteStoreInterface {
     private val imageStore = FirebaseStorage.getInstance()
 
 
-    init {
-        database.setPersistenceEnabled(true)
+    companion object {
+        fun setPersistanceEnabled() {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+        }
     }
 
 
