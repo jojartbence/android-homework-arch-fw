@@ -66,6 +66,7 @@ class SiteNavigatorFragment : Fragment() {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             it.uiSettings.isZoomControlsEnabled = true
+            it.setMaxZoomPreference(17.0f)
 
             val markerOptions = MarkerOptions()
             markerOptions.title(viewModel.siteTitle)
@@ -98,7 +99,7 @@ class SiteNavigatorFragment : Fragment() {
         builder.include(position)
         builder.include(viewModel.siteLocation.getLatLng())
         val bounds = builder.build()
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10))
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
 
         yourLat.text = "Lat: %.6f".format(position.latitude)
         yourLng.text = "Lng: %.6f".format(position.longitude)
