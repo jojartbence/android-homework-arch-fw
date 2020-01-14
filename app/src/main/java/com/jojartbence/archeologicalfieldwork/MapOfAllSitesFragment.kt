@@ -62,17 +62,23 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
             val map = it
             map.setOnMarkerClickListener(this)
             map.uiSettings.isZoomControlsEnabled = true
-            val cameraBuilder = LatLngBounds.builder()
-            viewModel.getAllSites().forEach {
-                val loc = LatLng(it.location.lat, it.location.lng)
-                val options = MarkerOptions().title(it.title).position(loc)
-                map.addMarker(options).tag = it.id
-                cameraBuilder.include(loc)
-            }
-            val bounds = cameraBuilder.build()
-            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10))
+            map.setMaxZoomPreference(17.0f)
+            if (viewModel.getAllSites().isNotEmpty()) {
 
-            viewModel.selectedSite.value = viewModel.selectedSite.value ?:viewModel.getAllSites().last()
+                val cameraBuilder = LatLngBounds.builder()
+                viewModel.getAllSites().forEach {
+                    val loc = LatLng(it.location.lat, it.location.lng)
+                    val options = MarkerOptions().title(it.title).position(loc)
+                    map.addMarker(options).tag = it.id
+                    cameraBuilder.include(loc)
+                }
+                val bounds = cameraBuilder.build()
+
+                map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 30))
+
+                viewModel.selectedSite.value =
+                    viewModel.selectedSite.value ?: viewModel.getAllSites().last()
+            }
         }
     }
 
