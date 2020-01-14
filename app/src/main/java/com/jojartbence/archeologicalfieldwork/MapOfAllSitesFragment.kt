@@ -116,7 +116,7 @@ class MapOfAllSitesFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        allSitesMapView.onSaveInstanceState(outState)
+        allSitesMapView?.onSaveInstanceState(outState)
     }
 
 
