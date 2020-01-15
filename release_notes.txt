@@ -1,7 +1,15 @@
 Release notes
 
 
-2019.01.13. - v2.1.0
+2020.01.15. - v2.1.1
+Hotfix:
+	- Map views is more convenient to use
+	- Bugs of maps fixed
+	- Logout causes app to quit
+	- When in offline mode, it is shown at settings
+
+
+2020.01.13. - v2.1.0
 Features:
 	- Components:
 		- Search
@@ -14,7 +22,7 @@ Improvements:
 	- UI improvements
 
 
-2019.01.04. - v2.0.0
+2020.01.04. - v2.0.0
 Features:
 	- Components:
 		- Map of all sites

@@ -79,6 +79,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun doLogOut() {
         FirebaseAuth.getInstance().signOut()
         SiteRepository.clear()
-        navController.navigateUp()
+        finish()
     }
 }

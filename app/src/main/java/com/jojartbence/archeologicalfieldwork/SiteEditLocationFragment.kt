@@ -112,7 +112,7 @@ class SiteEditLocationFragment : Fragment(), GoogleMap.OnMarkerDragListener, Goo
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
+        mapView?.onSaveInstanceState(outState)
     }
 
 
