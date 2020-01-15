@@ -16,7 +16,7 @@
     <string name="hint_additional_notes">Additional notes</string>
     <string name="button_addImage">Add Image</string>
     <string name="menu_addSite">Add site</string>
-    <string name="menu_logout">Log out</string>
+    <string name="menu_logout">Log out and quit</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_mapOfAllSites">Map of all sites</string>
     <string name="menu_favourites">Favourite sites</string>
